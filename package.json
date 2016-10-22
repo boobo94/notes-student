@@ -1,0 +1,15 @@
+{
+  "name": "notes-students",
+  "version": "1.0.0",
+  "description": "Website to show the students notes",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/boobo94/notes-student/"
+  },
+  "author": "Bogdan Alexandru Militaru",
+  "license": "ISC"
+}
