@@ -11,5 +11,9 @@
     "url": "https://github.com/boobo94/notes-student/"
   },
   "author": "Bogdan Alexandru Militaru",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.14.0",
+    "morgan": "^1.7.0"
+  }
 }
