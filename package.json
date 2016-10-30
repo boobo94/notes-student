@@ -2,7 +2,7 @@
   "name": "notes-students",
   "version": "0.0.1",
   "description": "Website to show the students notes",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "test"
   },
