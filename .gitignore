@@ -1,3 +1,8 @@
+##extra files
 /extra
+
+## Node JS
 /node_modules/
+
+## ENVnpm
 .vscode
