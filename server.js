@@ -1,11 +1,10 @@
 
-var express = require('express'),
-  morgan = require('morgan');
+import express from 'express';
 
 // create new server
 var app = express();
 
-/*
+/**
   |--------------------------------------------------
   | Routes
   |--------------------------------------------------
@@ -20,7 +19,7 @@ var adminRouter = require('./app/routes/admin.js');
 app.use('/admin', adminRouter);
 
 
-/*
+/**
   |--------------------------------------------------
   | The static resource
   |--------------------------------------------------
@@ -31,7 +30,7 @@ app.use(express.static(__dirname + '/client'));
 app.set('views', './client/views');
 app.engine('html', require('ejs').renderFile);
 
-/*
+/**
   |--------------------------------------------------
   | Database
   |--------------------------------------------------
@@ -45,18 +44,19 @@ function initDB() {
   });
 }
 
-//initDB();
+initDB();
 
 
 
-/*
+/**
   |--------------------------------------------------
   | Server
   |--------------------------------------------------
   */
 
-let environement = "local";
-let server = require('./config/server-config.json')[environement];
+//var environement = "local";
+let server = require('./config/server-config.json');
+    server = server[server["environement"]];
 
 app.listen(server.port, server.hostname, function () {
   console.log('Server running at http://' + server.hostname + ':' + server.port + '/');

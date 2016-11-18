@@ -1,5 +1,4 @@
-
-var express = require('express');
+import express from 'express';
 
 var admin = express.Router();
 
