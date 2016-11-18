@@ -2,9 +2,6 @@
 var express = require('express'),
   morgan = require('morgan');
 
-var hostname = 'localhost';
-var port = 8080;
-
 // create new server
 var app = express();
 
@@ -36,11 +33,31 @@ app.engine('html', require('ejs').renderFile);
 
 /*
   |--------------------------------------------------
-  | Start server
+  | Database
   |--------------------------------------------------
   */
 
+function initDB() {
+  let models = require('./app/database/models');
 
-app.listen(port, hostname, function () {
-  console.log('Server running at http://' + hostname + ':' + port + '/');
+  models.sequelize.sync().then(function () {
+    console.log('Models was synced!');
+  });
+}
+
+//initDB();
+
+
+
+/*
+  |--------------------------------------------------
+  | Server
+  |--------------------------------------------------
+  */
+
+let environement = "local";
+let server = require('./config/server-config.json')[environement];
+
+app.listen(server.port, server.hostname, function () {
+  console.log('Server running at http://' + server.hostname + ':' + server.port + '/');
 });
