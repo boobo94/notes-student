@@ -1,0 +1,10 @@
+{
+    "local": {
+        "hostname": "localhost",
+        "port": 8080
+    },
+    "production": {
+        "hostname": "live",
+        "port": 3000
+    }
+}
