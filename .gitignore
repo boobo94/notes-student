@@ -4,6 +4,7 @@
 ## Node JS
 /node_modules/
 npm-debug.log
+.babelrc
 
 ## ENVnpm
 .vscode
