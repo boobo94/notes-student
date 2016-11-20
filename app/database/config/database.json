@@ -1,0 +1,18 @@
+{
+  "local":{
+    "user": "postgres",
+    "password": "root",
+    "database": "students",
+    "host": "127.0.0.1",
+    "port": 5432,
+    "dialect": "postgres"
+  },
+  "production":{
+    "host": "localhost",
+    "_port": "5432",
+    "database": "students",
+    "user": "postgres",
+    "password": "root",
+    "dialect": "postgres"
+  }
+}
