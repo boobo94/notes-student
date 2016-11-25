@@ -14,7 +14,7 @@ const model = (sequelize, DataTypes) => {
       classMethods: {
         associate: (models) => {
           Specialization.belongsToMany(models.Discipline, {
-            through: 'specialization_discipline'
+            through: 'discipline_specialization'
           })
         }
       }

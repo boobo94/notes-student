@@ -1,7 +1,9 @@
 const model = (sequelize, DataTypes) => {
     let Note = sequelize.define("Note", {
         note_id: {
-            type: DataTypes.INTEGER
+            type: DataTypes.INTEGER,
+            primaryKey: true,
+            autoIncrement: true
         },
         discipline_id: {
             type: DataTypes.INTEGER
@@ -20,10 +22,12 @@ const model = (sequelize, DataTypes) => {
             classMethods: {
                 associate: (models) => {
                     Note.belongsToMany(models.Discipline, {
-                        through: 'note_discipline'
+                        through: 'note_discipline',
+                        foreignKey: 'discipline_id'
                     })
                     Note.belongsToMany(models.Student, {
-                        through: 'note_student'
+                        through: 'note_student',
+                        foreignKey: 'student_id'
                     })
                 }
             }

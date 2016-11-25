@@ -1,7 +1,9 @@
 const model = (sequelize, DataTypes) => {
   let Group = sequelize.define("Group", {
     group_id: {
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
     },
     student_id: {
       type: DataTypes.INTEGER
@@ -17,7 +19,8 @@ const model = (sequelize, DataTypes) => {
       classMethods: {
         associate: (models) => {
           Group.belongsToMany(models.Student, {
-            through: 'group_student'
+            through: 'student_group',
+            foreignKey: 'student_id'
           })
         }
       }
