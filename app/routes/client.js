@@ -1,10 +1,20 @@
 import express from 'express';
 
-var client = express.Router();
+export class Router {
+    /**
+     * @constructor
+     * @params {object} middlewares -> shared middlewares for routes
+     * @params {object} dependencies -> shared dependencies services (models, builders, etc.)
+     */
+    constructor(middlewares, dependencies) {
+        this.middlewares = middlewares
+        this.dependencies = dependencies
 
-client.route('/')
-    .get(function (req, res) {
-        res.render('index.html');
-    });
+        //create new Router
+        this.router = express.Router()
 
-module.exports = client;
+        this.router.get('/', function (req, res) {
+            res.send('/client');
+        })
+    }
+}

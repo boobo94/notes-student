@@ -1,25 +1,20 @@
 import express from 'express';
 
-var admin = express.Router();
+export class Router {
+    /**
+     * @constructor
+     * @params {object} middlewares -> shared middlewares for routes
+     * @params {object} dependencies -> shared dependencies services (models, builders, etc.)
+     */
+    constructor(middlewares, dependencies) {
+        this.middlewares = middlewares
+        this.dependencies = dependencies
 
-admin.route('/')
-    .get(function (req, res) {
-        res.send("Sunt pe admin /");
-    });
+        //create new Router
+        this.router = express.Router()
 
-admin.route('/add-student')
-    .get(function (req, res) {
-        res.send("Sunt pe admin /addStudent");
-    });
-
-admin.route('/edit-student')
-    .get(function (req, res) {
-        res.send("Sunt pe admin /addStudent");
-    });
-
-admin.route('/delete-student')
-    .get(function (req, res) {
-        res.send("Sunt pe admin /addStudent");
-    });
-
-module.exports = admin;
+        this.router.get('/', function (req, res) {
+            res.send('/admin');
+        })
+    }
+}
