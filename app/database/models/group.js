@@ -5,9 +5,6 @@ const model = (sequelize, DataTypes) => {
       primaryKey: true,
       autoIncrement: true
     },
-    student_id: {
-      type: DataTypes.INTEGER
-    },
     name: {
       type: DataTypes.STRING
     },
@@ -18,8 +15,7 @@ const model = (sequelize, DataTypes) => {
   }, {
       classMethods: {
         associate: (models) => {
-          Group.belongsToMany(models.Student, {
-            through: 'student_group',
+          Group.belongsTo(models.Student, {
             foreignKey: 'student_id'
           })
         }

@@ -1,7 +1,9 @@
 const model = (sequelize, DataTypes) => {
   let Specialization = sequelize.define("Specialization", {
     specialization_id: {
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
     },
     name: {
       type: DataTypes.STRING
@@ -13,9 +15,7 @@ const model = (sequelize, DataTypes) => {
   }, {
       classMethods: {
         associate: (models) => {
-          Specialization.belongsToMany(models.Discipline, {
-            through: 'discipline_specialization'
-          })
+          //associate
         }
       }
     });

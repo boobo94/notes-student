@@ -26,15 +26,11 @@ const model = (sequelize, DataTypes) => {
     semester: {
       type: DataTypes.INTEGER
     },
-    specialization_id: {
-     type: DataTypes.INTEGER
-    },
 
   }, {
       classMethods: {
         associate: (models) => {
-          Discipline.belongsToMany(models.Specialization, {
-            through: 'discipline_specialization',
+          Discipline.belongsTo(models.Specialization, {
             foreignKey: 'specialization_id'
           })
         }

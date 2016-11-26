@@ -18,12 +18,8 @@ const model = (sequelize, DataTypes) => {
   }, {
       classMethods: {
         associate: (models) => {
-          Student.belongsToMany(models.Group, {
-            through: 'student_group'
-          });
-
-          Student.belongsToMany(models.Note, {
-            through: 'note_student'
+          Student.belongsTo(models.Specialization, {
+            foreignKey: 'specialization_id'
           })
         }
       }
