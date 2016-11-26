@@ -1,8 +1,13 @@
 import express from 'express';
 import { Router } from './app/routes/index.router.js'
 
-// create new server
-  var app = express();
+/**
+  |--------------------------------------------------
+  | Create Server using Express
+  |--------------------------------------------------
+  */
+
+    var app = express();
 
 /**
   |--------------------------------------------------
@@ -10,9 +15,8 @@ import { Router } from './app/routes/index.router.js'
   |--------------------------------------------------
   */
 
-  var api = new Router();
-  api.configure(app);
-
+    var api = new Router();
+    api.configure(app);
 
 /**
   |--------------------------------------------------
@@ -20,10 +24,10 @@ import { Router } from './app/routes/index.router.js'
   |--------------------------------------------------
   */
 
-  app.use(express.static(__dirname + '/client'));
+    app.use(express.static(__dirname + '/client'));
 
-  app.set('views', './client/views');
-  app.engine('html', require('ejs').renderFile);
+    app.set('views', './client/views');
+    app.engine('html', require('ejs').renderFile);
 
 /**
   |--------------------------------------------------
@@ -31,17 +35,15 @@ import { Router } from './app/routes/index.router.js'
   |--------------------------------------------------
   */
 
-  function initDB() {
-    let models = require('./app/database/models');
+    function initDB() {
+      let models = require('./app/database/models');
 
-    models.sequelize.sync().then(function () {
-      console.log('Models was synced!');
-    });
-  }
+      models.sequelize.sync().then(function () {
+        console.log('Models was synced!');
+      });
+    }
 
   //initDB();
-
-
 
 /**
   |--------------------------------------------------
@@ -49,10 +51,9 @@ import { Router } from './app/routes/index.router.js'
   |--------------------------------------------------
   */
 
-  //var environement = "local";
-  let server = require('./config/server-config.json');
-      server = server[server["environement"]];
+    let server = require('./config/server-config.json');
+        server = server[server["environment"]];
 
-  app.listen(server.port, server.hostname, function () {
-    console.log('Server running at http://' + server.hostname + ':' + server.port + '/');
-  });
+    app.listen(server.port, server.hostname, function () {
+      console.log('Server running at http://' + server.hostname + ':' + server.port + '/');
+    });
