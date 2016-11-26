@@ -3,8 +3,8 @@ import fs from 'fs';
 import path from 'path';
 
 // get the database configuration for current environement
-const environement = require('../../../config/server-config.json')['environement'];
-const config = require('../config/database.json')[environement];
+const environment = require('../../../config/server-config.json')['environment'];
+const config = require('../config/database.json')[environment];
 
 const basename = path.basename(module.filename);
 
