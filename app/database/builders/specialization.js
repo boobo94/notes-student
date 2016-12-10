@@ -6,15 +6,25 @@ export class Specialization {
     }
 
     static findAll() {
-        return model.findAll();
+        return model.findAll({
+            attributes: ['specialization_id', 'name', 'short_name']
+        })
+            .then(function (spec) {//return all specializations as promise
+                return spec
+            })
+
     }
 
     static findById(id) {
         return model.findOne({
+            attributes: ['specialization_id', 'name', 'short_name'],
             where: {
                 specialization_id: id
             }
         })
+            .then(function (spec) {
+                return spec
+            })
     }
 
     static add(s, t) {
@@ -22,25 +32,13 @@ export class Specialization {
             //discipline_id: s.discipline_id,
             name: s.name,
             short_name: s.short_name,
-            type: s.type,
-            year: s.year,
-            examination: s.examination,
-            credit_points: s.credit_points,
-            semester: s.semester,
-            specialization_id: s.specialization_id
         }, { transaction: t })
     }
 
     static update(s, t) {
         return model.update({
             name: s.name,
-            short_name: s.short_name,
-            type: s.type,
-            year: s.year,
-            examination: s.examination,
-            credit_points: s.credit_points,
-            semester: s.semester,
-            specialization_id: s.specialization_id
+            short_name: s.short_name
         }, {
                 where: { specialization_id: s.specialization_id }
             }, {
