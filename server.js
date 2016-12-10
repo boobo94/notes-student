@@ -1,4 +1,5 @@
 import express from 'express';
+import bodyParser from 'body-parser';
 import { Router } from './app/routes/index.router.js'
 
 /**
@@ -8,6 +9,9 @@ import { Router } from './app/routes/index.router.js'
   */
 
     var app = express();
+
+    app.use(bodyParser.json()); // support json encoded bodies
+    app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 /**
   |--------------------------------------------------
