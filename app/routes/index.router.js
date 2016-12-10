@@ -4,6 +4,7 @@ import { Router as Client} from "./client.js"
 
 //Api
 import { Api as Specialization } from "./api/specialization.api.js"
+import { Api as Discipline } from "./api/discipline.api.js"
 
 
 export class Router {
@@ -32,6 +33,9 @@ export class Router {
         //routes for api
         let specialization = new Specialization(this.middlewares, this.dependencies)
         app.use('/api/specialization', specialization.router)
+
+        let discipline = new Discipline(this.middlewares, this.dependencies)
+        app.use('/api/discipline', discipline.router)
 
     }
 
