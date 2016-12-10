@@ -50,5 +50,8 @@ export class Specialization {
         return model.destroy({
             where: { specialization_id: id }, transaction: t
         })
+            .then(function (affectedRows) {
+                return affectedRows
+            })
     }
 }
