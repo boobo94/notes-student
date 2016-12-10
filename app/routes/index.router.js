@@ -23,11 +23,11 @@ export class Router {
     
     configure (app) {
 
+        let client = new Client(this.middlewares, this.dependencies)
+        app.use('/', client.router)
+        
         let admin = new Admin(this.middlewares, this.dependencies)
         app.use('/admin', admin.router)
-
-        let client = new Client(this.middlewares, this.dependencies)
-        app.use('/client', client.router)
 
         //routes for api
         let specialization = new Specialization(this.middlewares, this.dependencies)
