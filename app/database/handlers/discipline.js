@@ -1,6 +1,6 @@
-
-import { Discipline } from '../../database/builders/discipline.js'
-import { Handler } from '../../database/handlers/handler.js'
+import express from 'express';
+import { Discipline } from '../builders/discipline.js'
+import msg from "./messages.json";
 
 export class Handler {
     /**
@@ -12,46 +12,55 @@ export class Handler {
 
     }
 
-    static post(data) {
+    static post(reqBody, cb) {
 
-        return Discipline.add(data)
+        var disc = {
+            name: reqBody.name,
+            short_name: reqBody.short_name,
+            type: reqBody.type,
+            year: reqBody.year,
+            examination: reqBody.examination,
+            credit_points: reqBody.credit_points,
+            semester: reqBody.semester,
+            specialization_id: reqBody.specialization_id
+        }
+
+        Discipline.add(disc)
             .then(function (inserted) {
-                return Handler.success()
+                return cb(null, msg.success)
             })
             .catch(function (error) {
-                return Handler.error(error.message)
+                return cb(error)
             })
     }
 
-    static getAll() {
-        return Discipline.findAll()
+    static getAll(cb) {
+        Discipline.findAll()
             .then(function (results) {
                 if (results)
-                    return Handler.successJson(results)
+                    return cb(null, results)
                 else
-                    return Handler.error('notfound')
+                    return cb(null, msg.notfound)
             })
             .catch(function (error) {
-                return Handler.error(error.message)
+                return cb(error)
             })
     }
 
-    static getOne(id) {
+    static getOne(id, cb) {
         return Discipline.findById(id)
             .then(function (result) {
                 if (result && result.dataValues)
-                    return Handler.successJson(result)
+                    return cb(null, result)
                 else
-                    return Handler.error('notfound')
+                    return cb(null, msg.notfound)
             })
             .catch(function (error) {
-                return Handler.error(error.message)
+                return cb(error)
             })
     }
 
-    static put(reqBody, id) {
-        if (!reqBody)
-            return res.status(400).send();
+    static put(reqBody, id, cb) {
 
         var disc = {
             discipline_id: id,
@@ -65,30 +74,30 @@ export class Handler {
             specialization_id: reqBody.specialization_id
         }
 
-        return Discipline.update(disc)
+        Discipline.update(disc)
             .then(function (updated) {
                 if (updated == 0)
-                    return Handler.error('notupdated')
+                    return cb(null, msg.notupdated)
                 else
-                    return Handler.success()
+                    return cb(null, msg.success)
             })
             .catch(function (error) {
-                return Handler.error(error.message)
+                return cb(error)
             })
     }
 
-    static delete(id) {
+    static delete(id, cb) {
         return Discipline.delete(id)
             .then(function (affectedRows) {
                 if (!affectedRows) {
-                    return Handler.error('notdeleted')
+                    return cb(null, msg.notdeleted)
                 }
                 else {
-                    return Handler.success()
+                    return cb(null, msg.success)
                 }
             })
             .catch(function (error) {
-                return Handler.error(error.message)
+                return cb(error)
             })
 
     }
