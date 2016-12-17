@@ -14,10 +14,6 @@ export class Api {
     //create new Router
     this.router = express.Router()
 
-    this.router.get('/', function (req, res) {
-      res.send('spec api');
-    })
-
     this.router.post('/add', function (req, res) {
       var reqBody = req.body;
       if (!reqBody)
