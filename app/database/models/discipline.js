@@ -37,7 +37,8 @@ const model = (sequelize, DataTypes) => {
             foreignKey: {
               name: 'specialization_id',
               allowNull: false
-            }
+            },
+            onDelete: 'CASCADE'
           })
         }
       }
