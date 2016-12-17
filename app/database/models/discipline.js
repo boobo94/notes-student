@@ -10,8 +10,7 @@ const model = (sequelize, DataTypes) => {
       allowNull: false
     },
     short_name: {
-      type: DataTypes.STRING,
-      allowNull: false
+      type: DataTypes.STRING
     },
     type: {
       type: DataTypes.STRING
