@@ -6,7 +6,10 @@ export class Discipline {
     }
 
     static findAll() {
-        return model.findAll();
+        return model.findAll()
+            .then(function(results) {
+                return results
+            })
     }
 
     static findById(id) {
@@ -15,6 +18,9 @@ export class Discipline {
                 discipline_id: id
             }
         })
+            .then(function(result) {
+                return result
+            })
     }
 
     static add(d, t) {
@@ -28,7 +34,12 @@ export class Discipline {
             credit_points: d.credit_points,
             semester: d.semester,
             specialization_id: d.specialization_id
-        }, { transaction: t })
+        }, {
+                transaction: t
+            })
+            .then(function(inserted) {
+                return inserted
+            })
     }
 
     static update(d, t) {
@@ -46,11 +57,17 @@ export class Discipline {
             }, {
                 transaction: t
             })
+            .then(function(updated) {
+                return updated
+            })
     }
 
     static delete(id, t) {
         return model.destroy({
             where: { discipline_id: id }, transaction: t
         })
+            .then(function(affectedRows) {
+                return affectedRows
+            })
     }
 }
