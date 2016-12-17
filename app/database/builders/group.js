@@ -6,7 +6,10 @@ export class Group {
     }
 
     static findAll() {
-        return model.findAll();
+        return model.findAll()
+            .then(function (results) {
+                return results
+            })
     }
 
     static findById(id) {
@@ -15,6 +18,9 @@ export class Group {
                 group_id: id
             }
         })
+            .then(function (result) {
+                return result
+            })
     }
 
     static add(g, t) {
@@ -22,7 +28,12 @@ export class Group {
             student_id: g.name,
             name: g.short_name,
             year: g.year,
-        }, { transaction: t })
+        }, {
+                transaction: t
+            })
+            .then(function (inserted) {
+                return inserted
+            })
     }
 
     static update(g, t) {
@@ -35,11 +46,17 @@ export class Group {
             }, {
                 transaction: t
             })
+            .then(function (updated) {
+                return updated
+            })
     }
 
     static delete(id, t) {
         return model.destroy({
             where: { group_id: id }, transaction: t
         })
+            .then(function (affectedRows) {
+                return affectedRows
+            })
     }
 }
