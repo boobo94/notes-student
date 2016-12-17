@@ -32,7 +32,12 @@ export class Specialization {
             //discipline_id: s.discipline_id,
             name: s.name,
             short_name: s.short_name,
-        }, { transaction: t })
+        }, {
+                transaction: t
+            })
+            .then(function (inserted) {
+                return inserted
+            })
     }
 
     static update(s, t) {
@@ -43,6 +48,9 @@ export class Specialization {
                 where: { specialization_id: s.specialization_id }
             }, {
                 transaction: t
+            })
+            .then(function (updated) {
+                return updated
             })
     }
 
