@@ -6,16 +6,19 @@ const model = (sequelize, DataTypes) => {
       autoIncrement: true
     },
     name: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      allowNull: false
     },
     short_name: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      allowNull: false
     },
     type: {
       type: DataTypes.STRING
     },
     year: {
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
+      allowNull: false
     },
     examination: {
       type: DataTypes.STRING
@@ -24,14 +27,18 @@ const model = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER
     },
     semester: {
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
+      allowNull: false
     },
 
   }, {
       classMethods: {
         associate: (models) => {
           Discipline.belongsTo(models.Specialization, {
-            foreignKey: 'specialization_id'
+            foreignKey: {
+              name: 'specialization_id',
+              allowNull: false
+            }
           })
         }
       }

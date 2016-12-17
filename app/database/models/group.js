@@ -6,7 +6,8 @@ const model = (sequelize, DataTypes) => {
       autoIncrement: true
     },
     name: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      allowNull: false
     },
     year: {
       type: DataTypes.INTEGER
@@ -16,7 +17,8 @@ const model = (sequelize, DataTypes) => {
       classMethods: {
         associate: (models) => {
           Group.belongsTo(models.Student, {
-            foreignKey: 'student_id'
+            foreignKey: 'student_id',
+            allowNull: false
           })
         }
       }

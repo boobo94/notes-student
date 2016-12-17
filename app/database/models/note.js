@@ -6,7 +6,8 @@ const model = (sequelize, DataTypes) => {
             autoIncrement: true
         },
         note: {
-            type: DataTypes.INTEGER
+            type: DataTypes.INTEGER,
+            allowNull: false
         },
         exam_date: {
             type: DataTypes.DATE
@@ -16,10 +17,12 @@ const model = (sequelize, DataTypes) => {
             classMethods: {
                 associate: (models) => {
                     Note.belongsTo(models.Discipline, {
-                        foreignKey: 'discipline_id'
+                        foreignKey: 'discipline_id',
+                        allowNull: false
                     })
                     Note.belongsTo(models.Student, {
-                        foreignKey: 'student_id'
+                        foreignKey: 'student_id',
+                        allowNull: false
                     })
                 }
             }

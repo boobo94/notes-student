@@ -6,7 +6,8 @@ const model = (sequelize, DataTypes) => {
       autoIncrement: true
     },
     name: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      allowNull: false
     },
     short_name: {
       type: DataTypes.STRING
