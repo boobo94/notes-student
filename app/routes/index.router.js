@@ -3,11 +3,11 @@ import { Router as Admin} from "./admin.js"
 import { Router as Client} from "./client.js"
 
 //Api
-import { Api as Specialization } from "./api/specialization.api.js"
-import { Api as Discipline } from "./api/discipline.api.js"
-import { Api as Group } from "./api/group.api.js"
-import { Api as Note } from "./api/note.api.js"
-import { Api as Students } from "./api/students.api.js"
+import { Api as Specialization } from "./specialization.api.js"
+import { Api as Discipline } from "./discipline.api.js"
+import { Api as Group } from "./group.api.js"
+import { Api as Note } from "./note.api.js"
+import { Api as Students } from "./students.api.js"
 
 
 export class Router {
