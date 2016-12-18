@@ -7,7 +7,7 @@ export class Students {
 
     static findAll() {
         return model.findAll()
-            .then(function(results) {
+            .then(function (results) {
                 return results
             })
     }
@@ -18,7 +18,7 @@ export class Students {
                 student_id: id
             }
         })
-            .then(function(result) {
+            .then(function (result) {
                 return result
             })
     }
@@ -32,18 +32,23 @@ export class Students {
         }, {
                 transaction: t
             })
-            .then(function(inserted) {
+            .then(function (inserted) {
                 return inserted
             })
     }
 
     static update(s, t) {
-        return model.update(s, {
+        return model.update({
+            name: s.name,
+            tax: s.tax,
+            registration_number: s.registration_number,
+            specialization_id: s.specialization_id
+        }, {
                 where: { student_id: s.student_id }
             }, {
                 transaction: t
             })
-            .then(function(updated) {
+            .then(function (updated) {
                 return updated
             })
     }
@@ -52,7 +57,7 @@ export class Students {
         return model.destroy({
             where: { students_id: id }, transaction: t
         })
-            .then(function(affectedRows) {
+            .then(function (affectedRows) {
                 return affectedRows
             })
     }
