@@ -14,7 +14,8 @@ const model = (sequelize, DataTypes) => {
     },
     registration_number: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      unique: true
     },
 
   }, {
