@@ -18,11 +18,13 @@ const model = (sequelize, DataTypes) => {
                 associate: (models) => {
                     Note.belongsTo(models.Discipline, {
                         foreignKey: 'discipline_id',
-                        allowNull: false
+                        allowNull: false,
+                        onDelete: 'CASCADE'
                     })
                     Note.belongsTo(models.Student, {
                         foreignKey: 'student_id',
-                        allowNull: false
+                        allowNull: false,
+                        onDelete: 'CASCADE'
                     })
                 }
             }
