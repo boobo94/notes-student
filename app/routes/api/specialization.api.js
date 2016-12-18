@@ -1,6 +1,5 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import { Specialization } from '../../database/builders/specialization.js'
 import { Handler } from '../../database/handlers/specialization.js'
 
 export class Api {

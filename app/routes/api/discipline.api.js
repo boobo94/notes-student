@@ -1,6 +1,5 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import { Discipline } from '../../database/builders/discipline.js'
 import { Handler } from '../../database/handlers/discipline.js'
 
 export class Api {

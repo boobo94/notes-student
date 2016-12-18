@@ -29,7 +29,6 @@ export class Specialization {
 
     static add(s, t) {
         return model.create({
-            //discipline_id: s.discipline_id,
             name: s.name,
             short_name: s.short_name,
         }, {
