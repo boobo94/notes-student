@@ -5,6 +5,8 @@ import { Router as Client} from "./client.js"
 //Api
 import { Api as Specialization } from "./api/specialization.api.js"
 import { Api as Discipline } from "./api/discipline.api.js"
+import { Api as Group } from "./api/group.api.js"
+import { Api as Students } from "./api/students.api.js"
 
 
 export class Router {
@@ -36,6 +38,12 @@ export class Router {
 
         let discipline = new Discipline(this.middlewares, this.dependencies)
         app.use('/api/discipline', discipline.router)
+
+        let group = new Group(this.middlewares, this.dependencies)
+        app.use('/api/group', group.router)
+
+        let students = new Students(this.middlewares, this.dependencies)
+        app.use('/api/students', students.router)
 
     }
 
