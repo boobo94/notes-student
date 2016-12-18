@@ -1,7 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import { Note } from '../../database/builders/note.js'
-import { Handler } from '../../database/handlers/note.js'
+import { Handler } from '../database/handlers/specialization.js'
 
 export class Api {
     /**

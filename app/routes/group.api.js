@@ -1,6 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import { Handler } from '../../database/handlers/discipline.js'
+import { Handler } from '../database/handlers/group.js'
 
 export class Api {
     /**
