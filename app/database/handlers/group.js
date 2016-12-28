@@ -21,36 +21,36 @@ export class Handler {
         }
 
         Group.add(disc)
-            .then(function (inserted) {
+            .then((inserted) => {
                 return cb(null, msg.success)
             })
-            .catch(function (error) {
+            .catch((error) => {
                 return cb(error)
             })
     }
 
     static getAll(cb) {
         Group.findAll()
-            .then(function (results) {
+            .then((results) => {
                 if (results)
                     return cb(null, results)
                 else
                     return cb(null, msg.notfound)
             })
-            .catch(function (error) {
+            .catch((error) => {
                 return cb(error)
             })
     }
 
     static getOne(id, cb) {
         return Group.findById(id)
-            .then(function (result) {
+            .then((result) => {
                 if (result && result.dataValues)
                     return cb(null, result)
                 else
                     return cb(null, msg.notfound)
             })
-            .catch(function (error) {
+            .catch((error) => {
                 return cb(error)
             })
     }
@@ -65,20 +65,20 @@ export class Handler {
         }
 
         Group.update(group)
-            .then(function (updated) {
+            .then((updated) => {
                 if (updated == 0)
                     return cb(null, msg.notupdated)
                 else
                     return cb(null, msg.success)
             })
-            .catch(function (error) {
+            .catch((error) => {
                 return cb(error)
             })
     }
 
     static delete(id, cb) {
         return Group.delete(id)
-            .then(function (affectedRows) {
+            .then((affectedRows) => {
                 if (!affectedRows) {
                     return cb(null, msg.notdeleted)
                 }
@@ -86,7 +86,7 @@ export class Handler {
                     return cb(null, msg.success)
                 }
             })
-            .catch(function (error) {
+            .catch((error) => {
                 return cb(error)
             })
 

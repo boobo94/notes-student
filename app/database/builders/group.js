@@ -7,7 +7,7 @@ export class Group {
 
     static findAll() {
         return model.findAll()
-            .then(function (results) {
+            .then((results) => {
                 return results
             })
     }
@@ -18,7 +18,7 @@ export class Group {
                 group_id: id
             }
         })
-            .then(function (result) {
+            .then((result) => {
                 return result
             })
     }
@@ -31,7 +31,7 @@ export class Group {
         }, {
                 transaction: t
             })
-            .then(function (inserted) {
+            .then((inserted) => {
                 return inserted
             })
     }
@@ -46,7 +46,7 @@ export class Group {
             }, {
                 transaction: t
             })
-            .then(function (updated) {
+            .then((updated) => {
                 return updated
             })
     }
@@ -55,7 +55,7 @@ export class Group {
         return model.destroy({
             where: { group_id: id }, transaction: t
         })
-            .then(function (affectedRows) {
+            .then((affectedRows) => {
                 return affectedRows
             })
     }
