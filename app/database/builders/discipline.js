@@ -7,7 +7,7 @@ export class Discipline {
 
     static findAll() {
         return model.findAll()
-            .then(function(results) {
+            .then((results) => {
                 return results
             })
     }
@@ -18,14 +18,13 @@ export class Discipline {
                 discipline_id: id
             }
         })
-            .then(function(result) {
+            .then((result) => {
                 return result
             })
     }
 
     static add(d, t) {
         return model.create({
-            //discipline_id: d.discipline_id,
             name: d.name,
             short_name: d.short_name,
             type: d.type,
@@ -37,7 +36,7 @@ export class Discipline {
         }, {
                 transaction: t
             })
-            .then(function(inserted) {
+            .then((inserted) => {
                 return inserted
             })
     }
@@ -57,7 +56,7 @@ export class Discipline {
             }, {
                 transaction: t
             })
-            .then(function(updated) {
+            .then((updated) => {
                 return updated
             })
     }
@@ -66,7 +65,7 @@ export class Discipline {
         return model.destroy({
             where: { discipline_id: id }, transaction: t
         })
-            .then(function(affectedRows) {
+            .then((affectedRows) => {
                 return affectedRows
             })
     }
