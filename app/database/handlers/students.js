@@ -22,36 +22,36 @@ export class Handler {
         }
 
         Students.add(stud)
-            .then(function (inserted) {
+            .then((inserted) => {
                 return cb(null, msg.success)
             })
-            .catch(function (error) {
+            .catch((error) => {
                 return cb(error)
             })
     }
 
     static getAll(cb) {
         Students.findAll()
-            .then(function (results) {
+            .then((results) => {
                 if (results)
                     return cb(null, results)
                 else
                     return cb(null, msg.notfound)
             })
-            .catch(function (error) {
+            .catch((error) => {
                 return cb(error)
             })
     }
 
     static getOne(id, cb) {
         return Students.findById(id)
-            .then(function (result) {
+            .then((result) => {
                 if (result && result.dataValues)
                     return cb(null, result)
                 else
                     return cb(null, msg.notfound)
             })
-            .catch(function (error) {
+            .catch((error) => {
                 return cb(error)
             })
     }
@@ -66,29 +66,27 @@ export class Handler {
             specialization_id: reqBody.specialization_id
         }
 
-        Students.update(stud)
-            .then(function (updated) {
-                if (updated == 0)
-                    return cb(null, msg.notupdated)
-                else
+        return Students.update(stud)
+            .then((updated) => {
+                if (updated)
                     return cb(null, msg.success)
+                else
+                    return cb(null, msg.notupdated)
             })
-            .catch(function (error) {
+            .catch((error) => {
                 return cb(error)
             })
     }
 
     static delete(id, cb) {
         return Students.delete(id)
-            .then(function (affectedRows) {
-                if (!affectedRows) {
-                    return cb(null, msg.notdeleted)
-                }
-                else {
+            .then((affectedRows) => {
+                if (affectedRows)
                     return cb(null, msg.success)
-                }
+                else
+                    return cb(null, msg.notdeleted)
             })
-            .catch(function (error) {
+            .catch((error) => {
                 return cb(error)
             })
 

@@ -7,7 +7,7 @@ export class Students {
 
     static findAll() {
         return model.findAll()
-            .then(function (results) {
+            .then((results) => {
                 return results
             })
     }
@@ -18,7 +18,7 @@ export class Students {
                 student_id: id
             }
         })
-            .then(function (result) {
+            .then((result) => {
                 return result
             })
     }
@@ -32,32 +32,44 @@ export class Students {
         }, {
                 transaction: t
             })
-            .then(function (inserted) {
+            .then((inserted) => {
                 return inserted
             })
     }
 
     static update(s, t) {
-        return model.update({
-            name: s.name,
-            tax: s.tax,
-            registration_number: s.registration_number,
-            specialization_id: s.specialization_id
-        }, {
-                where: { student_id: s.student_id }
-            }, {
-                transaction: t
+        return this.findById(s.student_id)// search after student id
+            .then((result) => {
+                if (result) {// if there exist a result
+                    let json = {//create a new object without unique or not null object
+                        name: s.name,
+                        tax: s.tax,
+                        specialization_id: s.specialization_id
+                    }
+                    if (s.registration_number != result.dataValues.registration_number) // we check if new registration number is different than existen one
+                        json['registration_number'] = s.registration_number// if it is we will add to the json object created previous
+
+                    return json
+                }
             })
-            .then(function (updated) {
-                return updated
+            .then((data) => {// if we've created an object in previous step, now we'll update the record
+                return model.update(data, {
+                    where: { student_id: s.student_id }
+                }, {
+                        transaction: t
+                    })
+            })
+            .catch(() => {// if no record was found return 0
+                return 0;
             })
     }
 
     static delete(id, t) {
         return model.destroy({
-            where: { students_id: id }, transaction: t
+            where: { student_id: id },
+            transaction: t
         })
-            .then(function (affectedRows) {
+            .then((affectedRows) => {
                 return affectedRows
             })
     }

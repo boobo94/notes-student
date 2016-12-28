@@ -15,7 +15,7 @@ export class Api {
         //create new Router
         this.router = express.Router()
 
-        this.router.post('/add', function (req, res) {
+        this.router.post('/', function (req, res) {
             Handler.post(req.body, function (error, result) {
                 if (error)
                     return res.status(500).send(error)
