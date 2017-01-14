@@ -1,6 +1,9 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import { Router } from './app/routes/index.router.js'
+import { Router } from './app/routes/index.router.js';
+
+let config = require('./config/server-config.json');
+    config = config[config["environment"]];
 
 /**
   |--------------------------------------------------
@@ -19,7 +22,7 @@ import { Router } from './app/routes/index.router.js'
   |--------------------------------------------------
   */
 
-    var api = new Router();
+    var api = new Router(config);
     api.configure(app);
 
 /**
@@ -55,9 +58,6 @@ import { Router } from './app/routes/index.router.js'
   |--------------------------------------------------
   */
 
-    let server = require('./config/server-config.json');
-        server = server[server["environment"]];
-
-    app.listen(server.port, server.hostname, function () {
-      console.log('Server running at http://' + server.hostname + ':' + server.port + '/');
+    app.listen(config.port, config.hostname, function () {
+      console.log('Server running at http://' + config.hostname + ':' + config.port + '/');
     });
