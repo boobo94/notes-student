@@ -1,9 +1,23 @@
 {
-    "success": "success",
-    "error": "error",
-    "notfound": "No record was found",
-    "notdeleted": "No record was deleted, check if the id exists",
-    "notupdated": "No record was updated, check if the id exists",
-    "loginfailed": "Username or password is wrong",
+    "success": {
+        "success": "success"
+    },
+    "error": {
+        "error": "error"
+    },
+    "notfound": {
+        "error": "error",
+        "message": "No record was found"
+    },
+    "notdeleted": {
+        "message": "No record was deleted, check if the id exists"
+    },
+    "notupdated": {
+        "message": "No record was updated, check if the id exists"
+    },
+    "loginfailed": {
+        "error": "error",
+        "message": "Username or password is wrong"
+    },
     "loginsuccess": "Login with success"
 }
