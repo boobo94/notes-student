@@ -23,6 +23,14 @@ export class Api {
             })
         })
 
+        this.router.post('/signup', (req, res) => {
+            Handler.signup(req.body, (error, result) => {
+                if (error)
+                    return res.status(500).send(error)
+                return res.status(200).send(result)
+            })
+        })
+
         this.router.delete('/:id', (req, res) => {
             Handler.delete(req.params.id, (error, result) => {
                 if (error)

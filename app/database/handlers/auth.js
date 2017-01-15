@@ -54,4 +54,21 @@ export class Handler {
             })
     }
 
+    static signup(reqBody, cb) {
+        var usr = {
+            username: reqBody.username,
+            password: reqBody.password,
+            level: reqBody.level,
+            registration_number: reqBody.registration_number,
+        }
+
+        User.add(usr)
+            .then((inserted) => {
+                return cb(null, msg.success)
+            })
+            .catch((error) => {
+                return cb(error)
+            })
+    }
+
 }

@@ -12,7 +12,7 @@ export class Handler {
 
     }
 
-    static post(reqBody, cb) {
+    static addUser(reqBody, cb) {
 
         var usr = {
             username: reqBody.username,

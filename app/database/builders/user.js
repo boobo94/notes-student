@@ -37,7 +37,6 @@ export class User {
     }
 
     static add(u, t) {
-        console.log(u)
         var data = {
             username: u.username,
             password: bcrypt.hashSync(u.password, saltRounds),
@@ -60,7 +59,7 @@ export class User {
             username: u.username,
             level: u.level,
         }
-        if(u.password)
+        if (u.password)
             data['password'] = bcrypt.hashSync(u.password, saltRounds);
         if (u.level == 3) // if the new user is an student add also registration number
             data['registration_number'] = u.registration_number;
