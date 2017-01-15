@@ -14,7 +14,7 @@ export class Auth {
             let token = req.headers.authentification;
             jwt.verify(token, config.secret, function (err, decoded) {
                 if (err) {
-                    return res.status(200).send("Please enter a valid Token! Error: "+err)
+                    return res.status(200).send("Please enter a valid Token! Error Message: " + err)
                 }
                 else {
                     cb();

@@ -18,33 +18,32 @@ export class Handler {
 
     }
 
-    static generateToken() {
+    static generateToken(username) {
         var token = jwt.sign({
-            sub: "test",
+            sub: username,
         },
-        config.secret,{
-            expiresIn: "1d"
-        })
+            config.secret, {
+                expiresIn: "1d"
+            })
 
         return token;
     }
 
     static login(reqBody, cb) {
-        User.findByUsername(reqBody.username)
+        User.findByUsername(reqBody.username) // find in database the user from POST
             .then((user) => {
-                if (user) {
+                if (user) { // if user exists
 
-                    if(bcrypt.compareSync(reqBody.password, user.password)){
-                        var token = this.generateToken();
+                    if (bcrypt.compareSync(reqBody.password, user.password)) { // compare the password from db with that from POST
+                        var token = this.generateToken(user.username);
 
-
-                        return cb(null, {token: token})
+                        return cb(null, {
+                            token: token,
+                            "message": msg.loginsuccess
+                        })// return token and a successful message
                     }
-                    else {
+                    else
                         return cb(null, msg.loginfailed)
-                    }
-
-
 
                 }
                 else
@@ -53,13 +52,6 @@ export class Handler {
             .catch((error) => {
                 return cb(error)
             })
-
-
     }
-
-
-
-
-
 
 }
