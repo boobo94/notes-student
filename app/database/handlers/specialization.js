@@ -57,6 +57,7 @@ export class Handler {
     static put(reqBody, id, cb) {
 
         var spec = {
+            specialization_id: id,
             name: reqBody.name,
             short_name: reqBody.short_name,
         }
