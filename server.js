@@ -1,6 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import { Router } from './app/routes/index.router.js';
+import { Router } from './server/routes/index.router.js';
 
 let config = require('./config/server-config.json');
     config = config[config["environment"]];
@@ -43,7 +43,7 @@ let config = require('./config/server-config.json');
   */
 
     function initDB() {
-      let models = require('./app/database/models');
+      let models = require('./server/database/models');
 
       models.sequelize.sync().then(function () {
         console.log('Models was synced!');
