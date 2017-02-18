@@ -2,14 +2,9 @@
 /extra
 
 ## Node JS
-/node_modules/
+**/node_modules/
 npm-debug.log
 .babelrc
 
 ## ENVnpm
 .vscode
-
-
-## app
-
-/app/node_modules
