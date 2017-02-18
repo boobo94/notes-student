@@ -1,6 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import { Router } from './server/routes/index.router.js';
+import { Router } from './git stver/routes/index.router.js';
 
 let config = require('./config/server-config.json');
     config = config[config["environment"]];
@@ -31,9 +31,9 @@ let config = require('./config/server-config.json');
   |--------------------------------------------------
   */
 
-    app.use(express.static(__dirname + '/client'));
+    app.use(express.static(__dirname + '/app'));
 
-    app.set('views', './client/views');
+    app.set('views', './app/views');
     app.engine('html', require('ejs').renderFile);
 
 /**
