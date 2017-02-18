@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 
-let config = require('../../config/server-config.json');
+let config = require('../config/server-config.json');
 config = config[config["environment"]];
 
 export class Auth {

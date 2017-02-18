@@ -1,6 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import { Router } from './git stver/routes/index.router.js';
+import { Router } from './routes/index.router.js';
 
 let config = require('./config/server-config.json');
     config = config[config["environment"]];
@@ -33,7 +33,7 @@ let config = require('./config/server-config.json');
 
     app.use(express.static(__dirname + '/app'));
 
-    app.set('views', './app/views');
+    app.set('views', '../app/views');
     app.engine('html', require('ejs').renderFile);
 
 /**
@@ -43,7 +43,7 @@ let config = require('./config/server-config.json');
   */
 
     function initDB() {
-      let models = require('./server/database/models');
+      let models = require('./database/models');
 
       models.sequelize.sync().then(function () {
         console.log('Models was synced!');
