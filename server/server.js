@@ -30,7 +30,7 @@ let config = require('./config/server-config.json');
   | The static resource
   |--------------------------------------------------
   */
-
+    //todo: comments these lines
     app.use(express.static(__dirname + '/app'));
 
     app.set('views', '../app/views');

@@ -14,7 +14,7 @@ export class Router {
         this.router = express.Router()
 
         this.router.get('/', function (req, res) {
-            res.send('/client');
+            res.send('The server is working ...');
         })
     }
 }
