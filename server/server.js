@@ -30,11 +30,11 @@ let config = require('./config/server-config.json');
   | The static resource
   |--------------------------------------------------
   */
-    //todo: comments these lines
-    app.use(express.static(__dirname + '/app'));
+    //todo: remove this
+    // app.use(express.static(__dirname + '/public'));
 
-    app.set('views', '../app/views');
-    app.engine('html', require('ejs').renderFile);
+    // app.set('views', '../public/app/views');
+    // app.engine('html', require('ejs').renderFile);
 
 /**
   |--------------------------------------------------
