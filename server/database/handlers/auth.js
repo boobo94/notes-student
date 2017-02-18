@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken';
 import { User } from '../builders/user.js'
 import msg from "./messages.json";
 
-let config = require('../../../config/server-config.json');
+let config = require('../../config/server-config.json');
 config = config[config["environment"]];
 
 export class Handler {
