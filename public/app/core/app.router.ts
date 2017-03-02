@@ -12,7 +12,7 @@ const appRoutes: Routes = [
         path: '',
         redirectTo: 'home',
         pathMatch: 'full'
-    }
+    },
 ];
 
 export const baseRoute = RouterModule.forRoot(appRoutes);
