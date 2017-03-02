@@ -8,8 +8,12 @@ import { baseRoute } from './app.router';
 
 //components
 import { HomeComponent } from '../components/home/home.component';
-import { NavbarComponent} from '../components/navbar/navbar.component';
+import { NavbarComponent } from '../components/navbar/navbar.component';
 import { FooterComponent } from '../components/footer/footer.component';
+
+//modules
+import { ApiUrls } from './urls.config';
+import { AuthModule } from './auth/auth.module';
 
 
 @NgModule({
@@ -17,14 +21,19 @@ import { FooterComponent } from '../components/footer/footer.component';
         BrowserModule,
         HttpModule,
         FormsModule,
-        baseRoute
+        baseRoute,
+        //my modules
+        AuthModule,
     ],
     declarations: [
         AppComponent,
         NavbarComponent,
         HomeComponent,
         FooterComponent
-        ],
+    ],
+    providers: [
+        ApiUrls
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }
