@@ -1,5 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import cors from 'cors';
 import { Router } from './routes/index.router.js';
 
 let config = require('./config/server-config.json');
@@ -12,10 +13,17 @@ let config = require('./config/server-config.json');
   */
 
     var app = express();
-
+    
     app.use(bodyParser.json()); // support json encoded bodies
     app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
+/**
+  |--------------------------------------------------
+  | Cors Access
+  |--------------------------------------------------
+  */
+
+    app.use(cors());
 /**
   |--------------------------------------------------
   | Routes
@@ -24,17 +32,6 @@ let config = require('./config/server-config.json');
 
     var api = new Router(config);
     api.configure(app);
-
-/**
-  |--------------------------------------------------
-  | The static resource
-  |--------------------------------------------------
-  */
-    //todo: remove this
-    // app.use(express.static(__dirname + '/public'));
-
-    // app.set('views', '../public/app/views');
-    // app.engine('html', require('ejs').renderFile);
 
 /**
   |--------------------------------------------------
