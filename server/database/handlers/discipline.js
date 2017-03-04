@@ -38,7 +38,10 @@ export class Handler {
         Discipline.findAll()
             .then((results) => {
                 if (results)
-                    return cb(null, results)
+                    return cb(null, {
+                        statusCode: msg.success.statusCode,
+                        data: results
+                    })
                 else
                     return cb(null, msg.notfound)
             })
