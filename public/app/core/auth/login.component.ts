@@ -8,7 +8,7 @@ import { AuthService } from './auth.service';
     template: `
                 <div class="row">
                     <div class="input-field col s12">
-                        <input id="username" type="text" class="validate" [(ngModel)]="user.email">
+                        <input id="username" type="text" class="validate" [(ngModel)]="user.username">
                         <label for="username">Username</label>
                     </div>
                     <div class="input-field col s12">
@@ -31,7 +31,8 @@ export class LoginComponent {
     login(): void {
         this.service.login(this.user)
             .then((r) => {
-                console.log(r)
+                localStorage.setItem('userToken', r.token);
+                this.router.navigate(['/home'])
             })
             .catch((error) => {
                 console.log(error)
