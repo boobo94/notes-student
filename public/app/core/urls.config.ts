@@ -8,4 +8,6 @@ export class ApiUrls {
     signUpUrl = this.baseApiUrl + 'api/auth/signup' //GET
 
     getStudentByRegistrationNumber = this.baseApiUrl + 'api/student/findbyrn/' //GET and /:registration_number
+
+    getStudentByRN = this.baseApiUrl + 'api/user/findfindbyrn/' //GET and /:registration_number
 }

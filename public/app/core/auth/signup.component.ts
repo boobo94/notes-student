@@ -50,11 +50,20 @@ export class SignUpComponent {
                     this.user = {
                         registration_number: this.registrationNumber,
                         level: 3 //level 1 = admin
-                                // level 2 = moderator
-                               //  level 3 = student
+                        // level 2 = moderator
+                        //  level 3 = student
                     }
 
                     //todo: check if student doesn't have already an account
+                    this.service.getUserWithThisRegitrationNumber(this.registrationNumber)
+                        .then((r) => {
+                            console.log(r)
+
+                            //if no record save this.user
+                        })
+                        .catch((error) => {
+                            console.log(error)
+                        })
                     console.log(this.user)
                 })
                 .catch((error) => {
@@ -71,7 +80,7 @@ export class SignUpComponent {
                 this.router.navigate(['/login'])
             })
             .catch((error) => {
-                
+                console.log()
             })
     }
 }
