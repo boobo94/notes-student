@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
+import { AuthHttp } from 'angular2-jwt';
 
 import { AppComponent } from './app.component';
 import { baseRoute } from './app.router';
@@ -32,7 +33,8 @@ import { AuthModule } from './auth/auth.module';
         FooterComponent
     ],
     providers: [
-        ApiUrls
+        ApiUrls,
+        AuthHttp
     ],
     bootstrap: [AppComponent]
 })
