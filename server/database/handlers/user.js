@@ -81,6 +81,23 @@ export class Handler {
             })
     }
 
+    static getOneByUN(un, cb) {
+        return User.findByUN(un)
+            .then((result) => {
+                if (result && result.dataValues)
+                    return cb(null, {
+                        statusCode: msg.success.statusCode,
+                        message: msg.success.message,
+                        data: result
+                    })
+                else
+                    return cb(null, msg.notfound)
+            })
+            .catch((error) => {
+                return cb(error)
+            })
+    }
+
     static put(reqBody, id, cb) {
 
         var usr = {
