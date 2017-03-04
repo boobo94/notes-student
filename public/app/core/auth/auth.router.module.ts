@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { LoginComponent } from './login.component';
+import { SignUpComponent } from './signup.component';
 
 @NgModule({
     imports: [
@@ -9,6 +10,10 @@ import { LoginComponent } from './login.component';
             {
                 path: 'login',
                 component: LoginComponent
+            },
+            {
+                path: 'signup',
+                component: SignUpComponent
             }
         ])
     ],
