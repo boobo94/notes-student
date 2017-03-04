@@ -27,8 +27,18 @@ export class Api {
 
         this.router.get('/find',
             this.middlewares.auth.webAuth,
-            function (req, res) {
+            function (req, res) {console.log(req.query)
                 Handler.getAll(function (error, result) {
+                    if (error)
+                        return res.status(500).send(error)
+                    return res.status(200).send(result)
+                })
+            })
+
+        this.router.get('/findbyrn/:rn',
+            //this.middlewares.auth.webAuth,
+            function (req, res) {
+                Handler.getOneByRN(req.params.rn,function (error, result) {
                     if (error)
                         return res.status(500).send(error)
                     return res.status(200).send(result)

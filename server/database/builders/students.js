@@ -23,6 +23,17 @@ export class Students {
             })
     }
 
+    static findByRN(rn) {
+        return model.findOne({
+            where: {
+                registration_number: rn
+            }
+        })
+            .then((result) => {
+                return result
+            })
+    }
+
     static add(s, t) {
         return model.create({
             name: s.name,
