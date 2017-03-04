@@ -17,7 +17,7 @@ import { AuthService } from './auth.service';
                             <label for="password">Password</label>
                         </div>
                         <div class="col s10 offset-s1 m6 offset-m3 l4 offset-l4">
-                            <button class="btn waves-effect waves-light right" type="submit" (click)="loginform.form.valid : login() ? null">Submit
+                            <button class="btn waves-effect waves-light right" type="submit" (click)="loginform.form.valid ? login() : null">Submit
                                 <i class="material-icons right">send</i>
                             </button>
                         </div>

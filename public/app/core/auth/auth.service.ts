@@ -63,4 +63,15 @@ export class AuthService {
                 console.log(error);
             })
     }
+
+    getUserWithUsername(username: any): Promise<any> {
+        return this.http.get(this.urls.getStudentByUN + username)
+            .toPromise()
+            .then((response) => {
+                return response.json();
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }
 }

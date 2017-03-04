@@ -18,7 +18,7 @@ import { AuthService } from './auth.service';
                     </div>
                     <div *ngIf="user.registration_number">
                         <div class="input-field col s10 offset-s1 m6 offset-m3 l4 offset-l4">
-                            <input id="username" name="username" type="text" class="validate" required="" aria-required="true" s>
+                            <input id="username" name="username" type="text" class="validate" required="" aria-required="true" [(ngModel)]="user.username">
                             <label for="username">Username</label>
                         </div>
                         <div class="input-field col s10 offset-s1 m6 offset-m3 l4 offset-l4">
@@ -82,13 +82,32 @@ export class SignUpComponent {
         if (this.user.registration_number) {
             //check if username is already in user
             //todo: this
-            this.service.signup(this.user)
+
+            this.service.getUserWithUsername(this.user.username)
                 .then((r) => {
-                    this.router.navigate(['/login'])
+                    console.log(r)
+
+                    if (r.statusCode == 1) { // username doesn't exist
+                        
+                        this.service.signup(this.user)
+                            .then((r) => {
+                                //todo add an alert with signup success and redirect after n seconds
+                                this.router.navigate(['/login'])
+                            })
+                            .catch((error) => {
+                                console.log()
+                            })
+                    }
+                    else if (r.statusCode == 0) {
+                        //todo: add alert
+                        console.log("this status code already exists")
+                    }
                 })
                 .catch((error) => {
                     console.log()
                 })
+
+
         }
     }
 }
