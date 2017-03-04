@@ -56,6 +56,19 @@ export class Handler {
             })
     }
 
+    static getOneByRN(rn, cb) {
+        return User.findByRN(rn)
+            .then((result) => {
+                if (result && result.dataValues)
+                    return cb(null, result)
+                else
+                    return cb(null, msg.notfound)
+            })
+            .catch((error) => {
+                return cb(error)
+            })
+    }
+
     static put(reqBody, id, cb) {
 
         var usr = {

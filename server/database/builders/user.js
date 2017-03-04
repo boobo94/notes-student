@@ -25,6 +25,17 @@ export class User {
             })
     }
 
+    static findByRN(rn) {
+        return model.findOne({
+            where: {
+                registration_number: rn
+            }
+        })
+            .then((result) => {
+                return result
+            })
+    }
+
     static findByUsername(username) {
         return model.findOne({
             where: {

@@ -45,6 +45,16 @@ export class Api {
                 })
             })
 
+        this.router.get('/findbyrn/:rn',
+            //this.middlewares.auth.webAuth,
+            function (req, res) {
+                Handler.getOneByRN(req.params.rn, function (error, result) {
+                    if (error)
+                        return res.status(500).send(error)
+                    return res.status(200).send(result)
+                })
+            })
+
         this.router.put('/:id',
             this.middlewares.auth.webAuth,
             function (req, res) {
