@@ -30,5 +30,28 @@ export class AuthService {
         return tokenNotExpired('userToken');//userToken is saved in localStorage with this name
     }
 
-    //todo: singup
+    signup(user: any): Promise<any> {
+        return this.http.post(this.urls.signUpUrl, user)
+            .toPromise()
+            .then((response) => {
+                return response.json();
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }
+
+    getRegistrationNumber(nr: any): Promise<any> {
+        return this.http.get(this.urls.getStudentByRegistrationNumber + nr)
+            .toPromise()
+            .then((response) => {
+                return response.json();
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }
+
+    //todo: check if student doesn't have already an account
+
 }
