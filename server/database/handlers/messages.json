@@ -7,17 +7,24 @@
     },
     "notfound": {
         "error": "error",
+        "statusCode": 1,
         "message": "No record was found"
     },
     "notdeleted": {
+        "statusCode": 2,
         "message": "No record was deleted, check if the id exists"
     },
     "notupdated": {
+        "statusCode": 3,
         "message": "No record was updated, check if the id exists"
     },
     "loginfailed": {
+        "statusCode": 4,
         "error": "error",
         "message": "Username or password is wrong"
     },
-    "loginsuccess": "Login with success"
+    "loginsuccess": {
+        "message": "Login with success",
+        "statusCode": 0
+    }
 }
