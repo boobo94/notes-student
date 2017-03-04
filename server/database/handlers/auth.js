@@ -39,7 +39,8 @@ export class Handler {
 
                         return cb(null, {
                             token: token,
-                            "message": msg.loginsuccess
+                            "statusCode": msg.loginsuccess.statusCode,
+                            "message": msg.loginsuccess.message
                         })// return token and a successful message
                     }
                     else
