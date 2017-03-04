@@ -5,7 +5,7 @@ import { AuthService } from './auth.service';
 
 @Component({
     selector: 'signup',
-    template: `<form>
+    template: `<form #signupform="ngForm">
                 <div class="row">
                     <div class="input-field col s10 offset-s1 m6 offset-m3 l4 offset-l4">
                         <input [attr.disabled]="user.registration_number" name="registration_number" id="registration_number" type="text" class="validate" required="" aria-required="true" [(ngModel)]="registrationNumber">
@@ -18,15 +18,15 @@ import { AuthService } from './auth.service';
                     </div>
                     <div *ngIf="user.registration_number">
                         <div class="input-field col s10 offset-s1 m6 offset-m3 l4 offset-l4">
-                            <input id="username" name="username" type="text" class="validate" class="validate" required="" aria-required="true" [(ngModel)]="user.username">
+                            <input id="username" name="username" type="text" class="validate" required="" aria-required="true" s>
                             <label for="username">Username</label>
                         </div>
                         <div class="input-field col s10 offset-s1 m6 offset-m3 l4 offset-l4">
-                            <input id="password" name="password" type="password" class="validate" class="validate" required="" aria-required="true" [(ngModel)]="user.password">
+                            <input id="password" name="password" type="password" class="validate" required="" aria-required="true" [(ngModel)]="user.password">
                             <label for="password">Password</label>
                         </div>
                         <div class="col s10 offset-s1 m6 offset-m3 l4 offset-l4">
-                            <button class="btn waves-effect waves-light right" type="submit" (click)="signup()">Sign Up
+                            <button class="btn waves-effect waves-light right" name="action" type="submit" (click)="signupform.form.valid ? signup(): null">Sign Up
                                 <i class="material-icons right">send</i>
                             </button>
                         </div>
@@ -54,13 +54,13 @@ export class SignUpComponent {
                                     this.user = {
                                         registration_number: this.registrationNumber,
                                         level: 3 //level 1 = admin
-                                                // level 2 = moderator
-                                               //  level 3 = student
+                                        // level 2 = moderator
+                                        //  level 3 = student
                                     }
                                 }
                                 else if (r.statusCode == 0) {
                                     //todo: add an alert, this account already exist
-                                    console.log(r)
+                                    console.log('this account already exists')
                                 }
                             })
                             .catch((error) => {
@@ -79,7 +79,9 @@ export class SignUpComponent {
     }
 
     signup() {
-        if (this.registrationNumber) {
+        if (this.user.registration_number) {
+            //check if username is already in user
+            //todo: this
             this.service.signup(this.user)
                 .then((r) => {
                     this.router.navigate(['/login'])
