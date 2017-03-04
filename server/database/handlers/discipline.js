@@ -40,6 +40,7 @@ export class Handler {
                 if (results)
                     return cb(null, {
                         statusCode: msg.success.statusCode,
+                        message: msg.success.message,
                         data: results
                     })
                 else
@@ -54,7 +55,11 @@ export class Handler {
         return Discipline.findById(id)
             .then((result) => {
                 if (result && result.dataValues)
-                    return cb(null, result)
+                    return cb(null, {
+                        statusCode: msg.success.statusCode,
+                        message: msg.success.message,
+                        data: result
+                    })
                 else
                     return cb(null, msg.notfound)
             })

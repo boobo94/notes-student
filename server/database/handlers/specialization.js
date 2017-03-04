@@ -32,7 +32,11 @@ export class Handler {
         Specialization.findAll()
             .then(function (results) {
                 if (results)
-                    return cb(null, results)
+                    return cb(null, {
+                        statusCode: msg.success.statusCode,
+                        message: msg.success.message,
+                        data: results
+                    })
                 else
                     return cb(null, msg.notfound)
             })
@@ -45,7 +49,11 @@ export class Handler {
         return Specialization.findById(id)
             .then(function (result) {
                 if (result && result.dataValues)
-                    return cb(null, result)
+                    return cb(null, {
+                        statusCode: msg.success.statusCode,
+                        message: msg.success.message,
+                        data: result
+                    })
                 else
                     return cb(null, msg.notfound)
             })
