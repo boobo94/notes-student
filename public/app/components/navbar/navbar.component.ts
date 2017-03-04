@@ -18,6 +18,7 @@ declare var $: any;// declare $ to use jquery
                             <li><a (click)="auth.logout()">Log Out</a></li>
                         </div>
                         <li routerLinkActive="active"><a routerLink="login" *ngIf="!auth.loggedIn()">Log In</a></li>       
+                        <li routerLinkActive="active"><a routerLink="signup" *ngIf="!auth.loggedIn()">Sign Up</a></li>       
                     </ul>
                     <ul class="side-nav" id="mobile">
                         <div *ngIf="auth.loggedIn()">
@@ -26,6 +27,7 @@ declare var $: any;// declare $ to use jquery
                             <li><a *ngIf="auth.loggedIn()" (click)="auth.logout()">Log Out</a></li>
                         </div>
                         <li routerLinkActive="active"><a routerLink="login" *ngIf="!auth.loggedIn()">Log In</a></li>
+                        <li routerLinkActive="active"><a routerLink="signup" *ngIf="!auth.loggedIn()">Sign Up</a></li>
                     </ul>
                 </div>
             </nav>
