@@ -33,8 +33,18 @@ export class LoginComponent {
     login(): void {
         this.service.login(this.user)
             .then((r) => {
-                localStorage.setItem('userToken', r.token);
-                this.router.navigate(['/home'])
+                if (r.statusCode == 0) { // login with success
+                    localStorage.setItem('userToken', r.token);
+                    this.router.navigate(['/home'])
+                }
+                else if (r.statusCode == 4) {
+                    //todo: add alert
+                    console.log('username or password are wrong')
+                }
+                else if (r.statusCode == 1) {
+                    //todo: add alert
+                    console.log('no user was found')
+                }
             })
             .catch((error) => {
                 console.log(error)
