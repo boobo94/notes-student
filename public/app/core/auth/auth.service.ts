@@ -22,6 +22,10 @@ export class AuthService {
             })
     }
 
+    logout() {
+        localStorage.removeItem('userToken');
+    }
+
     loggedIn() {
         return tokenNotExpired('userToken');//userToken is saved in localStorage with this name
     }
