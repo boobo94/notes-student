@@ -47,24 +47,30 @@ export class SignUpComponent {
 
             this.service.getRegistrationNumber(this.registrationNumber)
                 .then((r) => {
-                    this.user = {
-                        registration_number: this.registrationNumber,
-                        level: 3 //level 1 = admin
-                        // level 2 = moderator
-                        //  level 3 = student
+                    if (r.statusCode == 0) { // registration number is assigned to a student
+                        this.service.getUserWithThisRegitrationNumber(this.registrationNumber)
+                            .then((r) => {
+                                if (r.statusCode == 1) { //student doesn't have an account yet
+                                    this.user = {
+                                        registration_number: this.registrationNumber,
+                                        level: 3 //level 1 = admin
+                                                // level 2 = moderator
+                                               //  level 3 = student
+                                    }
+                                }
+                                else if (r.statusCode == 0) {
+                                    //todo: add an alert, this account already exist
+                                    console.log(r)
+                                }
+                            })
+                            .catch((error) => {
+                                console.log(error)
+                            })
                     }
-
-                    //todo: check if student doesn't have already an account
-                    this.service.getUserWithThisRegitrationNumber(this.registrationNumber)
-                        .then((r) => {
-                            console.log(r)
-
-                            //if no record save this.user
-                        })
-                        .catch((error) => {
-                            console.log(error)
-                        })
-                    console.log(this.user)
+                    else if (r.statusCode == 1) { // registration number doesn't exist
+                        //todo: adda an alert
+                        console.log("registration number doesn't exist")
+                    }
                 })
                 .catch((error) => {
                     console.log(error)
@@ -73,14 +79,14 @@ export class SignUpComponent {
     }
 
     signup() {
-        console.log('sign up press')
-
-        this.service.signup(this.user)
-            .then((r) => {
-                this.router.navigate(['/login'])
-            })
-            .catch((error) => {
-                console.log()
-            })
+        if (this.registrationNumber) {
+            this.service.signup(this.user)
+                .then((r) => {
+                    this.router.navigate(['/login'])
+                })
+                .catch((error) => {
+                    console.log()
+                })
+        }
     }
 }
