@@ -10,4 +10,5 @@ export class ApiUrls {
     getStudentByRegistrationNumber = this.baseApiUrl + 'api/student/findbyrn/' //GET and /:registration_number
 
     getStudentByRN = this.baseApiUrl + 'api/user/findbyrn/' //GET and /:registration_number
+    getStudentByUN = this.baseApiUrl + 'api/user/findbyun/' //GET and /:username
 }
