@@ -36,6 +36,17 @@ export class User {
             })
     }
 
+    static findByUN(un) {
+        return model.findOne({
+            where: {
+                username: un
+            }
+        })
+            .then((result) => {
+                return result
+            })
+    }
+
     static findByUsername(username) {
         return model.findOne({
             where: {
