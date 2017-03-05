@@ -7,7 +7,8 @@ export class Messages {
         english: {
             accoutnAlreadyExists: 'This account already exists.',
             noRegistrationNumber: 'Registration number does not exists.',
-            usernameExists: 'This username already exists.'
+            usernameExists: 'This username already exists.',
+            signupSuccess: 'Your account was created with success.'
         }
     }
 

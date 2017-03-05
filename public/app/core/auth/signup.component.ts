@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 
 import { AuthService } from './auth.service';
 import { ToastService } from '../../components/notifications/toast.service';
+import { Messages } from '../messages.config';
 
 @Component({
     selector: 'signup',
@@ -60,9 +61,7 @@ export class SignUpComponent {
                                     }
                                 }
                                 else if (r.statusCode == 0) {
-                                    //todo: add an alert, this account already exist
-                                    console.log('this account already exists')
-                                    ToastService.toast('test toast');
+                                    ToastService.toast(Messages.message()['accoutnAlreadyExists']);
                                 }
                             })
                             .catch((error) => {
@@ -70,10 +69,7 @@ export class SignUpComponent {
                             })
                     }
                     else if (r.statusCode == 1) { // registration number doesn't exist
-                        //todo: adda an alert
-                        console.log("registration number doesn't exist")
-
-                        
+                        ToastService.toast(Messages.message()['noRegistrationNumber']);
                     }
                 })
                 .catch((error) => {
@@ -85,26 +81,25 @@ export class SignUpComponent {
     signup() {
         if (this.user.registration_number) {
             //check if username is already in user
-            //todo: this
 
             this.service.getUserWithUsername(this.user.username)
                 .then((r) => {
-                    console.log(r)
-
                     if (r.statusCode == 1) { // username doesn't exist
-                        
                         this.service.signup(this.user)
                             .then((r) => {
-                                //todo add an alert with signup success and redirect after n seconds
-                                this.router.navigate(['/login'])
+                                ToastService.toast(Messages.message()['signupSuccess']);
+                                //todo: add a spinner here
+                                setTimeout(() => {
+                                    this.router.navigate(['/login'])
+                                }, 2000);
+                                
                             })
                             .catch((error) => {
                                 console.log()
                             })
                     }
                     else if (r.statusCode == 0) {
-                        //todo: add alert
-                        console.log("this status code already exists")
+                        ToastService.toast(Messages.message()['usernameExists']);
                     }
                 })
                 .catch((error) => {
