@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { AuthService } from './auth.service';
+import { ToastService } from '../../components/notifications/toast.service';
 
 @Component({
     selector: 'signup',
@@ -61,6 +62,7 @@ export class SignUpComponent {
                                 else if (r.statusCode == 0) {
                                     //todo: add an alert, this account already exist
                                     console.log('this account already exists')
+                                    ToastService.toast('test toast');
                                 }
                             })
                             .catch((error) => {
@@ -70,6 +72,8 @@ export class SignUpComponent {
                     else if (r.statusCode == 1) { // registration number doesn't exist
                         //todo: adda an alert
                         console.log("registration number doesn't exist")
+
+                        
                     }
                 })
                 .catch((error) => {
