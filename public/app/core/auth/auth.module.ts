@@ -10,7 +10,8 @@ import { AuthRouter } from './auth.router.module';
 
 import { AuthGuard } from './auth.guard';
 
-import { ToastService } from '../../components/notifications/toast.service'
+import { ToastService } from '../../components/notifications/toast.service';
+import { Messages } from '../messages.config';
 
 @NgModule({
     imports: [
@@ -26,7 +27,8 @@ import { ToastService } from '../../components/notifications/toast.service'
     providers: [
         AuthService,
         AuthGuard,
-        ToastService
+        ToastService,
+        Messages
     ]
 })
 export class AuthModule {
