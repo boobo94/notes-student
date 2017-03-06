@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { AuthService } from './auth.service';
+import { ToastService } from '../../components/notifications/toast.service';
+import { Messages } from '../messages.config';
 
 @Component({
     selector: 'login',
@@ -40,12 +42,10 @@ export class LoginComponent {
                     this.router.navigate(['/home'])
                 }
                 else if (r.statusCode == 4) {
-                    //todo: add alert
-                    console.log('username or password are wrong')
+                    ToastService.toast(Messages.message()['wrongPassword']);
                 }
                 else if (r.statusCode == 1) {
-                    //todo: add alert
-                    console.log('no user was found')
+                    ToastService.toast(Messages.message()['noUsername']);
                 }
             })
             .catch((error) => {
