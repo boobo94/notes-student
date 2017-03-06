@@ -95,7 +95,7 @@ export class SignUpComponent {
                                 
                             })
                             .catch((error) => {
-                                console.log()
+                                console.log(error)
                             })
                     }
                     else if (r.statusCode == 0) {
@@ -103,7 +103,7 @@ export class SignUpComponent {
                     }
                 })
                 .catch((error) => {
-                    console.log()
+                    console.log(error)
                 })
 
 
