@@ -1,22 +1,26 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { Http } from '@angular/http';
+import { HttpModule } from '@angular/http';
 
 import { SpecializationsComponent } from './specializations.component';
 import { SpecializationsService } from './specializations.service';
+import { SpecializationsRouter } from './specializations.router.module';
+import { AuthGuard } from '../../core/auth/auth.guard';
 
 @NgModule({
     imports: [
         BrowserModule,
-        Http
+        HttpModule,
+        SpecializationsRouter
     ],
     declarations: [
         SpecializationsComponent
     ],
     providers: [
-        SpecializationsService
+        SpecializationsService,
+        AuthGuard
     ]
 })
-export class SpecializationModule {
+export class SpecializationsModule {
     
 }

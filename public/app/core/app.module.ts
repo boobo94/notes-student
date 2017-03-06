@@ -15,6 +15,7 @@ import { FooterComponent } from '../components/footer/footer.component';
 //modules
 import { ApiUrls } from './urls.config';
 import { AuthModule } from './auth/auth.module';
+import { SpecializationsModule } from '../components/specializations/specializations.module';
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import { AuthModule } from './auth/auth.module';
         baseRoute,
         //my modules
         AuthModule,
+        SpecializationsModule
     ],
     declarations: [
         AppComponent,
