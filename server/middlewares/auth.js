@@ -11,7 +11,7 @@ export class Auth {
 
     webAuth(req, res, cb) {
         try {
-            let token = req.headers.authentification;
+            let token = req.headers['x-auth-token'].split(' ')[1]; // get token from header x-auth-token
             jwt.verify(token, config.secret, function (err, decoded) {
                 if (err) {
                     return res.status(200).send("Please enter a valid Token! Error Message: " + err)
