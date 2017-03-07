@@ -3,6 +3,10 @@
         "statusCode": 0,
         "message": "success"
     },
+    "loginsuccess": {
+        "message": "Login with success",
+        "statusCode": 0
+    },
     "error": {
         "error": "error"
     },
@@ -24,8 +28,16 @@
         "error": "error",
         "message": "Username or password is wrong"
     },
-    "loginsuccess": {
-        "message": "Login with success",
-        "statusCode": 0
+    "authFailed" : {
+        "message": "Authentification failed",
+        "statusCode": 5
+    },
+    "notAuthorized" : {
+        "message": "You are not authorized to access this page.",
+        "statusCode": 6
+    },
+    "invalidToken" : {
+        "message": "Please enter a valid Token!",
+        "statusCode": 7
     }
 }
