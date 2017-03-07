@@ -14,6 +14,9 @@ export class Messages {
             //login
             wrongPassword: "Password are wrong.",
             noUsername: "Username does not exist.",
+
+            //general
+            deleteQuestion: 'Are you sure ?',
         }
     }
 
