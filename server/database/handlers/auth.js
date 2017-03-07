@@ -18,12 +18,15 @@ export class Handler {
 
     }
 
-    static generateToken(username) {
+    static generateToken(username, userLevel) {
         var token = jwt.sign({
             sub: username,
         },
             config.secret, {
-                expiresIn: "1d"
+                expiresIn: "1d",
+                header: {
+                    userLevel: userLevel //todo: get the level of user
+                }
             })
 
         return token;
@@ -35,7 +38,7 @@ export class Handler {
                 if (user) { // if user exists
 
                     if (bcrypt.compareSync(reqBody.password, user.password)) { // compare the password from db with that from POST
-                        var token = this.generateToken(user.username);
+                        var token = this.generateToken(user.username, user.level);
 
                         return cb(null, {
                             token: token,
