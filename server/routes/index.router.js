@@ -1,6 +1,6 @@
 // import routers
 import { Router as Admin } from "./admin.js"
-import { Router as Client } from "./client.js"
+import { Router as Client } from "./client.api.js"
 
 //Api
 import { Api as Specialization } from "./specialization.api.js"
