@@ -17,6 +17,7 @@ export class Api {
 
         this.router.post('/',
             this.middlewares.auth.webAuth,
+            this.middlewares.auth.adminAuth,
             function (req, res) {
                 Handler.post(req.body, function (error, result) {
                     if (error)
@@ -57,6 +58,7 @@ export class Api {
 
         this.router.put('/:id',
             this.middlewares.auth.webAuth,
+            this.middlewares.auth.adminAuth,
             function (req, res) {
                 Handler.put(req.body, req.params.id, function (error, result) {
                     if (error)
@@ -67,6 +69,7 @@ export class Api {
 
         this.router.delete('/:id',
             this.middlewares.auth.webAuth,
+            this.middlewares.auth.adminAuth,
             function (req, res) {
                 Handler.delete(req.params.id, function (error, result) {
                     if (error)
