@@ -39,6 +39,7 @@ export class LoginComponent {
             .then((r) => {
                 if (r.statusCode == 0) { // login with success
                     localStorage.setItem('userToken', r.token);
+                    localStorage.setItem('username', this.user.username);
                     this.router.navigate(['/home'])
                 }
                 else if (r.statusCode == 4) {
