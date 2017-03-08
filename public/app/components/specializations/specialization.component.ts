@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { SpecializationsService } from './specializations.service';
@@ -12,7 +12,7 @@ import { Messages } from '../../core/messages.config';
             <div class="row">
                 <form #specializationform="ngForm">
                     <div class="input-field col s10 offset-s1 m6 offset-m3 l4 offset-l4">
-                        <input id="specialization_id" type="text" name="specialization_id" class="validate" required="" aria-required="true" [(ngModel)]="specialization.specialization_id">
+                        <input [attr.disabled]="true" id="specialization_id" type="text" name="specialization_id" class="validate" required="" aria-required="true" [(ngModel)]="specialization.specialization_id">
                         <label [class.active]="specialization.specialization_id" for="specialization_id">Specialization ID</label>
                     </div>
                     <div class="input-field col s10 offset-s1 m6 offset-m3 l4 offset-l4">
@@ -33,23 +33,32 @@ import { Messages } from '../../core/messages.config';
         </div>
         `
 })
-export class SpecializationComponent {
-    specialization: any[]
+export class SpecializationComponent implements OnInit {
+    specialization: any
 
     constructor(private service: SpecializationsService, private router: Router) {
-        this.getSpecialization()
-        console.log(this.specialization)
+
+        this.specialization = { // create a null object to escape errors in template
+            specialization_id: null,
+            name: null,
+            short_name: null
+        }
+
     }
 
-    getSpecialization(): void {
-        this.specialization = this.service.getCurrentSpecialization();
+    ngOnInit() {
+            let spec: any = this.service.getCurrentSpecialization();
+
+            if (spec != null)
+                this.specialization = spec;
+            else //if is no more specialization in service [ refresh the page ] redirect
+                this.router.navigate(['admin/specializations'])
     }
 
     update(): void {
         this.service.update(this.specialization)
             .then((r) => {
-                console.log(r.statusCode)
-                if(r.statusCode == 0) {
+                if (r.statusCode == 0) {
                     ToastService.toast(Messages.message()['updatedWithSuccess'])
                 }
             })
