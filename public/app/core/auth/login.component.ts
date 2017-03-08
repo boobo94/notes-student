@@ -38,6 +38,7 @@ export class LoginComponent {
         this.service.login(this.user)
             .then((r) => {
                 if (r.statusCode == 0) { // login with success
+                    ToastService.toast(Messages.message()['loginSuccess']);
                     localStorage.setItem('userToken', r.token);
                     localStorage.setItem('username', this.user.username);
                     this.router.navigate(['/home'])
