@@ -47,6 +47,7 @@ export class NavbarComponent implements AfterViewInit {
     isAdmin: any;
 
     constructor(private auth: AuthService, private router: Router) {
+        this.checkIfAdmin()
         this.whenRouteChange()
     }
 
