@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { SpecializationsService } from './specializations.service';
+import { ToastService } from '../../components/notifications/toast.service';
 import { Messages } from '../../core/messages.config';
 
 @Component({
@@ -24,7 +25,7 @@ import { Messages } from '../../core/messages.config';
                             <td>{{spec.name}}</td>
                             <td class="right">
                                 <button (click)="edit(spec)" class="waves-effect waves-light btn "><i class="material-icons">mode_edit</i></button>
-                                <button (click)="deleteThis(spec)" class="waves-effect waves-light btn "><i class="material-icons">delete</i></button>
+                                <button (click)="delete(spec.specialization_id)" class="waves-effect waves-light btn "><i class="material-icons">delete</i></button>
                             </td>
                         </tr>
                     </tbody>
@@ -61,13 +62,20 @@ export class SpecializationsComponent implements OnInit {
         this.router.navigate(['admin/specializations/edit'])
     }
 
-    deleteThis(specialization: any): void {
-        var areSure = confirm(Messages.message()['deleteQuestion'])
+    delete(id: Number): void {
+        var areSure = confirm(Messages.message('deleteQuestion'))
 
         if (areSure) {
-            console.log(areSure)
-            //todo: add delete
+            this.service.delete(id)
+                .then((r) => {
+                    if (r.statusCode == 0) {
+                        ToastService.toast(Messages.message('deletedWithSuccess'))
+                    }
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
         }
-        
+
     }
 }

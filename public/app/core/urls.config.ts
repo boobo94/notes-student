@@ -22,4 +22,5 @@ export class ApiUrls {
     getAllSpecializations = this.baseApiUrl + 'api/specialization/find' //GET
     getSpecialization = this.baseApiUrl + 'api/specialization/find/' //GET and /:specialization_id
     updateSpecialization = this.baseApiUrl + 'api/specialization/' //PUT and /:specialization_id
+    deleteSpecialization = this.baseApiUrl + 'api/specialization/' //DELETE and /:specialization_id
 }

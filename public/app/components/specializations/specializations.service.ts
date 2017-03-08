@@ -42,6 +42,16 @@ export class SpecializationsService {
             })
     }
 
+    delete(id: Number): Promise<any> {
+        return this.http.delete(this.url.deleteSpecialization + id)
+            .toPromise()
+            .then((response) => {
+                return response.json();
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }
 
 
 }
