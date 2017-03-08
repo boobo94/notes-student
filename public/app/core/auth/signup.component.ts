@@ -61,7 +61,7 @@ export class SignUpComponent {
                                     }
                                 }
                                 else if (r.statusCode == 0) {
-                                    ToastService.toast(Messages.message()['accoutnAlreadyExists']);
+                                    ToastService.toast(Messages.message('accoutnAlreadyExists'));
                                 }
                             })
                             .catch((error) => {
@@ -69,7 +69,7 @@ export class SignUpComponent {
                             })
                     }
                     else if (r.statusCode == 1) { // registration number doesn't exist
-                        ToastService.toast(Messages.message()['noRegistrationNumber']);
+                        ToastService.toast(Messages.message('noRegistrationNumber'));
                     }
                 })
                 .catch((error) => {
@@ -87,7 +87,7 @@ export class SignUpComponent {
                     if (r.statusCode == 1) { // username doesn't exist
                         this.service.signup(this.user)
                             .then((r) => {
-                                ToastService.toast(Messages.message()['signupSuccess']);
+                                ToastService.toast(Messages.message('signupSuccess'));
                                 //todo: add a spinner here
                                 setTimeout(() => {
                                     this.router.navigate(['/login'])
@@ -99,7 +99,7 @@ export class SignUpComponent {
                             })
                     }
                     else if (r.statusCode == 0) {
-                        ToastService.toast(Messages.message()['usernameExists']);
+                        ToastService.toast(Messages.message('usernameExists'));
                     }
                 })
                 .catch((error) => {

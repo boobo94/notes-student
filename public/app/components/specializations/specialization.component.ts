@@ -59,7 +59,7 @@ export class SpecializationComponent implements OnInit {
         this.service.update(this.specialization)
             .then((r) => {
                 if (r.statusCode == 0) {
-                    ToastService.toast(Messages.message()['updatedWithSuccess'])
+                    ToastService.toast(Messages.message('updatedWithSuccess'))
                 }
             })
             .catch((error) => {

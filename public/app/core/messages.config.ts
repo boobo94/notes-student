@@ -18,13 +18,14 @@ export class Messages {
 
             //general
             deleteQuestion: 'Are you sure ?',
-            updatedWithSuccess: 'Modified with success' 
+            updatedWithSuccess: 'Modified with success.',
+            deletedWithSuccess: 'Deleted with success.',
             
         }
     }
 
-    static message():object {
-        return this.msg[this.msg['language']]
+    static message(message) {
+        return this.msg[this.msg['language']][message]
     }
 
 }

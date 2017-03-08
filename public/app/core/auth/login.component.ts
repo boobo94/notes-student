@@ -38,16 +38,16 @@ export class LoginComponent {
         this.service.login(this.user)
             .then((r) => {
                 if (r.statusCode == 0) { // login with success
-                    ToastService.toast(Messages.message()['loginSuccess']);
+                    ToastService.toast(Messages.message('loginSuccess'));
                     localStorage.setItem('userToken', r.token);
                     localStorage.setItem('username', this.user.username);
                     this.router.navigate(['/home'])
                 }
                 else if (r.statusCode == 4) {
-                    ToastService.toast(Messages.message()['wrongPassword']);
+                    ToastService.toast(Messages.message('wrongPassword'));
                 }
                 else if (r.statusCode == 1) {
-                    ToastService.toast(Messages.message()['noUsername']);
+                    ToastService.toast(Messages.message('noUsername'));
                 }
             })
             .catch((error) => {
