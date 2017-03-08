@@ -19,5 +19,7 @@ export class ApiUrls {
     getStudentByRegistrationNumber = this.baseApiUrl + 'api/student/findbyrn/' //GET and /:registration_number
 
     //specializations
-    getAllSpecializations = this.baseApiUrl + 'api/specialization/find'
+    getAllSpecializations = this.baseApiUrl + 'api/specialization/find' //GET
+    getSpecialization = this.baseApiUrl + 'api/specialization/find/' //GET and /:specialization_id
+    updateSpecialization = this.baseApiUrl + 'api/specialization/' //PUT and /:specialization_id
 }

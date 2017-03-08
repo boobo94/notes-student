@@ -57,7 +57,8 @@ export class SpecializationsComponent implements OnInit {
     }
 
     edit(specialization: any): void {
-        this.router.navigate(['/edit/' + specialization.specialization_id])
+        this.service.setCurrentSpecialization(specialization)
+        this.router.navigate(['admin/specializations/edit'])
     }
 
     deleteThis(specialization: any): void {

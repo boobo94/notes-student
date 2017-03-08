@@ -12,11 +12,14 @@ export class Messages {
             signupSuccess: 'Your account was created with success.',
 
             //login
+            loginSuccess: 'You are logged in with success!',
             wrongPassword: "Password are wrong.",
             noUsername: "Username does not exist.",
 
             //general
             deleteQuestion: 'Are you sure ?',
+            updatedWithSuccess: 'Modified with success' 
+            
         }
     }
 
