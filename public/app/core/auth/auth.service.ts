@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
+import { Router } from '@angular/router';
 import { tokenNotExpired } from 'angular2-jwt';
 import 'rxjs/add/operator/toPromise';
 
@@ -7,7 +8,7 @@ import { ApiUrls } from '../urls.config';
 
 @Injectable()
 export class AuthService {
-    constructor(private http: Http, private urls: ApiUrls) {
+    constructor(private http: Http, private urls: ApiUrls, private router: Router) {
 
     }
 
@@ -25,6 +26,8 @@ export class AuthService {
     logout() {
         localStorage.removeItem('userToken');
         localStorage.removeItem('username');
+
+        this.router.navigate(['/login'])
     }
 
     loggedIn() {
