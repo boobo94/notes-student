@@ -6,8 +6,18 @@ import { ApiUrls } from '../../core/urls.config';
 
 @Injectable()
 export class SpecializationsService {
-    constructor(private http: AuthHttp, private url: ApiUrls) {
+    specialization: any;
 
+    constructor(private http: AuthHttp, private url: ApiUrls) {
+        this.specialization = null
+    }
+
+    setCurrentSpecialization(spec: any) {
+        this.specialization = spec;
+    }
+
+    getCurrentSpecialization() {
+        return this.specialization
     }
 
     getAllSpecializations(): Promise<any> {
@@ -20,5 +30,18 @@ export class SpecializationsService {
                 console.log(error);
             })
     }
+
+    update(spec: any): Promise<any> {
+        return this.http.put(this.url.updateSpecialization + spec.specialization_id, spec)
+            .toPromise()
+            .then((response) => {
+                return response.json();
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }
+
+
 
 }
