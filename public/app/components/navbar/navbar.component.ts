@@ -1,5 +1,5 @@
 import { Component, AfterViewInit } from '@angular/core';
-
+import { Router, NavigationStart } from '@angular/router';
 import { AuthService } from './../../core/auth/auth.service';
 
 declare var $: any;// declare $ to use jquery
@@ -20,7 +20,6 @@ declare var $: any;// declare $ to use jquery
                             <li *ngIf="isAdmin" routerLinkActive="active"><a routerLink="admin/notes">Notes</a></li>
 
                             <li routerLinkActive="active"><a routerLink="home">Home</a></li>
-                            <li routerLinkActive="active"><a routerLink="test">test</a></li>
                             <li><a (click)="auth.logout()">Log Out</a></li> 
                         </div>
                         <li routerLinkActive="active"><a routerLink="login" *ngIf="!auth.loggedIn()">Log In</a></li>       
@@ -35,7 +34,6 @@ declare var $: any;// declare $ to use jquery
                             <li *ngIf="isAdmin" routerLinkActive="active"><a routerLink="admin/notes">Notes</a></li>
 
                             <li routerLinkActive="active"><a routerLink="home">Home</a></li>
-                            <li routerLinkActive="active"><a routerLink="test">Test</a></li>
                             <li><a *ngIf="auth.loggedIn()" (click)="auth.logout()">Log Out</a></li>
                         </div>
                         <li routerLinkActive="active"><a routerLink="login" *ngIf="!auth.loggedIn()">Log In</a></li>
@@ -48,29 +46,40 @@ declare var $: any;// declare $ to use jquery
 export class NavbarComponent implements AfterViewInit {
     isAdmin: any;
 
-    constructor(private auth: AuthService) {
-        this.checkIfAdmin()
+    constructor(private auth: AuthService, private router: Router) {
+        this.whenRouteChange()
     }
 
     ngAfterViewInit() {
         $(document).ready(function () {
             $(".button-collapse").sideNav(); // use navbar collapse in mobile view
         })
-
-
     }
 
     checkIfAdmin(): void {
-        this.auth.getUserWithUsername(localStorage.getItem('username'))
-            .then((r) => {
-                if (r.data.level < 3)
-                    this.isAdmin = true
-                else
-                    this.isAdmin = false
-            })
-            .catch((error) => {
-                console.log(error)
-            })
+        if (localStorage.getItem('username')) {
+            this.auth.getUserWithUsername(localStorage.getItem('username'))
+                .then((r) => {
+                    if (r.data.level < 3)
+                        this.isAdmin = true
+                    else
+                        this.isAdmin = false
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
+        }
+        else
+            this.isAdmin = false;
+    }
+
+    whenRouteChange(): void {
+        // check user on server each time
+        this.router.events.subscribe(event => {// check when a route is changing
+            if (event instanceof NavigationStart) {
+                this.checkIfAdmin() // update isAdmin when a route is changing
+            }
+        });
     }
 
 }
