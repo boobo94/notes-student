@@ -31,6 +31,17 @@ export class SpecializationsService {
             })
     }
 
+    insert(spec: any): Promise<any> {
+        return this.http.post(this.url.insertSpecialization, spec)
+            .toPromise()
+            .then((response) => {
+                return response.json();
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }
+
     update(spec: any): Promise<any> {
         return this.http.put(this.url.updateSpecialization + spec.specialization_id, spec)
             .toPromise()

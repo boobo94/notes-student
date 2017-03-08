@@ -17,6 +17,11 @@ import { AuthGuard } from '../../core/auth/auth.guard';
                 path: 'admin/specializations/edit',
                 component: SpecializationComponent,
                 canActivate: [AuthGuard]
+            },
+            {
+                path: 'admin/specializations/add',
+                component: SpecializationComponent,
+                canActivate: [AuthGuard]
             }
         ])
     ]

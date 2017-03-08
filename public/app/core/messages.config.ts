@@ -20,6 +20,7 @@ export class Messages {
             deleteQuestion: 'Are you sure ?',
             updatedWithSuccess: 'Modified with success.',
             deletedWithSuccess: 'Deleted with success.',
+            insertedWithSuccess: 'Inserted with success.',
             
         }
     }

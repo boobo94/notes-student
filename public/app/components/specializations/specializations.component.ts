@@ -10,6 +10,9 @@ import { Messages } from '../../core/messages.config';
     template: `
         <div class="container">
             <div class="row">
+                <div class="col s12">
+                    <button class="btn-floating btn-large waves-effect waves-light red right" (click)="add()"><i class="material-icons">add</i></button>
+                </div>
                 <table class="bordered">
                     <thead>
                         <tr>
@@ -57,6 +60,10 @@ export class SpecializationsComponent implements OnInit {
 
     }
 
+    add(): void {
+        this.router.navigate(['admin/specializations/add'])
+    }
+
     edit(specialization: any): void {
         this.service.setCurrentSpecialization(specialization)
         this.router.navigate(['admin/specializations/edit'])
@@ -70,6 +77,7 @@ export class SpecializationsComponent implements OnInit {
                 .then((r) => {
                     if (r.statusCode == 0) {
                         ToastService.toast(Messages.message('deletedWithSuccess'))
+                        this.getAllSpecializations() // reload all specializations
                     }
                 })
                 .catch((error) => {
