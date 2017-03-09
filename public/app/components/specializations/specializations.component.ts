@@ -6,7 +6,7 @@ import { ToastService } from '../../components/notifications/toast.service';
 import { Messages } from '../../core/messages.config';
 
 @Component({
-    selector: 'specialization-component',
+    selector: 'specializations-component',
     template: `
         <div class="container">
             <div class="row">
