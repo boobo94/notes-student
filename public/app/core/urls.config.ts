@@ -24,8 +24,15 @@ export class ApiUrls {
     //students
     getStudentByRegistrationNumber = this.baseApiUrl + 'api/student/findbyrn/' //GET and /:registration_number
     getAllStudents          = this.baseApiUrl + 'api/student/find' //GET
-    getStudents             = this.baseApiUrl + 'api/student/find/' //GET and /:sstudent_id
+    getStudents             = this.baseApiUrl + 'api/student/find/' //GET and /:student_id
     updateStudents          = this.baseApiUrl + 'api/student/' //PUT and /:student_id
     deleteStudents          = this.baseApiUrl + 'api/student/' //DELETE and /:student_id
     insertStudents          = this.baseApiUrl + 'api/student/' //POST and /:student_id
+
+    //disciplines
+    getAllDisciplines       = this.baseApiUrl + 'api/discipline/find' //GET
+    getDisciplines          = this.baseApiUrl + 'api/discipline/find/' //GET and /:discipline_id
+    updateDisciplines       = this.baseApiUrl + 'api/discipline/' //PUT and /:discipline_id
+    deleteDisciplines       = this.baseApiUrl + 'api/discipline/' //DELETE and /:discipline_id
+    insertDisciplines       = this.baseApiUrl + 'api/discipline/' //POST and /:discipline_id
 }
