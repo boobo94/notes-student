@@ -16,6 +16,7 @@ import { ApiUrls } from './urls.config';
 import { AuthModule } from './auth/auth.module';
 import { SpecializationsModule } from '../components/specializations/specializations.module';
 import { StudentsModule } from '../components/students/students.module';
+import { DisciplinesModule } from '../components/disciplines/disciplines.module';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { StudentsModule } from '../components/students/students.module';
         //my modules
         AuthModule,
         SpecializationsModule,
-        StudentsModule
+        StudentsModule,
+        DisciplinesModule
     ],
     declarations: [
         AppComponent,
