@@ -65,4 +65,38 @@ export class StudentsService {
     }
 
 
+    getRegistrationNumber(nr: any): Promise<any> {
+        return this.http.get(this.url.getStudentByRegistrationNumber + nr)
+            .toPromise()
+            .then((response) => {
+                return response.json();
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }
+
+    getUserWithThisRegitrationNumber(nr: any): Promise<any> {
+        return this.http.get(this.url.getStudentByRN + nr)
+            .toPromise()
+            .then((response) => {
+                return response.json();
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }
+
+    getUserWithUsername(username: any): Promise<any> {
+        return this.http.get(this.url.getStudentByUN + username)
+            .toPromise()
+            .then((response) => {
+                return response.json();
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }
+
+
 }

@@ -17,8 +17,8 @@ import { Messages } from '../../core/messages.config';
                     <thead>
                         <tr>
                             <th data-field="id">#</th>
-                            <th data-field="registratio_number">Registation Number</th>
                             <th data-field="full_name">Full Name</th>
+                            <th data-field="registratio_number">Registation Number</th>
                             <th data-field="btns" class="right">Edit/Delete</th>
                         </tr>
                     </thead>
@@ -26,8 +26,8 @@ import { Messages } from '../../core/messages.config';
                     <tbody>
                         <tr *ngFor="let stud of students">
                             <td>{{stud.student_id}}</td>
-                            <td>{{stud.registration_number}}</td>
                             <td>{{stud.name}}</td>
+                            <td>{{stud.registration_number}}</td>
                             <td class="right">
                                 <button (click)="edit(stud)" class="waves-effect waves-light btn "><i class="material-icons">mode_edit</i></button>
                                 <button (click)="delete(stud.student_id)" class="waves-effect waves-light btn "><i class="material-icons">delete</i></button>
