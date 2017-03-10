@@ -21,7 +21,7 @@ const model = (sequelize, DataTypes) => {
   }, {
       classMethods: {
         associate: (models) => {
-          Student.belongsTo(models.Specialization, {
+          Student.belongsTo(models.Specialization, {// todo: add this to group model
             foreignKey: 'specialization_id',
             allowNull: false
           })
