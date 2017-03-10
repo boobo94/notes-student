@@ -8,11 +8,11 @@ var src = 'app/assets';
 gulp.task('sass', function () {
     // css unminified
     gulp.src(src + '/sass/**/*.scss')
-        .pipe(sass({errLogToConsole: true}))
+        .pipe(sass({ errLogToConsole: true }))
         .pipe(gulp.dest(src + '/css/'));
     //css minified
     gulp.src(src + '/sass/**/*.scss')
-        .pipe(cleanCSS({compatibility: 'ie8'}))
+        .pipe(sass({ outputStyle: 'compressed', errLogToConsole: true }))
         .pipe(rename({ extname: '.min.css' }))
         .pipe(gulp.dest(src + '/css/'));
 });
