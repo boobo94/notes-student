@@ -56,7 +56,6 @@ export class AuthService {
             })
     }
 
-    //todo: check if student doesn't have already an account
     getUserWithThisRegitrationNumber(nr: any): Promise<any> {
         return this.http.get(this.urls.getStudentByRN + nr)
             .toPromise()
