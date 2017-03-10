@@ -17,6 +17,7 @@ declare var $: any;// declare $ to use jquery
                             <li *ngIf="isAdmin" routerLinkActive="active"><a routerLink="admin/specializations">Specializations</a></li>
                             <li *ngIf="isAdmin" routerLinkActive="active"><a routerLink="admin/students">Students</a></li>
                             <li *ngIf="isAdmin" routerLinkActive="active"><a routerLink="admin/notes">Notes</a></li>
+                            <li *ngIf="isAdmin" routerLinkActive="active"><a routerLink="admin/users">Users</a></li>
 
                             <li routerLinkActive="active"><a routerLink="home">Home</a></li>
                             <li><a (click)="auth.logout()">Log Out</a></li> 
@@ -30,6 +31,7 @@ declare var $: any;// declare $ to use jquery
                             <li *ngIf="isAdmin" routerLinkActive="active"><a routerLink="admin/specializations">Specializations</a></li>
                             <li *ngIf="isAdmin" routerLinkActive="active"><a routerLink="admin/students">Students</a></li>
                             <li *ngIf="isAdmin" routerLinkActive="active"><a routerLink="admin/notes">Notes</a></li>
+                            <li *ngIf="isAdmin" routerLinkActive="active"><a routerLink="admin/users">Users</a></li>
 
                             <li routerLinkActive="active"><a routerLink="home">Home</a></li>
                             <li><a *ngIf="auth.loggedIn()" (click)="auth.logout()">Log Out</a></li>
