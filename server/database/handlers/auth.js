@@ -25,7 +25,7 @@ export class Handler {
             config.secret, {
                 expiresIn: "1d",
                 header: {
-                    userLevel: userLevel //todo: get the level of user
+                    userLevel: userLevel
                 }
             })
 
