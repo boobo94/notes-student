@@ -35,4 +35,11 @@ export class ApiUrls {
     updateDisciplines       = this.baseApiUrl + 'api/discipline/' //PUT and /:discipline_id
     deleteDisciplines       = this.baseApiUrl + 'api/discipline/' //DELETE and /:discipline_id
     insertDisciplines       = this.baseApiUrl + 'api/discipline/' //POST and /:discipline_id
+
+    //users
+    getAllUsers       = this.baseApiUrl + 'api/user/find' //GET
+    getUsers          = this.baseApiUrl + 'api/user/find/' //GET and /:user_id
+    updateUsers       = this.baseApiUrl + 'api/user/' //PUT and /:user_id
+    deleteUsers       = this.baseApiUrl + 'api/user/' //DELETE and /:user_id
+    insertUsers       = this.baseApiUrl + 'api/user/' //POST and /:user_id
 }
