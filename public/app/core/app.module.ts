@@ -17,6 +17,7 @@ import { AuthModule } from './auth/auth.module';
 import { SpecializationsModule } from '../components/specializations/specializations.module';
 import { StudentsModule } from '../components/students/students.module';
 import { DisciplinesModule } from '../components/disciplines/disciplines.module';
+import { UsersModule } from '../components/users/users.module';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { DisciplinesModule } from '../components/disciplines/disciplines.module'
         AuthModule,
         SpecializationsModule,
         StudentsModule,
-        DisciplinesModule
+        DisciplinesModule,
+        UsersModule
     ],
     declarations: [
         AppComponent,
