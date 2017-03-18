@@ -19,7 +19,7 @@ export class Api {
             this.middlewares.auth.webAuth,
             this.middlewares.auth.adminAuth,
             function (req, res) {
-                Handler.post(req.body, function (error, result) {
+                Handler.addUser(req.body, function (error, result) {
                     if (error)
                         return res.status(500).send(error)
                     return res.status(200).send(result)
