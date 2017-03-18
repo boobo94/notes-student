@@ -1,4 +1,5 @@
-let model = require('../models').Student
+import models from '../models';
+let model = models.Student
 
 export class Students {
     constructor() {
@@ -14,6 +15,16 @@ export class Students {
 
     static findById(id) {
         return model.findOne({
+            include: [
+                {
+                    model: models.Specialization,
+                    attributes: ["specialization_id"],
+                    as: 'specializations',
+                    through: {
+                        attributes: []
+                    }
+                },
+            ],
             where: {
                 student_id: id
             }
@@ -39,12 +50,14 @@ export class Students {
             name: s.name,
             tax: s.tax,
             registration_number: s.registration_number,
-            specialization_id: s.specialization_id
         }, {
                 transaction: t
             })
             .then((inserted) => {
-                return inserted
+                return inserted.setSpecializations(s.specialization_id)
+                    .then((student_specializations) => {
+                        return student_specializations
+                    })
             })
     }
 
@@ -54,8 +67,7 @@ export class Students {
                 if (result) {// if there exist a result
                     let json = {//create a new object without unique or not null object
                         name: s.name,
-                        tax: s.tax,
-                        specialization_id: s.specialization_id
+                        tax: s.tax
                     }
                     if (s.registration_number != result.dataValues.registration_number) // we check if new registration number is different than existen one
                         json['registration_number'] = s.registration_number// if it is we will add to the json object created previous
