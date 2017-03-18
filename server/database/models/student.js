@@ -21,9 +21,12 @@ const model = (sequelize, DataTypes) => {
   }, {
       classMethods: {
         associate: (models) => {
-          Student.belongsTo(models.Specialization, {// todo: add this to group model
-            foreignKey: 'specialization_id',
-            allowNull: false
+          Student.belongsToMany(models.Specialization, {
+            through: 'studentSpecializations',
+            foreignKey: 'student_id',
+            otherKey: 'specialization_id',
+            as: 'specializations',
+            timestamps: false
           })
         }
       }
