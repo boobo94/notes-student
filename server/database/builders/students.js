@@ -7,7 +7,21 @@ export class Students {
     }
 
     static findAll() {
-        return model.findAll()
+        return model.findAll({
+            include: [
+                {
+                    model: models.Specialization,
+                    attributes: ["specialization_id"],
+                    as: 'specializations',
+                    through: {
+                        attributes: []
+                    }
+                },
+            ],
+            order:[
+                ['student_id','ASC']
+            ]
+        })
             .then((results) => {
                 return results
             })
