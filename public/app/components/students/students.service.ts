@@ -98,5 +98,16 @@ export class StudentsService {
             })
     }
 
+    addSpecializationToStudent(spec: any): Promise<any> {
+        return this.http.post(this.url.addSpecializationToStudent, spec)
+            .toPromise()
+            .then((response) => {
+                return response.json();
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }
+
 
 }
