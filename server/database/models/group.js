@@ -18,6 +18,12 @@ const model = (sequelize, DataTypes) => {
         associate: (models) => {
           Group.belongsTo(models.Student, {
             foreignKey: 'student_id',
+            as: 'groups',
+            allowNull: false,
+            onDelete: 'CASCADE'
+          })
+          Group.belongsTo(models.Specialization, {
+            foreignKey: 'specialization_id',
             allowNull: false,
             onDelete: 'CASCADE'
           })

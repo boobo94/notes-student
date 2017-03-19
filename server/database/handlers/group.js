@@ -14,13 +14,14 @@ export class Handler {
 
     static post(reqBody, cb) {
 
-        var disc = {
+        var group = {
             name: reqBody.name,
             year: reqBody.year,
+            specialization_id: reqBody.specialization_id,
             student_id: reqBody.student_id
         }
 
-        Group.add(disc)
+        Group.add(group)
             .then((inserted) => {
                 return cb(null, msg.success)
             })
@@ -46,10 +47,11 @@ export class Handler {
             })
     }
 
-    static getOne(id, cb) {
+    static getAllById(id, cb) {
+
         return Group.findById(id)
             .then((result) => {
-                if (result && result.dataValues)
+                if (result)
                     return cb(null, {
                         statusCode: msg.success.statusCode,
                         message: msg.success.message,
@@ -69,9 +71,10 @@ export class Handler {
             group_id: id,
             name: reqBody.name,
             year: reqBody.year,
-            specialization_id: reqBody.specialization_id
+            specialization_id: reqBody.specialization_id,
+            student_id: reqBody.student_id
         }
-
+console.log(group)
         Group.update(group)
             .then((updated) => {
                 if (updated == 0)

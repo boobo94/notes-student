@@ -15,7 +15,7 @@ export class Api {
         //create new Router
         this.router = express.Router()
 
-        this.router.post('/add',
+        this.router.post('/',
             this.middlewares.auth.webAuth,
             this.middlewares.auth.adminAuth,
             (req, res) => {
@@ -39,7 +39,7 @@ export class Api {
         this.router.get('/find/:id',
             this.middlewares.auth.webAuth,
             (req, res) => {
-                Handler.getOne(req.params.id, (error, result) => {
+                Handler.getAllById(req.params.id, (error, result) => {
                     if (error)
                         return res.status(500).send(error)
                     return res.status(200).send(result)

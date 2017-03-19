@@ -12,10 +12,10 @@ export class Group {
             })
     }
 
-    static findById(id) {
-        return model.findOne({
+    static findById(student_id) {
+        return model.findAll({
             where: {
-                group_id: id
+                student_id: student_id
             }
         })
             .then((result) => {
@@ -25,8 +25,9 @@ export class Group {
 
     static add(g, t) {
         return model.create({
-            student_id: g.name,
-            name: g.short_name,
+            student_id: g.student_id,
+            specialization_id: g.specialization_id,
+            name: g.name,
             year: g.year,
         }, {
                 transaction: t
@@ -38,8 +39,9 @@ export class Group {
 
     static update(g, t) {
         return model.update({
-            student_id: g.name,
-            name: g.short_name,
+            student_id: g.student_id,
+            specialization_id: g.specialization_id,
+            name: g.name,
             year: g.year,
         }, {
                 where: { group_id: g.group_id }
