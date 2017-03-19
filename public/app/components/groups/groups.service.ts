@@ -12,15 +12,15 @@ export class GroupsService {
         this.group = null
     }
 
-    setCurrentDiscipline(group: any) {
+    setCurrentGroups(group: any) {
         this.group = group;
     }
 
-    getCurrentDiscipline() {
+    getCurrentGroups() {
         return this.group
     }
 
-    getAllDisciplines(): Promise<any> {
+    getAllGroups(): Promise<any> {
         return this.http.get(this.url.getAllGroups)
             .toPromise()
             .then((response) => {
@@ -31,8 +31,8 @@ export class GroupsService {
             })
     }
 
-    insert(disc: any): Promise<any> {
-        return this.http.post(this.url.insertGroups, disc)
+    getGroupById(student_id): Promise<any> {
+        return this.http.get(this.url.getGroup + student_id)
             .toPromise()
             .then((response) => {
                 return response.json();
@@ -42,8 +42,19 @@ export class GroupsService {
             })
     }
 
-    update(disc: any): Promise<any> {
-        return this.http.put(this.url.updateGroups + disc.discipline_id, disc)
+    insert(group: any): Promise<any> {
+        return this.http.post(this.url.insertGroups, group)
+            .toPromise()
+            .then((response) => {
+                return response.json();
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }
+
+    update(group: any): Promise<any> {
+        return this.http.put(this.url.updateGroups + group.group_id, group)
             .toPromise()
             .then((response) => {
                 return response.json();
