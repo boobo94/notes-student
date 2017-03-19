@@ -21,6 +21,8 @@ export class Messages {
             updatedWithSuccess: 'Modified with success.',
             deletedWithSuccess: 'Deleted with success.',
             insertedWithSuccess: 'Inserted with success.',
+            thisRecordWasNotFound: 'This record was not found.',
+            notModified: 'The record was not modified, some errors was encounterd.'
             
         }
     }
