@@ -28,6 +28,8 @@ export class ApiUrls {
     updateStudents          = this.baseApiUrl + 'api/student/' //PUT and /:student_id
     deleteStudents          = this.baseApiUrl + 'api/student/' //DELETE and /:student_id
     insertStudents          = this.baseApiUrl + 'api/student/' //POST and /:student_id
+    addSpecializationToStudent          = this.baseApiUrl + 'api/student/add-specializations/' //POST
+    removeSpecializationFromStudent     = this.baseApiUrl + 'api/student/remove-specializations/' //POST and /:student_id
 
     //disciplines
     getAllDisciplines       = this.baseApiUrl + 'api/discipline/find' //GET
