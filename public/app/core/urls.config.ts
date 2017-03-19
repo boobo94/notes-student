@@ -44,4 +44,11 @@ export class ApiUrls {
     updateUsers       = this.baseApiUrl + 'api/user/' //PUT and /:user_id
     deleteUsers       = this.baseApiUrl + 'api/user/' //DELETE and /:user_id
     insertUsers       = this.baseApiUrl + 'api/user/' //POST and /:user_id
+
+    //groups
+    getAllGroups      = this.baseApiUrl + 'api/group/find' //GET
+    getGroup          = this.baseApiUrl + 'api/group/find/' //GET and /:group_id
+    updateGroups       = this.baseApiUrl + 'api/group/' //PUT and /:group_id
+    deleteGropups       = this.baseApiUrl + 'api/group/' //DELETE and /:group_id
+    insertGroups       = this.baseApiUrl + 'api/group/' //POST and /:group_id
 }
