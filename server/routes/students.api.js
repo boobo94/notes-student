@@ -26,6 +26,17 @@ export class Api {
                 })
             })
 
+        this.router.post('/add-specializations',
+            this.middlewares.auth.webAuth,
+            this.middlewares.auth.adminAuth,
+            function (req, res) {
+                Handler.addSpecializationToStudent(req.body, function (error, result) {
+                    if (error)
+                        return res.status(500).send(error)
+                    return res.status(200).send(result)
+                })
+            })
+
         this.router.get('/find',
             this.middlewares.auth.webAuth,
             function (req, res) {console.log(req.query)
@@ -72,6 +83,17 @@ export class Api {
             this.middlewares.auth.adminAuth,
             function (req, res) {
                 Handler.delete(req.params.id, function (error, result) {
+                    if (error)
+                        return res.status(500).send(error)
+                    return res.status(200).send(result)
+                })
+            })
+
+        this.router.post('/remove-specializations',
+            this.middlewares.auth.webAuth,
+            this.middlewares.auth.adminAuth,
+            function (req, res) {
+                Handler.removeSpecializationFromStudent(req.body, function (error, result) {
                     if (error)
                         return res.status(500).send(error)
                     return res.status(200).send(result)
