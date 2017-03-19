@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 
 import { StudentsService } from './students.service';
 import { SpecializationsService } from '../specializations/specializations.service';
+import { GroupsService } from '../groups/groups.service';
 import { ToastService } from '../../components/notifications/toast.service';
 import { Messages } from '../../core/messages.config';
 
@@ -75,10 +76,42 @@ declare var $: any;// declare $ to use jquery
                         <li *ngFor="let spec of studentSpecializations">
                             <div class="collapsible-header"><i class="material-icons">open_in_new</i>{{ spec.name }}</div>
                             <div class="collapsible-body">
+                                <h5>Groups</h5>
+
+                                <ul class="collapsible" data-collapsible="accordion">
+                                    <li *ngFor="let group of spec.groups">
+                                        <div class="collapsible-header"><i class="material-icons">view_module</i>{{ group.name }}</div>
+                                        <div class="collapsible-body">
+                                            
+                                            <form #groupsform="ngForm">
+                                                <div class="input-field">
+                                                    <input [disabled]="editMode" id="group_id" type="text" name="group_id" class="validate" required="" aria-required="true" [(ngModel)]="group.group_id">
+                                                    <label [class.active]="group.group_id" for="group_id">Group ID</label>
+                                                </div>
+                                                <div class="input-field">
+                                                    <input id="name" type="text" name="name" class="validate" required="" aria-required="true" [(ngModel)]="group.name">
+                                                    <label [class.active]="group.name" for="name">Name</label>
+                                                </div>
+                                                <div class="input-field">
+                                                    <input id="year" type="text" name="year" class="validate" required="" aria-required="true" [(ngModel)]="group.year">
+                                                    <label [class.active]="group.year" for="year">year</label>
+                                                </div>
+
+                                                <div class="input-field">
+                                                    <button class="btn waves-effect waves-light" type="submit" (click)="groupsform.form.valid ? editGroup(group) : null">Submit
+                                                        <i class="material-icons right">send</i>
+                                                    </button>
+                                                    <button class="btn" (click)="removeGroup(group.group_id)"><i class="material-icons">delete</i></button>
+                                                </div>
+                                            </form>
+
+                                        </div>
+                                    </li>
+                                </ul>
                                 
-                                <span>Lorem ipsum dolor sit amet.</span>
 
                                 <button class="btn right" (click)="removeSpecialization(spec.specialization_id)"><i class="material-icons">delete</i></button>
+                                <br>
                             </div>
                         </li>
                     </ul>
@@ -96,8 +129,9 @@ export class StudentComponent implements OnInit {
     editMode: Boolean
     allSpecializations: any[]
     studentSpecializations: any
+    allGroups: any
 
-    constructor(private service: StudentsService, private router: Router, private specService: SpecializationsService, ) {
+    constructor(private service: StudentsService, private router: Router, private specService: SpecializationsService, private groupService: GroupsService) {
 
         this.student = { // create a null object to escape errors in template
             student_id: null, //todo: change this
@@ -126,6 +160,7 @@ export class StudentComponent implements OnInit {
         }
 
         this.getAllSpecializations();
+        this.getGroups()
     }
 
     update(): void {
@@ -154,6 +189,7 @@ export class StudentComponent implements OnInit {
                     ToastService.toast(Messages.message('insertedWithSuccess'))
                     this.router.navigate(['admin/students'])
                 }
+                //todo: check if registration number is used by another student
             })
             .catch((error) => {
                 console.log(error)
@@ -231,7 +267,7 @@ export class StudentComponent implements OnInit {
             .then((r) => {
                 if (r.statusCode == 0) {
                     var specializationIndex = this.getIndexStudentSpecializationsById(specialization_id)
-                    this.studentSpecializations.splice(specializationIndex,1) // delete from studentSpecializations array deleted specialization
+                    this.studentSpecializations.splice(specializationIndex, 1) // delete from studentSpecializations array deleted specialization
                     ToastService.toast(Messages.message('deletedWithSuccess'))
                 }
                 else
@@ -244,9 +280,9 @@ export class StudentComponent implements OnInit {
 
     getSpecializationsById(id): any {
         var specialization = null;
-        $.each(this.allSpecializations,function(index,value){ 
-            if(value.specialization_id == id)
-                specialization =  value;
+        $.each(this.allSpecializations, function (index, value) {
+            if (value.specialization_id == id)
+                specialization = value;
         });
 
         return specialization
@@ -254,9 +290,80 @@ export class StudentComponent implements OnInit {
 
     getIndexStudentSpecializationsById(id): any {
         var specializationIndex = null;
-        $.each(this.allSpecializations,function(index,value){ 
-            if(value.specialization_id == id)
-                specializationIndex =  index;
+        $.each(this.allSpecializations, function (index, value) {
+            if (value.specialization_id == id)
+                specializationIndex = index;
+        });
+
+        return specializationIndex
+    }
+
+    getGroups(): void {
+        this.groupService.getGroupById(this.student.student_id)
+            .then((r) => {
+
+                var studentSpecializationsTemp = this.studentSpecializations;
+
+                //add groups to studentSpecializations
+                $.each(studentSpecializationsTemp, function (index, value) {
+                    var group = []
+                    $.each(r.data, function (index2, value2) {
+                        if (value.specialization_id == value2.specialization_id)
+                            group.push(value2);
+                    })
+
+                    studentSpecializationsTemp[index].groups = group
+                })
+
+                this.studentSpecializations = studentSpecializationsTemp;
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
+
+    editGroup(group): void {
+        this.groupService.update(group)
+            .then((r) => {
+                if (r.statusCode == 0) {
+                    ToastService.toast(Messages.message('updatedWithSuccess'))
+                }
+                else if (r.statusCode == 3) {
+                    ToastService.toast(Messages.message('thisRecordWasNotFound'))
+                }
+                else {
+                    ToastService.toast(Messages.message('notModified'))
+                }
+
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
+
+    removeGroup(group_id): void {
+        this.groupService.delete(group_id)
+            .then((r) => {
+                if (r.statusCode == 0) {
+                    var groupIndex = this.getIndexStudentGroupById(group_id) // delete from studentSpecializations array deleted group
+                    ToastService.toast(Messages.message('deletedWithSuccess'))
+                }
+                else
+                    ToastService.toast(Messages.message('notModified'))
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
+
+    getIndexStudentGroupById(id): any {
+        var specializationIndex = null;
+        $.each(this.studentSpecializations, function (index, value) {
+            $.each(value.groups, function (index2, value2) {
+                if (value2.group_id == id) {
+                    value.groups.splice(index2, 1)
+                }
+            })
         });
 
         return specializationIndex
