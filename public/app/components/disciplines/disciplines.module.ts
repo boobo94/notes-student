@@ -4,7 +4,7 @@ import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 
 import { DisciplinesComponent } from './disciplines.component';
-// import { DisciplineComponent } from './discipline.component';
+import { DisciplineComponent } from './discipline.component';
 import { DisciplinesService } from './disciplines.service';
 import { DisciplinesRouter } from './disciplines.router.module';
 import { AuthGuard } from '../../core/auth/auth.guard';
@@ -18,7 +18,7 @@ import { AuthGuard } from '../../core/auth/auth.guard';
     ],
     declarations: [
         DisciplinesComponent,
-        // DisciplineComponent
+        DisciplineComponent
     ],
     providers: [
         DisciplinesService,
