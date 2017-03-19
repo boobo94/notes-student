@@ -32,6 +32,7 @@ declare var $: any;// declare $ to use jquery
         <div class="container">
             <div class="row">
                 <div class="col s12 m6">
+                    <h4 class="col s10 offset-s1">Student</h4>
                     <form #studentform="ngForm">
                     
                         <div *ngIf="editMode" class="input-field col s10 offset-s1">
@@ -66,7 +67,7 @@ declare var $: any;// declare $ to use jquery
                         <h4 class="col s10">Specializations</h4>
                         <button class="dropdown-button btn btn-floating btn-large waves-effect waves-light red right" data-activates='dropdownNewSpecialization'><i class="material-icons">add</i></button>
                         <ul id='dropdownNewSpecialization' class='dropdown-content'>
-                            <li *ngFor="let spec of specializations"> <a (click)="addSpecialization(spec.specialization_id)">{{ spec.name }}</a></li>
+                            <li *ngFor="let spec of allSpecializations"> <a (click)="addSpecialization(spec.specialization_id)">{{ spec.name }}</a></li>
                         </ul>
                     </div>
 
@@ -93,7 +94,7 @@ declare var $: any;// declare $ to use jquery
 export class StudentComponent implements OnInit {
     student: any
     editMode: Boolean
-    specializations: any[]
+    allSpecializations: any[]
     studentSpecializations: any
 
     constructor(private service: StudentsService, private router: Router, private specService: SpecializationsService, ) {
@@ -163,7 +164,7 @@ export class StudentComponent implements OnInit {
         this.specService.getAllSpecializations()
             .then((r) => {
                 var specializations = r.data;
-                this.specializations = specializations;
+                this.allSpecializations = specializations;
 
                 var currentSpecializationsIds = this.student.specializations
 
@@ -201,7 +202,6 @@ export class StudentComponent implements OnInit {
     }
 
     addSpecialization(specialization_id) {
-        console.log(specialization_id)
         let spec = {
             specialization_id: specialization_id,
             student_id: this.student.student_id
@@ -209,8 +209,10 @@ export class StudentComponent implements OnInit {
 
         this.service.addSpecializationToStudent(spec)
             .then((r) => {
-                if (r.statusCode == 0)
+                if (r.statusCode == 0) {
+                    this.studentSpecializations.push(this.getSpecializationsById(specialization_id)) // add the specialization created now in studentSpecializations array
                     ToastService.toast(Messages.message('insertedWithSuccess'))
+                }
                 else
                     ToastService.toast(Messages.message('notModified'))
             })
@@ -227,14 +229,37 @@ export class StudentComponent implements OnInit {
 
         this.service.removeSpecializationFromStudent(spec)
             .then((r) => {
-                if (r.statusCode == 0)
+                if (r.statusCode == 0) {
+                    var specializationIndex = this.getIndexStudentSpecializationsById(specialization_id)
+                    this.studentSpecializations.splice(specializationIndex,1) // delete from studentSpecializations array deleted specialization
                     ToastService.toast(Messages.message('deletedWithSuccess'))
+                }
                 else
                     ToastService.toast(Messages.message('notModified'))
             })
             .catch((error) => {
                 console.log(error)
             })
+    }
+
+    getSpecializationsById(id): any {
+        var specialization = null;
+        $.each(this.allSpecializations,function(index,value){ 
+            if(value.specialization_id == id)
+                specialization =  value;
+        });
+
+        return specialization
+    }
+
+    getIndexStudentSpecializationsById(id): any {
+        var specializationIndex = null;
+        $.each(this.allSpecializations,function(index,value){ 
+            if(value.specialization_id == id)
+                specializationIndex =  index;
+        });
+
+        return specializationIndex
     }
 
     //todo: implement edit and check if registration nr exists ...
