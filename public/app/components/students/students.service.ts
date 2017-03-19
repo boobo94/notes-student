@@ -109,5 +109,16 @@ export class StudentsService {
             })
     }
 
+    removeSpecializationFromStudent(spec: any): Promise<any> {
+        return this.http.post(this.url.removeSpecializationFromStudent, spec)
+            .toPromise()
+            .then((response) => {
+                return response.json();
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }
+
 
 }

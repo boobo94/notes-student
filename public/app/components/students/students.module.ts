@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { StudentsComponent } from './students.component';
 import { StudentComponent } from './student.component';
 import { StudentsService } from './students.service';
+import { SpecializationsService } from '../specializations/specializations.service';
 import { StudentsRouter } from './students.router.module';
 import { AuthGuard } from '../../core/auth/auth.guard';
 
@@ -22,6 +23,7 @@ import { AuthGuard } from '../../core/auth/auth.guard';
     ],
     providers: [
         StudentsService,
+        SpecializationsService,
         AuthGuard
     ]
 })

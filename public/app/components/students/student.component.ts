@@ -2,8 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { StudentsService } from './students.service';
+import { SpecializationsService } from '../specializations/specializations.service';
 import { ToastService } from '../../components/notifications/toast.service';
 import { Messages } from '../../core/messages.config';
+
+declare var $: any;// declare $ to use jquery
 
 /**
  * todo: implement this student component
@@ -28,29 +31,61 @@ import { Messages } from '../../core/messages.config';
     template: `
         <div class="container">
             <div class="row">
-                <form #studentform="ngForm">
-                    <div *ngIf="editMode" class="input-field col s10 offset-s1 m6 offset-m3 l4 offset-l4">
-                        <input [disabled]="editMode" id="student_id" type="text" name="student_id" class="validate" required="" aria-required="true" [(ngModel)]="student.student_id">
-                        <label [class.active]="student.student_id" for="student_id">Student ID</label>
+                <div class="col s12 m6">
+                    <form #studentform="ngForm">
+                    
+                        <div *ngIf="editMode" class="input-field col s10 offset-s1">
+                            <input [disabled]="editMode" id="student_id" type="text" name="student_id" class="validate" required="" aria-required="true" [(ngModel)]="student.student_id">
+                            <label [class.active]="student.student_id" for="student_id">Student ID</label>
+                        </div>
+                        <div class="input-field col s10 offset-s1">
+                            <input id="name" type="text" name="name" class="validate" required="" aria-required="true" [(ngModel)]="student.name">
+                            <label [class.active]="student.name" for="name">Name</label>
+                        </div>
+                        <div class="input-field col s10 offset-s1">
+                            <input id="registration_number" type="text" name="registration_number" class="validate" required="" aria-required="true" [(ngModel)]="student.registration_number">
+                            <label [class.active]="student.registration_number" for="registration_number">Registration Number</label>
+                        </div>
+                        <div class="input-field col s10 offset-s1">
+                            <input id="tax" type="text" name="tax" class="validate" required="" aria-required="true" [(ngModel)]="student.tax">
+                            <label [class.active]="student.tax" for="tax">Tax</label>
+                        </div>
+
+                        <div class="col s10 offset-s1">
+                            <button class="btn waves-effect waves-light right" type="submit" (click)="studentform.form.valid ? (editMode ? update() : insert()) : null">Submit
+                                <i class="material-icons right">send</i>
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+
+                <div class="col s12 m6">
+                    
+                    <div class="col s12">
+                        <h4 class="col s10">Specializations</h4>
+                        <button class="dropdown-button btn btn-floating btn-large waves-effect waves-light red right" data-activates='dropdownNewSpecialization'><i class="material-icons">add</i></button>
+                        <ul id='dropdownNewSpecialization' class='dropdown-content'>
+                            <li *ngFor="let spec of specializations"> <a (click)="addSpecialization(spec.specialization_id)">{{ spec.name }}</a></li>
+                        </ul>
                     </div>
-                    <div class="input-field col s10 offset-s1 m6 offset-m3 l4 offset-l4">
-                        <input id="name" type="text" name="name" class="validate" required="" aria-required="true" [(ngModel)]="student.name">
-                        <label [class.active]="student.name" for="name">Name</label>
-                    </div>
-                    <div class="input-field col s10 offset-s1 m6 offset-m3 l4 offset-l4">
-                        <input id="registration_number" type="text" name="registration_number" class="validate" required="" aria-required="true" [(ngModel)]="student.registration_number">
-                        <label [class.active]="student.registration_number" for="registration_number">Registration Number</label>
-                    </div>
-                    <div class="input-field col s10 offset-s1 m6 offset-m3 l4 offset-l4">
-                        <input id="tax" type="text" name="tax" class="validate" required="" aria-required="true" [(ngModel)]="student.tax">
-                        <label [class.active]="student.tax" for="tax">Tax</label>
-                    </div>
-                    <div class="col s10 offset-s1 m6 offset-m3 l4 offset-l4">
-                        <button class="btn waves-effect waves-light right" type="submit" (click)="studentform.form.valid ? (editMode ? update() : insert()) : null">Submit
-                            <i class="material-icons right">send</i>
-                        </button>
-                    </div>
-                </form>
+
+                    <ul class="col s12 collapsible popout" data-collapsible="accordion">
+                        <li *ngFor="let spec of studentSpecializations">
+                            <div class="collapsible-header"><i class="material-icons">open_in_new</i>{{ spec.name }}</div>
+                            <div class="collapsible-body">
+                                
+                                <span>Lorem ipsum dolor sit amet.</span>
+
+                                <button class="btn" (click)="removeSpecialization(spec.specialization_id)"><i class="material-icons">delete</i></button>
+                            </div>
+                        </li>
+                    </ul>
+
+
+                </div>
+
+                    
             </div>
         </div>
         `
@@ -58,14 +93,18 @@ import { Messages } from '../../core/messages.config';
 export class StudentComponent implements OnInit {
     student: any
     editMode: Boolean
+    specializations: any[]
+    studentSpecializations: any
 
-    constructor(private service: StudentsService, private router: Router) {
+    constructor(private service: StudentsService, private router: Router, private specService: SpecializationsService, ) {
 
         this.student = { // create a null object to escape errors in template
             student_id: null, //todo: change this
             name: null,
             tax: null, // todo in component I can create a dropdown with S and T
-            registration_number: null
+            registration_number: null,
+            specialization_id: null,
+            specializations: null
         }
         this.editMode = false
 
@@ -84,6 +123,8 @@ export class StudentComponent implements OnInit {
         else {
             this.editMode = false
         }
+
+        this.getAllSpecializations();
     }
 
     update(): void {
@@ -92,6 +133,13 @@ export class StudentComponent implements OnInit {
                 if (r.statusCode == 0) {
                     ToastService.toast(Messages.message('updatedWithSuccess'))
                 }
+                else if (r.statusCode == 3) {
+                    ToastService.toast(Messages.message('thisRecordWasNotFound'))
+                }
+                else {
+                    ToastService.toast(Messages.message('notModified'))
+                }
+
             })
             .catch((error) => {
                 console.log(error)
@@ -111,8 +159,86 @@ export class StudentComponent implements OnInit {
             })
     }
 
+    getAllSpecializations(): void {
+        this.specService.getAllSpecializations()
+            .then((r) => {
+                var specializations = r.data;
+                this.specializations = specializations;
+
+                var currentSpecializationsIds = this.student.specializations
+
+                specializations = specializations.filter(function (spec) {
+                    var exists = false;
+                    $.each(currentSpecializationsIds, function (index, val) {
+                        if (val.specialization_id == spec.specialization_id)
+                            exists = true
+                    })
+
+                    return exists
+                })
+                this.studentSpecializations = specializations;
+
+                $(document).ready(function () {
+                    $('.collapsible').collapsible();
+
+                    $('.dropdown-button').dropdown({
+                        inDuration: 300,
+                        outDuration: 225,
+                        constrainWidth: false, // Does not change width of dropdown to that of the activator
+                        hover: false, // Activate on hover
+                        gutter: 0, // Spacing from edge
+                        belowOrigin: false, // Displays dropdown below the button
+                        alignment: 'left', // Displays dropdown with edge aligned to the left of button
+                        stopPropagation: false // Stops event propagation
+                    });
+
+                });
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+
+    }
+
+    addSpecialization(specialization_id) {
+        console.log(specialization_id)
+        let spec = {
+            specialization_id: specialization_id,
+            student_id: this.student.student_id
+        }
+
+        this.service.addSpecializationToStudent(spec)
+            .then((r) => {
+                if (r.statusCode == 0)
+                    ToastService.toast(Messages.message('insertedWithSuccess'))
+                else
+                    ToastService.toast(Messages.message('notModified'))
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
+
+    removeSpecialization(specialization_id) {
+        let spec = {
+            specialization_id: specialization_id,
+            student_id: this.student.student_id
+        }
+
+        this.service.removeSpecializationFromStudent(spec)
+            .then((r) => {
+                if (r.statusCode == 0)
+                    ToastService.toast(Messages.message('deletedWithSuccess'))
+                else
+                    ToastService.toast(Messages.message('notModified'))
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
+
     //todo: implement edit and check if registration nr exists ...
-    RegistrationNumberExists() {
+    /*RegistrationNumberExists() {
         if (this.student.registration_number) {
 
             this.service.getRegistrationNumber(this.student)
@@ -139,6 +265,6 @@ export class StudentComponent implements OnInit {
                     console.log(error)
                 })
         }
-    }
+    }*/
 }
 
