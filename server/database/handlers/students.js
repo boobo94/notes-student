@@ -81,6 +81,30 @@ export class Handler {
             })
     }
 
+    static addSpecializationToStudent(stud, cb) {
+        return Students.findById(stud.student_id)
+            .then((result) => {
+                if (result && result.dataValues) {
+
+                    result.addSpecializations(stud.specialization_id)
+                        .then((student_specializations) => {
+                            return student_specializations
+                        })
+
+                    return cb(null, {
+                        statusCode: msg.success.statusCode,
+                        message: msg.success.message,
+                        //data: result
+                    })
+                }
+                else
+                    return cb(null, msg.notfound)
+            })
+            .catch((error) => {
+                return cb(error)
+            })
+    }
+
     static put(reqBody, id, cb) {
 
         var stud = {
@@ -115,6 +139,30 @@ export class Handler {
                 return cb(error)
             })
 
+    }
+
+    static removeSpecializationFromStudent(stud, cb) {
+        return Students.findById(stud.student_id)
+            .then((result) => {
+                if (result && result.dataValues) {
+
+                    result.removeSpecializations(stud.specialization_id) // remove specialization from studentSpecialization table
+                        .then((student_specializations) => {
+                            return student_specializations
+                        })
+
+                    return cb(null, {
+                        statusCode: msg.success.statusCode,
+                        message: msg.success.message,
+                        //data: result
+                    })
+                }
+                else
+                    return cb(null, msg.notfound)
+            })
+            .catch((error) => {
+                return cb(error)
+            })
     }
 
 
