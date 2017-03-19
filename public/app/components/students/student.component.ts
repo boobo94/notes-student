@@ -76,7 +76,27 @@ declare var $: any;// declare $ to use jquery
                         <li *ngFor="let spec of studentSpecializations">
                             <div class="collapsible-header"><i class="material-icons">open_in_new</i>{{ spec.name }}</div>
                             <div class="collapsible-body">
+                                <button (click)="addNewGroup()" class="btn btn-floating btn-large waves-effect waves-light red right"><i class="material-icons">add</i></button>
                                 <h5>Groups</h5>
+
+                                <div *ngIf="newGroup">
+                                    <form #addGroupform="ngForm">
+                                        <div class="input-field">
+                                            <input id="name" type="text" name="name" class="validate" required="" aria-required="true" [(ngModel)]="newGroupTemp.name">
+                                            <label [class.active]="newGroupTemp.name" for="name">Name</label>
+                                        </div>
+                                        <div class="input-field">
+                                            <input id="year" type="number" name="year" class="validate" required="" aria-required="true" [(ngModel)]="newGroupTemp.year">
+                                            <label [class.active]="newGroupTemp.year" for="year">year</label>
+                                        </div>
+
+                                        <div class="input-field">
+                                            <button class="btn waves-effect waves-light" type="submit" (click)="addGroupform.form.valid ? insertGroup(spec.specialization_id) : null">Submit
+                                                <i class="material-icons right">send</i>
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
 
                                 <ul class="collapsible" data-collapsible="accordion">
                                     <li *ngFor="let group of spec.groups">
@@ -130,6 +150,8 @@ export class StudentComponent implements OnInit {
     allSpecializations: any[]
     studentSpecializations: any
     allGroups: any
+    newGroup: Boolean
+    newGroupTemp: any
 
     constructor(private service: StudentsService, private router: Router, private specService: SpecializationsService, private groupService: GroupsService) {
 
@@ -142,7 +164,13 @@ export class StudentComponent implements OnInit {
             specializations: null
         }
         this.editMode = false
-
+        this.newGroup = false
+        this.newGroupTemp = {
+            student_id: null,
+            specialization_id: null,
+            name: null,
+            year: null
+        }
     }
 
     ngOnInit() {
@@ -188,6 +216,7 @@ export class StudentComponent implements OnInit {
                 if (r.statusCode == 0) {
                     ToastService.toast(Messages.message('insertedWithSuccess'))
                     this.router.navigate(['admin/students'])
+                    //todo remove navigate
                 }
                 //todo: check if registration number is used by another student
             })
@@ -262,7 +291,6 @@ export class StudentComponent implements OnInit {
             specialization_id: specialization_id,
             student_id: this.student.student_id
         }
-
         this.service.removeSpecializationFromStudent(spec)
             .then((r) => {
                 if (r.statusCode == 0) {
@@ -322,6 +350,44 @@ export class StudentComponent implements OnInit {
             })
     }
 
+    getStudentGroupSpecializationsById(id): any {
+        var specializationIndex = null;
+        $.each(this.studentSpecializations, function (index, value) {
+            if (value.specialization_id == id)
+                specializationIndex = index;
+        });
+
+        return specializationIndex
+    }
+
+    insertGroup(specialization_id): void {
+        this.newGroupTemp.specialization_id = specialization_id;
+        this.newGroupTemp.student_id = this.student.student_id;
+
+        this.groupService.insert(this.newGroupTemp)
+            .then((r) => {
+                if (r.statusCode == 0) {
+                    var groupIndex = this.getStudentGroupSpecializationsById(specialization_id)
+                    
+                    var firstGroup = [];
+                    firstGroup.push(this.newGroupTemp)
+                    this.studentSpecializations[groupIndex].groups = firstGroup
+
+                    this.newGroup = false;
+                    this.newGroupTemp = {
+                        student_id: null,
+                        specialization_id: null,
+                        name: null,
+                        year: null
+                    }
+                    ToastService.toast(Messages.message('insertedWithSuccess'))
+                }
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
+
     editGroup(group): void {
         this.groupService.update(group)
             .then((r) => {
@@ -345,7 +411,7 @@ export class StudentComponent implements OnInit {
         this.groupService.delete(group_id)
             .then((r) => {
                 if (r.statusCode == 0) {
-                    var groupIndex = this.getIndexStudentGroupById(group_id) // delete from studentSpecializations array deleted group
+                    var groupIndex = this.removeStudentGroupById(group_id) // delete from studentSpecializations array deleted group
                     ToastService.toast(Messages.message('deletedWithSuccess'))
                 }
                 else
@@ -356,8 +422,7 @@ export class StudentComponent implements OnInit {
             })
     }
 
-    getIndexStudentGroupById(id): any {
-        var specializationIndex = null;
+    removeStudentGroupById(id): any {
         $.each(this.studentSpecializations, function (index, value) {
             $.each(value.groups, function (index2, value2) {
                 if (value2.group_id == id) {
@@ -365,8 +430,23 @@ export class StudentComponent implements OnInit {
                 }
             })
         });
+    }
 
-        return specializationIndex
+    //  getIndexStudentGroupById(id): any {
+    //     var specializationIndex = null;
+    //     $.each(this.studentSpecializations, function (index, value) {
+    //         $.each(value.groups, function (index2, value2) {
+    //             if (value2.group_id == id) {
+    //                 specializationIndex = index2
+    //             }
+    //         })
+    //     });
+
+    //     return specializationIndex
+    // }
+
+    addNewGroup(): void {
+        this.newGroup = true;
     }
 
     //todo: implement edit and check if registration nr exists ...
