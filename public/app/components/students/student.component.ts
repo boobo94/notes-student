@@ -77,7 +77,7 @@ declare var $: any;// declare $ to use jquery
                                 
                                 <span>Lorem ipsum dolor sit amet.</span>
 
-                                <button class="btn" (click)="removeSpecialization(spec.specialization_id)"><i class="material-icons">delete</i></button>
+                                <button class="btn right" (click)="removeSpecialization(spec.specialization_id)"><i class="material-icons">delete</i></button>
                             </div>
                         </li>
                     </ul>
