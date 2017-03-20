@@ -1,5 +1,6 @@
 import express from 'express';
 import { Students } from '../builders/students.js'
+import { Group } from '../builders/group.js'
 import msg from "./messages.json";
 
 export class Handler {
@@ -152,7 +153,20 @@ export class Handler {
 
                     result.removeSpecializations(stud.specialization_id) // remove specialization from studentSpecialization table
                         .then((student_specializations) => {
-                            return student_specializations
+                            //after specializations were removed, remove all groups which belongs to this student
+                            return Group.deleteBySpecializationId(stud)
+                                .then((affectedRows) => {
+                                    if (!affectedRows) {
+                                        return false
+                                    }
+                                    else {
+                                        return true
+                                    }
+                                })
+                                .catch((error) => {
+                                    return cb(error)
+                                })
+                            //return student_specializations
                         })
 
                     return cb(null, {
