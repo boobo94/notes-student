@@ -61,4 +61,16 @@ export class Group {
                 return affectedRows
             })
     }
+
+    static deleteBySpecializationId(ids) {
+        return model.destroy({
+            where: { 
+                specialization_id: ids.specialization_id,
+                student_id: ids.student_id
+             }
+        })
+            .then((affectedRows) => {
+                return affectedRows
+            })
+    }
 }
