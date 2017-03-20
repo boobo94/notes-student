@@ -9,23 +9,6 @@ import { Messages } from '../../core/messages.config';
 
 declare var $: any;// declare $ to use jquery
 
-/**
- * todo: implement this student component
- * todo: when I display the student, maybe he has many specialization in account
- * 
- * in template create a section for specializations
- *      in the right corner of this section put a + button to add a section (in this way you can register this student
- *      to a new specialization)
- *      
- *      show a list with the name of all specializations and in his right side edit and delete buttons for each one
- *          if I press edit, under that specialization will be displayed a list with all the groups for each year
- *          here i need to display another + sign for adding a new group, register student into new study year
- *          
- *          display a list with all the groups, with edit and delete buttons
- *              if edit display a the data for selected group
- * 
- * 
- */
 
 @Component({
     selector: 'student-component',
@@ -273,6 +256,7 @@ export class StudentComponent implements OnInit {
             specialization_id: specialization_id,
             student_id: this.student.student_id
         }
+
         this.service.addSpecializationToStudent(spec)
             .then((r) => {
                 if (r.statusCode == 0) {
