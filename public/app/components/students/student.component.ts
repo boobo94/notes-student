@@ -182,13 +182,14 @@ export class StudentComponent implements OnInit {
                 this.student = stud;
             else //if is no more student in service [ refresh the page ] redirect
                 this.router.navigate(['admin/students'])
+
+            this.getAllSpecializations();
+            this.getGroups()
         }
         else {
             this.editMode = false
         }
 
-        this.getAllSpecializations();
-        this.getGroups()
     }
 
     update(): void {
@@ -215,8 +216,9 @@ export class StudentComponent implements OnInit {
             .then((r) => {
                 if (r.statusCode == 0) {
                     ToastService.toast(Messages.message('insertedWithSuccess'))
-                    this.router.navigate(['admin/students'])
-                    //todo remove navigate
+                    this.student = this.service.setCurrentStudent(r.data);
+                    this.router.navigate(['admin/students/edit'])
+
                 }
                 //todo: check if registration number is used by another student
             })
@@ -271,7 +273,6 @@ export class StudentComponent implements OnInit {
             specialization_id: specialization_id,
             student_id: this.student.student_id
         }
-
         this.service.addSpecializationToStudent(spec)
             .then((r) => {
                 if (r.statusCode == 0) {
@@ -332,7 +333,7 @@ export class StudentComponent implements OnInit {
 
                 var studentSpecializationsTemp = this.studentSpecializations;
 
-                //add groups to studentSpecializations
+                //add a group to its studentSpecializations
                 $.each(studentSpecializationsTemp, function (index, value) {
                     var group = []
                     $.each(r.data, function (index2, value2) {
@@ -368,10 +369,11 @@ export class StudentComponent implements OnInit {
             .then((r) => {
                 if (r.statusCode == 0) {
                     var groupIndex = this.getStudentGroupSpecializationsById(specialization_id)
-                    
-                    var firstGroup = [];
-                    firstGroup.push(this.newGroupTemp)
-                    this.studentSpecializations[groupIndex].groups = firstGroup
+
+                    //if groups exists in studentSpecializations save it else create a new array
+                    var groups = (this.studentSpecializations[groupIndex].groups) ? this.studentSpecializations[groupIndex].groups : []
+                    groups.push(r.data)
+                    this.studentSpecializations[groupIndex].groups = groups
 
                     this.newGroup = false;
                     this.newGroupTemp = {
@@ -380,6 +382,10 @@ export class StudentComponent implements OnInit {
                         name: null,
                         year: null
                     }
+                    $(document).ready(function () {
+                        $('.collapsible').collapsible();
+                    })//load again collapsible for group wrapper
+
                     ToastService.toast(Messages.message('insertedWithSuccess'))
                 }
             })
