@@ -33,7 +33,7 @@ export class Group {
                 transaction: t
             })
             .then((inserted) => {
-                return inserted
+                return inserted.dataValues
             })
     }
 

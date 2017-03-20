@@ -23,7 +23,11 @@ export class Handler {
 
         Students.add(stud)
             .then((inserted) => {
-                return cb(null, msg.success)
+                return cb(null, {
+                    statusCode: msg.success.statusCode,
+                    message: msg.success.message,
+                    data: inserted
+                })
             })
             .catch((error) => {
                 return cb(error)

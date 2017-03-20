@@ -68,10 +68,11 @@ export class Students {
                 transaction: t
             })
             .then((inserted) => {
-                return inserted.setSpecializations(s.specialization_id)
-                    .then((student_specializations) => {
-                        return student_specializations
-                    })
+                return inserted.dataValues
+                // return inserted.setSpecializations(s.specialization_id)
+                //     .then((student_specializations) => {
+                //         return student_specializations
+                //     })
             })
     }
 

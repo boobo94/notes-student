@@ -23,7 +23,11 @@ export class Handler {
 
         Group.add(group)
             .then((inserted) => {
-                return cb(null, msg.success)
+                return cb(null, {
+                    statusCode: msg.success.statusCode,
+                    message: msg.success.message,
+                    data: inserted
+                })
             })
             .catch((error) => {
                 return cb(error)
@@ -74,7 +78,7 @@ export class Handler {
             specialization_id: reqBody.specialization_id,
             student_id: reqBody.student_id
         }
-console.log(group)
+
         Group.update(group)
             .then((updated) => {
                 if (updated == 0)
