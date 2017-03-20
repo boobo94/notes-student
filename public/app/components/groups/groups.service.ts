@@ -65,7 +65,7 @@ export class GroupsService {
     }
 
     delete(id: Number): Promise<any> {
-        return this.http.delete(this.url.deleteGropups + id)
+        return this.http.delete(this.url.deleteGroups + id)
             .toPromise()
             .then((response) => {
                 return response.json();
