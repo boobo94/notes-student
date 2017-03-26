@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 
+import { MaterializeModule } from '../../core/materialize.module';
 import { DisciplinesComponent } from './disciplines.component';
 import { DisciplineComponent } from './discipline.component';
 import { DisciplinesService } from './disciplines.service';
@@ -14,7 +15,8 @@ import { AuthGuard } from '../../core/auth/auth.guard';
         BrowserModule,
         HttpModule,
         FormsModule,
-        DisciplinesRouter
+        DisciplinesRouter,
+        MaterializeModule
     ],
     declarations: [
         DisciplinesComponent,

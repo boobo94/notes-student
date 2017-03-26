@@ -12,6 +12,7 @@ import { NavbarComponent } from '../components/navbar/navbar.component';
 import { FooterComponent } from '../components/footer/footer.component';
 
 //modules
+import { MaterializeModule } from './materialize.module'
 import { ApiUrls } from './urls.config';
 import { AuthModule } from './auth/auth.module';
 import { SpecializationsModule } from '../components/specializations/specializations.module';
@@ -27,6 +28,7 @@ import { UsersModule } from '../components/users/users.module';
         FormsModule,
         baseRoute,
         //my modules
+        MaterializeModule,
         AuthModule,
         SpecializationsModule,
         StudentsModule,

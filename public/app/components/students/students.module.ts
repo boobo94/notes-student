@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 
+import { MaterializeModule } from '../../core/materialize.module';
 import { StudentsComponent } from './students.component';
 import { StudentComponent } from './student.component';
 import { StudentsService } from './students.service';
@@ -16,7 +17,8 @@ import { AuthGuard } from '../../core/auth/auth.guard';
         BrowserModule,
         HttpModule,
         FormsModule,
-        StudentsRouter
+        StudentsRouter,
+        MaterializeModule
     ],
     declarations: [
         StudentsComponent,
