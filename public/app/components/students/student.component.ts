@@ -256,7 +256,7 @@ export class StudentComponent implements OnInit {
             specialization_id: specialization_id,
             student_id: this.student.student_id
         }
-        console.log(this.studentSpecializations)
+
         this.service.addSpecializationToStudent(spec)
             .then((r) => {
                 if (r.statusCode == 0) {
@@ -276,7 +276,6 @@ export class StudentComponent implements OnInit {
             specialization_id: specialization_id,
             student_id: this.student.student_id
         }
-        console.log(this.studentSpecializations)
         this.service.removeSpecializationFromStudent(spec)
             .then((r) => {
                 if (r.statusCode == 0) {
@@ -284,7 +283,6 @@ export class StudentComponent implements OnInit {
                     delete this.studentSpecializations[specializationIndex].groups; // remove this object because if not next time will prepopulated
                     this.studentSpecializations.splice(specializationIndex, 1) // delete from studentSpecializations array deleted specialization
                     ToastService.toast(Messages.message('deletedWithSuccess'))
-                    console.log(this.studentSpecializations)
                 }
                 else
                     ToastService.toast(Messages.message('notModified'))
@@ -293,7 +291,7 @@ export class StudentComponent implements OnInit {
                 console.log(error)
             })
     }
-
+    
     getSpecializationsById(id): any {
         var specialization = null;
         $.each(this.allSpecializations, function (index, value) {

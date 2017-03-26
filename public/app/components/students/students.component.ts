@@ -59,7 +59,7 @@ export class StudentsComponent implements OnInit {
             .catch((error) => {
                 console.log(error)
             })
-
+            //todo: load 10 and preapre next ten, show them and go on..
     }
 
     add(): void {
@@ -87,5 +87,9 @@ export class StudentsComponent implements OnInit {
                 })
         }
 
+    }
+
+    search(): void {
+        //todo: search after name and registration_number
     }
 }
