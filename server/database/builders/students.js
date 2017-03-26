@@ -64,9 +64,7 @@ export class Students {
             name: s.name,
             tax: s.tax,
             registration_number: s.registration_number,
-        }, {
-                transaction: t
-            })
+        })
             .then((inserted) => {
                 return inserted.dataValues
                 // return inserted.setSpecializations(s.specialization_id)
@@ -93,9 +91,7 @@ export class Students {
             .then((data) => {// if we've created an object in previous step, now we'll update the record
                 return model.update(data, {
                     where: { student_id: s.student_id }
-                }, {
-                        transaction: t
-                    })
+                })
             })
             .catch(() => {// if no record was found return 0
                 return 0;
@@ -104,8 +100,7 @@ export class Students {
 
     static delete(id, t) {
         return model.destroy({
-            where: { student_id: id },
-            transaction: t
+            where: { student_id: id }
         })
             .then((affectedRows) => {
                 return affectedRows

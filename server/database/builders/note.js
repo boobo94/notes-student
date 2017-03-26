@@ -29,9 +29,7 @@ export class Note {
             exam_date: n.exam_date,
             discipline_id: n.discipline_id,
             student_id: n.student_id
-        }, {
-                transaction: t
-            })
+        })
             .then(function(inserted) {
                 return inserted
             })
@@ -45,8 +43,6 @@ export class Note {
             student_id: n.student_id
         }, {
                 where: { note_id: n.note_id }
-            }, {
-                transaction: t
             })
             .then(function(updated) {
                 return updated
@@ -55,7 +51,7 @@ export class Note {
 
     static delete(id, t) {
         return model.destroy({
-            where: { Note_id: id }, transaction: t
+            where: { note_id: id }
         })
             .then(function(affectedRows) {
                 return affectedRows

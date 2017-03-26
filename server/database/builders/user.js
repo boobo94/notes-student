@@ -68,9 +68,7 @@ export class User {
         if (u.level == 3) // if the new user is an student add also registration number
             data['registration_number'] = u.registration_number;
 
-        return model.create(data, {
-            transaction: t
-        })
+        return model.create(data)
             .then((inserted) => {
                 return inserted
             })
@@ -88,16 +86,13 @@ export class User {
 
         return model.update(data, {
             where: { user_id: u.user_id }
-        }, {
-                transaction: t
-            })
+        })
 
     }
 
     static delete(id, t) {
         return model.destroy({
-            where: { user_id: id },
-            transaction: t
+            where: { user_id: id }
         })
             .then((affectedRows) => {
                 return affectedRows

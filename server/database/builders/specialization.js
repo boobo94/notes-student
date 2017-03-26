@@ -31,9 +31,7 @@ export class Specialization {
         return model.create({
             name: s.name,
             short_name: s.short_name,
-        }, {
-                transaction: t
-            })
+        })
             .then(function (inserted) {
                 return inserted
             })
@@ -45,8 +43,6 @@ export class Specialization {
             short_name: s.short_name
         }, {
                 where: { specialization_id: s.specialization_id }
-            }, {
-                transaction: t
             })
             .then(function (updated) {
                 return updated
@@ -55,7 +51,7 @@ export class Specialization {
 
     static delete(id, t) {
         return model.destroy({
-            where: { specialization_id: id }, transaction: t
+            where: { specialization_id: id }
         })
             .then(function (affectedRows) {
                 return affectedRows

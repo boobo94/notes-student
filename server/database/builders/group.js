@@ -29,9 +29,7 @@ export class Group {
             specialization_id: g.specialization_id,
             name: g.name,
             year: g.year,
-        }, {
-                transaction: t
-            })
+        })
             .then((inserted) => {
                 return inserted.dataValues
             })
@@ -45,8 +43,6 @@ export class Group {
             year: g.year,
         }, {
                 where: { group_id: g.group_id }
-            }, {
-                transaction: t
             })
             .then((updated) => {
                 return updated
@@ -55,7 +51,7 @@ export class Group {
 
     static delete(id, t) {
         return model.destroy({
-            where: { group_id: id }, transaction: t
+            where: { group_id: id }
         })
             .then((affectedRows) => {
                 return affectedRows
