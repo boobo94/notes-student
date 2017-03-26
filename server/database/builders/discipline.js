@@ -1,4 +1,5 @@
-let model = require('../models').Discipline
+import models from '../models';
+let model = models.Discipline
 
 export class Discipline {
     constructor() {
@@ -6,7 +7,21 @@ export class Discipline {
     }
 
     static findAll() {
-        return model.findAll()
+        return model.findAll({
+            include: [
+                {
+                    model: models.Specialization,
+                    attributes: ["specialization_id"],
+                    as: 'disciplines',
+                    through: {
+                        attributes: []
+                    }
+                },
+            ],
+            order:[
+                ['discipline_id','ASC']
+            ]
+        })
             .then((results) => {
                 return results
             })
@@ -37,7 +52,6 @@ export class Discipline {
             .then((inserted) => {
                 return inserted.setDisciplines(d.specialization_id) // after insert a new record in discipline table, also in relationship table discipline_specialization should be added
                     .then((discipline_specializations) => {
-                        console.log(discipline_specializations)
                         return discipline_specializations
                     })
             })
