@@ -33,11 +33,12 @@ const model = (sequelize, DataTypes) => {
   }, {
       classMethods: {
         associate: (models) => {
-          Discipline.belongsTo(models.Specialization, {
-            foreignKey: {
-              name: 'specialization_id',
-              allowNull: false
-            },
+          Discipline.belongsToMany(models.Specialization, {
+            through: 'disciplineSpecializations',
+            foreignKey: 'discipline_id',
+            otherKey: 'specialization_id',
+            as: 'disciplines',
+            timestamps: false,
             onDelete: 'CASCADE'
           })
         }
