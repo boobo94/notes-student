@@ -33,11 +33,13 @@ export class Discipline {
             credit_points: d.credit_points,
             semester: d.semester,
             specialization_id: d.specialization_id
-        }, {
-                transaction: t
-            })
+        })
             .then((inserted) => {
-                return inserted
+                return inserted.setDisciplines(d.specialization_id) // after insert a new record in discipline table, also in relationship table discipline_specialization should be added
+                    .then((discipline_specializations) => {
+                        console.log(discipline_specializations)
+                        return discipline_specializations
+                    })
             })
     }
 
@@ -53,17 +55,29 @@ export class Discipline {
             specialization_id: d.specialization_id
         }, {
                 where: { discipline_id: d.discipline_id }
-            }, {
-                transaction: t
             })
             .then((updated) => {
-                return updated
+                return this.findById(d.discipline_id)
+                    .then((result) => {
+                        if (result && result.dataValues) {
+                            return result.setDisciplines(d.specialization_id) // after update a new record in discipline table was added, also in relationship table discipline_specialization should be added
+                                .then((discipline_specializations) => {
+                                    return discipline_specializations
+                                })
+                        }
+                        else
+                            return updated;
+                    })
+                    .catch((error) => {
+                        console.log(error)
+                    })
+
             })
     }
 
     static delete(id, t) {
         return model.destroy({
-            where: { discipline_id: id }, transaction: t
+            where: { discipline_id: id }
         })
             .then((affectedRows) => {
                 return affectedRows
