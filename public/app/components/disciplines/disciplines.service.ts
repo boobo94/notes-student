@@ -43,7 +43,7 @@ export class DisciplinesService {
     }
 
     update(disc: any): Promise<any> {
-        return this.http.put(this.url.updateSpecialization + disc.discipline_id, disc)
+        return this.http.put(this.url.updateDisciplines + disc.discipline_id, disc)
             .toPromise()
             .then((response) => {
                 return response.json();
