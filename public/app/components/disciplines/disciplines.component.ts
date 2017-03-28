@@ -17,7 +17,7 @@ import { Messages } from '../../core/messages.config';
                     <thead>
                         <tr>
                             <th data-field="id">#</th>
-                            <th data-field="name">Number</th>
+                            <th data-field="name">Discipline</th>
                             <th data-field="btns" class="right">Edit/Delete</th>
                         </tr>
                     </thead>
