@@ -20,7 +20,7 @@ import { Messages } from '../../core/messages.config';
                         <label [class.active]="user.username" for="username">Username</label>
                     </div>
                     <div class="input-field col s10 offset-s1 m6 offset-m3 l4 offset-l4">
-                        <input id="password" type="password" name="password" [(ngModel)]="user.password">
+                        <input id="password" type="password" name="password" class="validate" required="" aria-required="true"[(ngModel)]="user.password">
                         <label [class.active]="user.password" for="password">Password</label>
                     </div>
                     <div class="input-field col s10 offset-s1 m6 offset-m3 l4 offset-l4">
