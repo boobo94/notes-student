@@ -79,15 +79,22 @@ export class User {
             username: u.username,
             level: u.level,
         }
-        if (u.password)
-            data['password'] = bcrypt.hashSync(u.password, saltRounds);
-        if (u.level == 3) // if the new user is an student add also registration number
-            data['registration_number'] = u.registration_number;
 
-        return model.update(data, {
-            where: { user_id: u.user_id }
-        })
+        return this.findById(u.user_id)
+            .then((result) => {
+                if (result.password != u.password) // compare password stored in db with that from client, if are different then add new password
+                    data['password'] = bcrypt.hashSync(u.password, saltRounds);
+                if (u.level == 3) // if the new user is an student add also registration number
+                    data['registration_number'] = u.registration_number;
 
+                return model.update(data, {
+                    where: { user_id: u.user_id }
+                })
+
+            })
+            .catch((error) => {
+                console.log(error)
+            })
     }
 
     static delete(id, t) {
