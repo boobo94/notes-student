@@ -39,16 +39,23 @@ export class ApiUrls {
     insertDisciplines       = this.baseApiUrl + 'api/discipline/' //POST and /:discipline_id
 
     //users
-    getAllUsers       = this.baseApiUrl + 'api/user/find' //GET
-    getUsers          = this.baseApiUrl + 'api/user/find/' //GET and /:user_id
-    updateUsers       = this.baseApiUrl + 'api/user/' //PUT and /:user_id
-    deleteUsers       = this.baseApiUrl + 'api/user/' //DELETE and /:user_id
-    insertUsers       = this.baseApiUrl + 'api/user/' //POST and /:user_id
+    getAllUsers             = this.baseApiUrl + 'api/user/find' //GET
+    getUsers                = this.baseApiUrl + 'api/user/find/' //GET and /:user_id
+    updateUsers             = this.baseApiUrl + 'api/user/' //PUT and /:user_id
+    deleteUsers             = this.baseApiUrl + 'api/user/' //DELETE and /:user_id
+    insertUsers             = this.baseApiUrl + 'api/user/' //POST and /:user_id
 
     //groups
-    getAllGroups      = this.baseApiUrl + 'api/group/find' //GET
-    getGroup          = this.baseApiUrl + 'api/group/find/' //GET and /:student_id
-    updateGroups       = this.baseApiUrl + 'api/group/' //PUT and /:group_id
-    deleteGroups       = this.baseApiUrl + 'api/group/' //DELETE and /:group_id
-    insertGroups       = this.baseApiUrl + 'api/group/' //POST and /:group_id
+    getAllGroups            = this.baseApiUrl + 'api/group/find' //GET
+    getGroup                = this.baseApiUrl + 'api/group/find/' //GET and /:student_id
+    updateGroups            = this.baseApiUrl + 'api/group/' //PUT and /:group_id
+    deleteGroups            = this.baseApiUrl + 'api/group/' //DELETE and /:group_id
+    insertGroups            = this.baseApiUrl + 'api/group/' //POST and /:group_id
+
+    //notes
+    getAllNotes             = this.baseApiUrl + 'api/group/find' //GET
+    getNote                 = this.baseApiUrl + 'api/group/find/' //GET and /:note_id
+    updateNote              = this.baseApiUrl + 'api/group/' //PUT and /:note_id
+    deleteNote              = this.baseApiUrl + 'api/group/' //DELETE and /:note_id
+    insertNote              = this.baseApiUrl + 'api/group/' //POST and /:note_id
 }
