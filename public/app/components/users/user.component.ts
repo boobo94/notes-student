@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { UsersService } from './users.service';
@@ -20,10 +20,19 @@ import { Messages } from '../../core/messages.config';
                         <label [class.active]="user.username" for="username">Username</label>
                     </div>
                     <div class="input-field col s10 offset-s1 m6 offset-m3 l4 offset-l4">
-                        <input id="level" type="text" name="level" class="validate" required="" aria-required="true" [(ngModel)]="user.level">
-                        <label [class.active]="user.level" for="level">Level</label>
+                        <input id="password" type="password" name="password" [(ngModel)]="user.password">
+                        <label [class.active]="user.password" for="password">Password</label>
                     </div>
                     <div class="input-field col s10 offset-s1 m6 offset-m3 l4 offset-l4">
+                        <select id="level" name="level" class="validate" required="" aria-required="true" materialize="material_select" [materializeSelectOptions]="selectOptions" [(ngModel)]="user.level">
+                            <option value="" disabled selected>Choose your option</option>
+                            <option value="3">Student</option>
+                            <option value="2">Teacher</option>
+                            <option value="1">Admin</option>
+                        </select>
+                        <label [class.active]="user.level" for="level">Level</label>
+                    </div>
+                    <div *ngIf="user.level==3" class="input-field col s10 offset-s1 m6 offset-m3 l4 offset-l4">
                         <input id="registration_number" type="text" name="registration_number" class="validate" required="" aria-required="true" [(ngModel)]="user.registration_number">
                         <label [class.active]="user.registration_number" for="registration_number">Registration Number</label>
                     </div>
@@ -37,7 +46,7 @@ import { Messages } from '../../core/messages.config';
         </div>
         `
 })
-export class UserComponent implements OnInit {
+export class UserComponent implements OnInit, AfterViewInit {
     user: any
     editMode: Boolean
 
@@ -47,6 +56,7 @@ export class UserComponent implements OnInit {
             user_id: null,
             username: null,
             level: null,
+            password: null,
             registration_number: null,
         }
         this.editMode = false
@@ -66,6 +76,13 @@ export class UserComponent implements OnInit {
         else {
             this.editMode = false
         }
+    }
+
+    ngAfterViewInit() {
+        setTimeout(function () {
+            Materialize.updateTextFields(); // updateTextFields to move the labels above inputs after data binding
+
+        }, 100);
     }
 
     update(): void {
