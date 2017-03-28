@@ -3,11 +3,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 
-import { MaterializeModule } from '../../core/materialize.module';
-import { UsersComponent } from './users.component';
-import { UserComponent } from './user.component';
-import { UsersService } from './users.service';
-import { UsersRouter } from './users.router.module';
+import { NotesComponent } from './notes.component';
+import { NoteComponent } from './note.component';
+import { NotesService } from './notes.service';
+import { NotesRouter } from './notes.router.module';
 import { AuthGuard } from '../../core/auth/auth.guard';
 
 @NgModule({
@@ -15,18 +14,17 @@ import { AuthGuard } from '../../core/auth/auth.guard';
         BrowserModule,
         HttpModule,
         FormsModule,
-        UsersRouter,
-        MaterializeModule
+        NotesRouter
     ],
     declarations: [
-        UsersComponent,
-        UserComponent
+        NotesComponent,
+        NoteComponent
     ],
     providers: [
-        UsersService,
+        NotesService,
         AuthGuard
     ]
 })
-export class UsersModule {
+export class NotesModule {
     
 }

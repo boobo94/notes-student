@@ -19,6 +19,7 @@ import { SpecializationsModule } from '../components/specializations/specializat
 import { StudentsModule } from '../components/students/students.module';
 import { DisciplinesModule } from '../components/disciplines/disciplines.module';
 import { UsersModule } from '../components/users/users.module';
+import { NotesModule } from '../components/notes/notes.module';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { UsersModule } from '../components/users/users.module';
         SpecializationsModule,
         StudentsModule,
         DisciplinesModule,
-        UsersModule
+        UsersModule,
+        NotesModule,
     ],
     declarations: [
         AppComponent,

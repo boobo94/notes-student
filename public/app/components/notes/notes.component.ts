@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { DisciplinesService } from './disciplines.service';
+import { NotesService } from './notes.service';
 import { ToastService } from '../../components/notifications/toast.service';
 import { Messages } from '../../core/messages.config';
 
 @Component({
-    selector: 'disciplines-component',
+    selector: 'notes-component',
     template: `
         <div class="container">
             <div class="row">
@@ -17,18 +17,18 @@ import { Messages } from '../../core/messages.config';
                     <thead>
                         <tr>
                             <th data-field="id">#</th>
-                            <th data-field="name">Discipline</th>
+                            <th data-field="name">Notes</th>
                             <th data-field="btns" class="right">Edit/Delete</th>
                         </tr>
                     </thead>
 
                     <tbody>
-                        <tr *ngFor="let disc of disciplines">
-                            <td>{{disc.discipline_id}}</td>
-                            <td>{{disc.name}}</td>
+                        <tr *ngFor="let note of notes">
+                            <td>{{note.note_id}}</td>
+                            <td>{{note.name}}</td>
                             <td class="right">
-                                <button (click)="edit(disc)" class="waves-effect waves-light btn "><i class="material-icons">mode_edit</i></button>
-                                <button (click)="delete(disc.discipline_id)" class="waves-effect waves-light btn "><i class="material-icons">delete</i></button>
+                                <button (click)="edit(note)" class="waves-effect waves-light btn "><i class="material-icons">mode_edit</i></button>
+                                <button (click)="delete(note.note_id)" class="waves-effect waves-light btn "><i class="material-icons">delete</i></button>
                             </td>
                         </tr>
                     </tbody>
@@ -38,21 +38,21 @@ import { Messages } from '../../core/messages.config';
         </div>
     `
 })
-export class DisciplinesComponent implements OnInit {
-    disciplines: any[]
+export class NotesComponent implements OnInit {
+    notes: any[]
 
-    constructor(private service: DisciplinesService, private router: Router) {
+    constructor(private service: NotesService, private router: Router) {
 
     }
 
     ngOnInit(): void {
-        this.getAllDisciplines()
+        this.getAllNotes()
     }
 
-    getAllDisciplines(): void {
-        this.service.getAllDisciplines()
+    getAllNotes(): void {
+        this.service.getAllNotes()
             .then((r) => {
-                this.disciplines = r.data;
+                this.notes = r.data;
             })
             .catch((error) => {
                 console.log(error)
@@ -61,12 +61,12 @@ export class DisciplinesComponent implements OnInit {
     }
 
     add(): void {
-        this.router.navigate(['admin/disciplines/add'])
+        this.router.navigate(['admin/notes/add'])
     }
 
-    edit(discipline: any): void {
-        this.service.setCurrentDiscipline(discipline)
-        this.router.navigate(['admin/disciplines/edit'])
+    edit(note: any): void {
+        this.service.setCurrentNote(note)
+        this.router.navigate(['admin/notes/edit'])
     }
 
     delete(id: Number): void {
@@ -77,7 +77,7 @@ export class DisciplinesComponent implements OnInit {
                 .then((r) => {
                     if (r.statusCode == 0) {
                         ToastService.toast(Messages.message('deletedWithSuccess'))
-                        this.getAllDisciplines() // reload all disciplines
+                        this.getAllNotes() // reload all notes
                     }
                 })
                 .catch((error) => {

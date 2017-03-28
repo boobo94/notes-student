@@ -48,11 +48,11 @@ declare var $: any;// declare $ to use jquery
                         <label [class.active]="discipline.semester" for="semester">Semester</label>
                     </div>
                     <div class="input-field col s10 offset-s1 m6 offset-m3 l4 offset-l4">
-                        <select id="specialization_id" name="specialization_id" materialize="material_select" [materializeSelectOptions]="selectOptions" [(ngModel)]="discipline.specialization_id">
+                        <select id="specialization_id" name="specialization_id" materialize="material_select" [materializeSelectOptions]="selectOptions" [(ngModel)]="selectedSpecialization">
                             <option value="" disabled >Choose your option</option>
-                            <option *ngFor="let specialization of allSpecializations" [selected]="discipline.disciplines[0].specialization_id==specialization.specialization_id" [value]="specialization.specialization_id" >{{specialization.name}}</option>
+                            <option *ngFor="let specialization of allSpecializations" [value]="specialization.specialization_id" >{{specialization.name}}</option>
                         </select>
-                        <label [class.active]="discipline.specialization_id" >Specialization</label>
+                        <label [class.active]="selectedSpecialization" >Specialization</label>
                     </div>
                     <div class="col s10 offset-s1 m6 offset-m3 l4 offset-l4">
                         <button class="btn waves-effect waves-light right" type="submit" (click)="disciplineform.form.valid ? (editMode ? update() : insert()) : null">Submit
@@ -68,6 +68,7 @@ export class DisciplineComponent implements OnInit {
     discipline: any
     editMode: Boolean
     allSpecializations: any[]
+    selectedSpecialization: any
 
     constructor(private service: DisciplinesService, private router: Router, private specService: SpecializationsService) {
 
@@ -81,7 +82,8 @@ export class DisciplineComponent implements OnInit {
             semester: null,
             specialization_id: null
         }
-        this.editMode = false
+        this.selectedSpecialization = null;
+        this.editMode = false;
 
     }
 
@@ -90,8 +92,10 @@ export class DisciplineComponent implements OnInit {
             this.editMode = true
             let disc: any = this.service.getCurrentDiscipline();
 
-            if (disc != null)
+            if (disc != null){
                 this.discipline = disc;
+                this.selectedSpecialization = (disc.disciplines[0]) ? disc.disciplines[0].specialization_id : 0
+            }
             else //if is no more specialization in service [ refresh the page ] redirect
                 this.router.navigate(['admin/disciplines'])
         }
@@ -102,6 +106,7 @@ export class DisciplineComponent implements OnInit {
     }
 
     update(): void {
+        this.discipline.specialization_id = this.selectedSpecialization;
         this.service.update(this.discipline)
             .then((r) => {
                 if (r.statusCode == 0) {
@@ -114,6 +119,7 @@ export class DisciplineComponent implements OnInit {
     }
 
     insert(): void {
+        this.discipline.specialization_id = this.selectedSpecialization;
         this.service.insert(this.discipline)
             .then((r) => {
                 if (r.statusCode == 0) {
@@ -131,6 +137,7 @@ export class DisciplineComponent implements OnInit {
             .then((result) => {
                 this.allSpecializations = result.data;
                 Materialize.updateTextFields(); // updateTextFields to move the labels above inputs after data binding
+            })
             .catch((error) => {
                 console.log(error)
             })
