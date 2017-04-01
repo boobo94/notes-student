@@ -1,15 +1,35 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { NotesService } from './notes.service';
+import { SpecializationsService } from '../specializations/specializations.service';
 import { ToastService } from '../../components/notifications/toast.service';
 import { Messages } from '../../core/messages.config';
+
+declare var $: any;// declare $ to use jquery
 
 @Component({
     selector: 'notes-component',
     template: `
         <div class="container">
             <div class="row">
+                <div id="modal1" class="modal modal-fixed-footer" materialize="modal" [materializeParams]="[{dismissible: false}]" [materializeActions]="modalAction">
+                    <div class="modal-content">
+                        <h4>Select a specialization</h4>
+                        <div class="input-field col s10 offset-s1 m6 offset-m3 l4 offset-l4">
+                            <select id="specialization_id" name="specialization_id" materialize="material_select" [materializeSelectOptions]="selectOptions" [(ngModel)]="selectedSpecialization">
+                                <option value="" disabled >Choose your option</option>
+                                <option *ngFor="let specialization of allStudentSpecialization" [ngValue]="specialization" >{{specialization.name}}</option>
+                            </select>
+                            <label [class.active]="selectedSpecialization" >Specialization</label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <a class="waves-effect waves-green btn-flat" (click)="closeModal()">Close</a>
+                        <a class="modal-action modal-close waves-effect waves-green btn-flat" (click)="agreeModal()">Agree</a>
+                    </div>
+                </div>
+
                 <div class="col s12">
                     <button class="btn-floating btn-large waves-effect waves-light red right" (click)="add()"><i class="material-icons">add</i></button>
                 </div>
@@ -25,7 +45,7 @@ import { Messages } from '../../core/messages.config';
                     <tbody>
                         <tr *ngFor="let note of notes">
                             <td>{{note.note_id}}</td>
-                            <td>{{note.name}}</td>
+                            <td>{{note.note}}</td>
                             <td class="right">
                                 <button (click)="edit(note)" class="waves-effect waves-light btn "><i class="material-icons">mode_edit</i></button>
                                 <button (click)="delete(note.note_id)" class="waves-effect waves-light btn "><i class="material-icons">delete</i></button>
@@ -40,13 +60,22 @@ import { Messages } from '../../core/messages.config';
 })
 export class NotesComponent implements OnInit {
     notes: any[]
+    student: any
+    modalAction = new EventEmitter<string | MaterializeAction>();
+    allStudentSpecialization: any[];
+    selectedSpecialization: any;
 
-    constructor(private service: NotesService, private router: Router) {
+    constructor(private service: NotesService, private router: Router, private specializationService: SpecializationsService) {
+        this.student = this.service.getCurrentStudent(); // get the student data
+        
+        if(!this.student) //if student is not set redirect to students
+            this.router.navigate(['admin/students']);
 
+        this.getAllNotes();
     }
 
     ngOnInit(): void {
-        this.getAllNotes()
+        this.selectSpecialization();
     }
 
     getAllNotes(): void {
@@ -85,5 +114,66 @@ export class NotesComponent implements OnInit {
                 })
         }
 
+    }
+
+    selectSpecialization() {
+        if (this.student.specializations && this.student.specializations.length == 1) { // if student is recorded in a single specialization
+
+            this.specializationService.getSpecializationByID(this.student.specializations[0].specialization_id)
+                .then((result) => {
+                    if (result.statusCode == 0) {
+                        this.service.setCurrentSpecialization(result.data);
+                    }
+
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
+        }
+        else if (this.student.specializations && this.student.specializations.length > 1) {
+            // prepare selector from modal with student's specializations
+            this.getAllStudentSpecializations(this.student.specializations);
+        }
+        else {//student doesn't have a specialization assigned to
+            ToastService.toast(Messages.message('studentWithoutSpecialization'));
+            this.router.navigate(['admin/students/']);
+        }
+
+    }
+
+    getAllStudentSpecializations(studentSpecializations: any): void {
+        this.specializationService.getAllSpecializations()
+            .then((result) => {
+                if (result.statusCode == 0) {
+                    var allStudentSpecializations = [];
+                    $.each(studentSpecializations, function (index, value) {
+                        $.each(result.data, function (index2, value2) {
+                            if (value.specialization_id == value2.specialization_id)
+                                allStudentSpecializations.push(value2);
+                        })
+                    })
+                    this.allStudentSpecialization = allStudentSpecializations;
+                    console.log('open modal')
+                    this.openModal();//open modal to choose a specialization
+                }
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+
+    }
+
+    openModal(): void {
+        this.modalAction.emit({ action: "modal", params: ['open'] });
+    }
+
+    closeModal(): void {
+        this.modalAction.emit({ action: "modal", params: ['close'] });
+        this.router.navigate(['admin/students/']);
+    }
+
+    agreeModal(): void {
+        console.log(this.selectedSpecialization)
+        this.service.setCurrentSpecialization(this.selectedSpecialization);
     }
 }

@@ -16,7 +16,7 @@ export class Api {
         //create new Router
         this.router = express.Router()
 
-        this.router.post('/add',
+        this.router.post('/',
             this.middlewares.auth.webAuth,
             this.middlewares.auth.adminAuth,
             function (req, res) {
