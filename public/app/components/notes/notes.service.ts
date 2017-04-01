@@ -8,6 +8,7 @@ import { ApiUrls } from '../../core/urls.config';
 export class NotesService {
     note: any;
     student: any;
+    specialization: any;
 
     constructor(private http: AuthHttp, private url: ApiUrls) {
         this.note = null
@@ -27,6 +28,14 @@ export class NotesService {
 
     getCurrentStudent() {
         return this.student;
+    }
+
+    setCurrentSpecialization(specialization: any) {
+        this.specialization = specialization;
+    }
+
+    getCurrentSpecialization() {
+        return this.specialization;
     }
 
     getAllNotes(): Promise<any> {
