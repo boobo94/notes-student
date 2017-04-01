@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { StudentsService } from './students.service';
+import { NotesService } from '../notes/notes.service';
 import { ToastService } from '../../components/notifications/toast.service';
 import { Messages } from '../../core/messages.config';
 
@@ -44,7 +45,7 @@ import { Messages } from '../../core/messages.config';
 export class StudentsComponent implements OnInit {
     students: any[]
 
-    constructor(private service: StudentsService, private router: Router) {
+    constructor(private service: StudentsService, private router: Router, private noteService: NotesService) {
 
     }
 
@@ -73,6 +74,7 @@ export class StudentsComponent implements OnInit {
     }
 
     notes(student: any): void{
+        this.noteService.setCurrentStudent(student);
         this.router.navigate(['admin/notes'])
     }
 

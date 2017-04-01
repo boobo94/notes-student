@@ -7,6 +7,7 @@ import { ApiUrls } from '../../core/urls.config';
 @Injectable()
 export class NotesService {
     note: any;
+    student: any;
 
     constructor(private http: AuthHttp, private url: ApiUrls) {
         this.note = null
@@ -18,6 +19,14 @@ export class NotesService {
 
     getCurrentNote() {
         return this.note
+    }
+
+    setCurrentStudent(student: any) {
+        this.student = student;
+    }
+
+    getCurrentStudent() {
+        return this.student;
     }
 
     getAllNotes(): Promise<any> {
