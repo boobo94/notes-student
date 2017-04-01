@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 
+import { MaterializeModule } from '../../core/materialize.module';
 import { NotesComponent } from './notes.component';
 import { NoteComponent } from './note.component';
 import { NotesService } from './notes.service';
@@ -14,7 +15,8 @@ import { AuthGuard } from '../../core/auth/auth.guard';
         BrowserModule,
         HttpModule,
         FormsModule,
-        NotesRouter
+        NotesRouter,
+        MaterializeModule
     ],
     declarations: [
         NotesComponent,
