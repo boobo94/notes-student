@@ -53,9 +53,9 @@ export class ApiUrls {
     insertGroups            = this.baseApiUrl + 'api/group/' //POST and /:group_id
 
     //notes
-    getAllNotes             = this.baseApiUrl + 'api/group/find' //GET
-    getNote                 = this.baseApiUrl + 'api/group/find/' //GET and /:note_id
-    updateNote              = this.baseApiUrl + 'api/group/' //PUT and /:note_id
-    deleteNote              = this.baseApiUrl + 'api/group/' //DELETE and /:note_id
-    insertNote              = this.baseApiUrl + 'api/group/' //POST and /:note_id
+    getAllNotes             = this.baseApiUrl + 'api/note/find' //GET
+    getNote                 = this.baseApiUrl + 'api/note/find/' //GET and /:note_id
+    updateNote              = this.baseApiUrl + 'api/note/' //PUT and /:note_id
+    deleteNote              = this.baseApiUrl + 'api/note/' //DELETE and /:note_id
+    insertNote              = this.baseApiUrl + 'api/note/' //POST and /:note_id
 }
