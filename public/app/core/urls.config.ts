@@ -33,6 +33,7 @@ export class ApiUrls {
 
     //disciplines
     getAllDisciplines       = this.baseApiUrl + 'api/discipline/find' //GET
+    getAllDisciplinesBySpecialization       = this.baseApiUrl + 'api/discipline/findBySpecialization/' //GET and /:specialization_id
     getDisciplines          = this.baseApiUrl + 'api/discipline/find/' //GET and /:discipline_id
     updateDisciplines       = this.baseApiUrl + 'api/discipline/' //PUT and /:discipline_id
     deleteDisciplines       = this.baseApiUrl + 'api/discipline/' //DELETE and /:discipline_id
@@ -54,6 +55,7 @@ export class ApiUrls {
 
     //notes
     getAllNotes             = this.baseApiUrl + 'api/note/find' //GET
+    getAllStudentNotes      = this.baseApiUrl + 'api/note/findByStudentId/' //GET and /:studentid/:specializationid
     getNote                 = this.baseApiUrl + 'api/note/find/' //GET and /:note_id
     updateNote              = this.baseApiUrl + 'api/note/' //PUT and /:note_id
     deleteNote              = this.baseApiUrl + 'api/note/' //DELETE and /:note_id
