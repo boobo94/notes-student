@@ -31,6 +31,17 @@ export class DisciplinesService {
             })
     }
 
+    getAllDisciplinesBySpecialization(id: Number): Promise<any> {
+        return this.http.get(this.url.getAllDisciplinesBySpecialization + id)
+            .toPromise()
+            .then((response) => {
+                return response.json();
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }
+
     insert(disc: any): Promise<any> {
         return this.http.post(this.url.insertDisciplines, disc)
             .toPromise()
