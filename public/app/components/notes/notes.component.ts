@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter } from '@angular/core';
+import { Component, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { NotesService } from './notes.service';
@@ -13,24 +13,16 @@ declare var $: any;// declare $ to use jquery
     template: `
         <div class="container">
             <div class="row">
-                <div id="modal1" class="modal modal-fixed-footer" materialize="modal" [materializeParams]="[{dismissible: false}]" [materializeActions]="modalAction">
-                    <div class="modal-content">
-                        <h4>Select a specialization</h4>
-                        <div class="input-field col s10 offset-s1 m6 offset-m3 l4 offset-l4">
-                            <select id="specialization_id" name="specialization_id" materialize="material_select" [materializeSelectOptions]="selectOptions" [(ngModel)]="selectedSpecialization">
-                                <option value="" disabled >Choose your option</option>
-                                <option *ngFor="let specialization of allStudentSpecialization" [ngValue]="specialization" >{{specialization.name}}</option>
-                            </select>
-                            <label [class.active]="selectedSpecialization" >Specialization</label>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <a class="waves-effect waves-green btn-flat" (click)="closeModal()">Close</a>
-                        <a class="modal-action modal-close waves-effect waves-green btn-flat" (click)="agreeModal()">Agree</a>
-                    </div>
-                </div>
-
                 <div class="col s12">
+                   
+                    <div class="input-field col s8 ">
+                     <label [class.active]="selectedSpecialization" >Specialization</label>
+                        <select id="specialization_id" name="specialization_id" materialize="material_select" [materializeSelectOptions]="selectOptions" [(ngModel)]="selectedSpecialization" (change)="showNotes()">
+                            <option value="" disabled >Choose your option</option>
+                            <option *ngFor="let specialization of allStudentSpecialization" [ngValue]="specialization" >{{specialization.name}}</option>
+                        </select>
+                    </div>
+
                     <button class="btn-floating btn-large waves-effect waves-light red right" (click)="add()"><i class="material-icons">add</i></button>
                 </div>
                 <table class="bordered">
@@ -58,35 +50,33 @@ declare var $: any;// declare $ to use jquery
         </div>
     `
 })
-export class NotesComponent implements OnInit {
-    notes: any[]
-    student: any
-    modalAction = new EventEmitter<string | MaterializeAction>();
+export class NotesComponent {
+    notes: any[];
+    student: any;
     allStudentSpecialization: any[];
     selectedSpecialization: any;
 
     constructor(private service: NotesService, private router: Router, private specializationService: SpecializationsService) {
+
         this.student = this.service.getCurrentStudent(); // get the student data
-        
-        if(!this.student) //if student is not set redirect to students
+        if (!this.student) //if student is not set redirect to students
             this.router.navigate(['admin/students']);
 
-        this.getAllNotes();
-    }
-
-    ngOnInit(): void {
         this.selectSpecialization();
     }
 
     getAllNotes(): void {
-        this.service.getAllNotes()
+        var noteIDS = {
+            student_id: this.student.student_id,
+            specialization_id: this.selectedSpecialization.specialization_id
+        }
+        this.service.getAllStudentNotes(noteIDS)
             .then((r) => {
                 this.notes = r.data;
             })
             .catch((error) => {
                 console.log(error)
             })
-
     }
 
     add(): void {
@@ -116,13 +106,18 @@ export class NotesComponent implements OnInit {
 
     }
 
-    selectSpecialization() {
+    selectSpecialization(): void {
         if (this.student.specializations && this.student.specializations.length == 1) { // if student is recorded in a single specialization
 
-            this.specializationService.getSpecializationByID(this.student.specializations[0].specialization_id)
+            this.specializationService.getSpecializationByID(this.student.specializations[0].specialization_id) // get all data for that specialization
                 .then((result) => {
                     if (result.statusCode == 0) {
-                        this.service.setCurrentSpecialization(result.data);
+                        this.selectedSpecialization = result.data;// set selectedSpecialization
+
+                        let tempAllSpecializations = []; tempAllSpecializations.push(result.data);// use a temp variable to sett allStudentSpecialization, to display the current specialization in the header of page
+                        this.allStudentSpecialization = tempAllSpecializations;
+
+                        this.showNotes();
                     }
 
                 })
@@ -145,16 +140,18 @@ export class NotesComponent implements OnInit {
         this.specializationService.getAllSpecializations()
             .then((result) => {
                 if (result.statusCode == 0) {
+                    
                     var allStudentSpecializations = [];
-                    $.each(studentSpecializations, function (index, value) {
+                    $.each(studentSpecializations, function (index, value) {// get all data for specialization assigned with this student
                         $.each(result.data, function (index2, value2) {
                             if (value.specialization_id == value2.specialization_id)
                                 allStudentSpecializations.push(value2);
                         })
                     })
                     this.allStudentSpecialization = allStudentSpecializations;
-                    console.log('open modal')
-                    this.openModal();//open modal to choose a specialization
+
+                    this.selectedSpecialization = allStudentSpecializations[0];// set first specialization as default to show the notes
+                    this.showNotes();//show notes for selectedSpecialization
                 }
             })
             .catch((error) => {
@@ -163,17 +160,8 @@ export class NotesComponent implements OnInit {
 
     }
 
-    openModal(): void {
-        this.modalAction.emit({ action: "modal", params: ['open'] });
-    }
-
-    closeModal(): void {
-        this.modalAction.emit({ action: "modal", params: ['close'] });
-        this.router.navigate(['admin/students/']);
-    }
-
-    agreeModal(): void {
-        console.log(this.selectedSpecialization)
+    showNotes(): void {
         this.service.setCurrentSpecialization(this.selectedSpecialization);
+        this.getAllNotes();
     }
 }
