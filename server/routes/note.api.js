@@ -37,6 +37,20 @@ export class Api {
                 })
             })
 
+        this.router.get('/findByStudentId/:studentid/:specializationid',
+            this.middlewares.auth.webAuth,
+            function (req, res) {
+                var noteIDS = {
+                    student_id: req.params.studentid,
+                    specialization_id: req.params.specializationid
+                }
+                Handler.getAllByStudentIDandSpecializationID(noteIDS, function (error, result) {
+                    if (error)
+                        return res.status(500).send(error)
+                    return res.status(200).send(result)
+                })
+            })
+
         this.router.get('/find/:id',
             this.middlewares.auth.webAuth,
             function (req, res) {
