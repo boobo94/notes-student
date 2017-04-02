@@ -2,6 +2,7 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { NotesService } from './notes.service';
+import { DisciplinesService } from '../disciplines/disciplines.service';
 import { ToastService } from '../../components/notifications/toast.service';
 import { Messages } from '../../core/messages.config';
 
@@ -20,15 +21,15 @@ import { Messages } from '../../core/messages.config';
                         <label [class.active]="note.note" for="note">Note</label>
                     </div>
                     <div class="input-field col s10 offset-s1 m6 offset-m3 l4 offset-l4">
-                        <input id="exam_date" type="text" name="exam_date" materialize="pickadate" [(ngModel)]="note.exam_date">
+                        <input id="exam_date" type="text" name="exam_date" materialize="pickadate" [materializeParams]="[{format: 'yyyy/mm/dd'}]" [(ngModel)]="note.exam_date">
                         <label [class.active]="note.exam_date" for="exam_date">Exam date</label>
                     </div>
                     <div class="input-field col s10 offset-s1 m6 offset-m3 l4 offset-l4">
-                        <select id="specialization_id" name="specialization_id" materialize="material_select" [materializeSelectOptions]="selectOptions" [(ngModel)]="selectedSpecialization">
+                        <select id="discipline_id" name="discipline_id" materialize="material_select" [materializeSelectOptions]="selectOptions" [(ngModel)]="selectedDiscipline">
                             <option value="" disabled >Choose your option</option>
-                            <option *ngFor="let specialization of allSpecializations" [value]="specialization.specialization_id" >{{specialization.name}}</option>
+                            <option *ngFor="let discipline of disciplines" [value]="discipline.discipline_id" >{{discipline.name}}</option>
                         </select>
-                        <label [class.active]="selectedSpecialization" >Specialization</label>
+                        <label [class.active]="selectedSpecialization" >Discipline</label>
                     </div>
                     <div class="col s10 offset-s1 m6 offset-m3 l4 offset-l4">
                         <button class="btn waves-effect waves-light right" type="submit" (click)="noteform.form.valid ? (editMode ? update() : insert()) : null">Submit
@@ -45,9 +46,10 @@ export class NoteComponent implements OnInit, AfterViewInit {
     editMode: Boolean
     student: any
     selectedSpecialization: any
-    disciplines: any[]
+    disciplines: any
+    selectedDiscipline: any
 
-    constructor(private service: NotesService, private router: Router) {
+    constructor(private service: NotesService, private router: Router, private disciplineService: DisciplinesService) {
 
         this.note = { // create a null object to escape errors in template
             note_id: null,
@@ -58,7 +60,8 @@ export class NoteComponent implements OnInit, AfterViewInit {
             student_id: null
         }
         this.editMode = false
-
+        this.selectedDiscipline = null
+        this.disciplines = null
     }
 
     ngOnInit() {
@@ -66,8 +69,10 @@ export class NoteComponent implements OnInit, AfterViewInit {
             this.editMode = true
             let currentNote: any = this.service.getCurrentNote();
 
-            if (currentNote != null)
+            if (currentNote != null){
                 this.note = currentNote;
+                this.selectedDiscipline = currentNote.discipline_id
+            }
             else //if is no more note in service [ refresh the page ] redirect
                 this.router.navigate(['admin/notes'])
         }
@@ -77,6 +82,7 @@ export class NoteComponent implements OnInit, AfterViewInit {
         }
 
         this.setSelectedSpecialization();
+        console.log(this.note)
 
     }
 
@@ -87,6 +93,7 @@ export class NoteComponent implements OnInit, AfterViewInit {
     }
 
     update(): void {
+        this.note.discipline_id = this.selectedDiscipline;
         this.service.update(this.note)
             .then((r) => {
                 if (r.statusCode == 0) {
@@ -99,6 +106,7 @@ export class NoteComponent implements OnInit, AfterViewInit {
     }
 
     insert(): void {
+        this.note.discipline_id = this.selectedDiscipline;
         this.service.insert(this.note)
             .then((r) => {
                 if (r.statusCode == 0) {
@@ -126,15 +134,26 @@ export class NoteComponent implements OnInit, AfterViewInit {
 
         if (currentSpecialization) {
             this.selectedSpecialization = currentSpecialization;
+            this.note.specialization_id = currentSpecialization.specialization_id;
 
             console.log(currentSpecialization)
-        //this.getSpecializationDisciplines();
+            this.getSpecializationDisciplines();
         }
 
-        
+
     }
 
     getSpecializationDisciplines(): void {
-
+        var specialization_id = this.selectedSpecialization.specialization_id
+        this.disciplineService.getAllDisciplinesBySpecialization(specialization_id)
+            .then((result) => {
+                if (result.statusCode == 0) {
+                    this.disciplines = result.data;
+                    console.log(result.data)
+                }
+            })
+            .catch((error) => {
+                console.log(error)
+            })
     }
 }
