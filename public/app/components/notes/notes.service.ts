@@ -49,6 +49,17 @@ export class NotesService {
             })
     }
 
+    getAllStudentNotes(noteIDS: any): Promise<any> {
+        return this.http.get(this.url.getAllStudentNotes + noteIDS.student_id + '/' + noteIDS.specialization_id)
+            .toPromise()
+            .then((response) => {
+                return response.json();
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }
+
     insert(note: any): Promise<any> {
         return this.http.post(this.url.insertNote, note)
             .toPromise()
