@@ -94,7 +94,7 @@ export class DisciplineComponent implements OnInit {
 
             if (disc != null){
                 this.discipline = disc;
-                this.selectedSpecialization = (disc.disciplines[0]) ? disc.disciplines[0].specialization_id : 0
+                this.selectedSpecialization = (disc.specializations[0]) ? disc.specializations[0].specialization_id : 0
             }
             else //if is no more specialization in service [ refresh the page ] redirect
                 this.router.navigate(['admin/disciplines'])
