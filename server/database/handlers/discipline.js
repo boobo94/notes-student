@@ -51,6 +51,23 @@ export class Handler {
             })
     }
 
+    static getAllBySpecializationID(specialization_id, cb) {
+        Discipline.findAllBySpecializationID(specialization_id)
+            .then((results) => {
+                if (results)
+                    return cb(null, {
+                        statusCode: msg.success.statusCode,
+                        message: msg.success.message,
+                        data: results
+                    })
+                else
+                    return cb(null, msg.notfound)
+            })
+            .catch((error) => {
+                return cb(error)
+            })
+    }
+
     static getOne(id, cb) {
         return Discipline.findById(id)
             .then((result) => {
