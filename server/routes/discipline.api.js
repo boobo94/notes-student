@@ -46,6 +46,16 @@ export class Api {
                 })
             })
 
+        this.router.get('/findBySpecialization/:id',
+            this.middlewares.auth.webAuth,
+            (req, res) => {
+                Handler.getAllBySpecializationID(req.params.id, (error, result) => {
+                    if (error)
+                        return res.status(500).send(error)
+                    return res.status(200).send(result)
+                })
+            })
+
         this.router.put('/:id',
             this.middlewares.auth.webAuth,
             this.middlewares.auth.adminAuth,
