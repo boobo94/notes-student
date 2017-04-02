@@ -18,6 +18,7 @@ const model = (sequelize, DataTypes) => {
                 associate: (models) => {
                     Note.belongsTo(models.Discipline, {
                         foreignKey: 'discipline_id',
+                        as: 'disciplines',
                         allowNull: false,
                         onDelete: 'CASCADE'
                     })

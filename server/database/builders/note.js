@@ -1,4 +1,5 @@
-let model = require('../models').Note
+import models from '../models';
+let model = models.Note;
 
 export class Note {
     constructor() {
@@ -14,6 +15,14 @@ export class Note {
 
     static findAllByStudentIDandSpecializationID(noteIDS) {
         return model.findAll({
+            include: [
+                {
+                    model: models.Discipline,
+                    attributes: ["name"],
+                    as: 'disciplines',
+
+                },
+            ],
             where: {
                 student_id: noteIDS.student_id,
                 specialization_id: noteIDS.specialization_id
