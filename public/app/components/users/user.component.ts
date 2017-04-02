@@ -37,7 +37,7 @@ import { Messages } from '../../core/messages.config';
                         <label [class.active]="user.registration_number" for="registration_number">Registration Number</label>
                     </div>
                     <div class="col s10 offset-s1 m6 offset-m3 l4 offset-l4">
-                        <button class="btn waves-effect waves-light right" type="submit" (click)="userform.form.valid ? (editMode ? update() : insert()) : null">Submit
+                        <button class="btn waves-effect waves-light right" type="submit" (click)="userform.form.valid ? (editMode ? checkStudentUpdate() : checkStudentInsert()) : null">Submit
                             <i class="material-icons right">send</i>
                         </button>
                     </div>
@@ -108,5 +108,51 @@ export class UserComponent implements OnInit, AfterViewInit {
             .catch((error) => {
                 console.log(error)
             })
+    }
+
+    checkStudentInsert(): void {
+        if (this.user.level == 3) {
+            if (this.user.registration_number) {
+
+                this.service.getRegistrationNumber(this.user.registration_number)
+                    .then((r) => {
+                        if (r.statusCode == 0) { // registration number is assigned to a student
+                            this.insert();
+                        }
+                        else if (r.statusCode == 1) { // registration number doesn't exist
+                            ToastService.toast(Messages.message('noRegistrationNumber'));
+                        }
+                    })
+                    .catch((error) => {
+                        console.log(error)
+                    })
+            }
+        }
+        else {
+            this.insert();
+        }
+    }
+
+    checkStudentUpdate(): void {
+        if (this.user.level == 3) {
+            if (this.user.registration_number) {
+
+                this.service.getRegistrationNumber(this.user.registration_number)
+                    .then((r) => {
+                        if (r.statusCode == 0) { // registration number is assigned to a student
+                            this.update();
+                        }
+                        else if (r.statusCode == 1) { // registration number doesn't exist
+                            ToastService.toast(Messages.message('noRegistrationNumber'));
+                        }
+                    })
+                    .catch((error) => {
+                        console.log(error)
+                    })
+            }
+        }
+        else {
+            this.update();
+        }
     }
 }

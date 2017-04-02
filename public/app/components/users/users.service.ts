@@ -64,5 +64,16 @@ export class UsersService {
             })
     }
 
+    getRegistrationNumber(nr: any): Promise<any> {
+        return this.http.get(this.url.getStudentByRegistrationNumber + nr)
+            .toPromise()
+            .then((response) => {
+                return response.json();
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }
+
 
 }
