@@ -82,8 +82,6 @@ export class NoteComponent implements OnInit, AfterViewInit {
         }
 
         this.setSelectedSpecialization();
-        console.log(this.note)
-
     }
 
     ngAfterViewInit() {
@@ -136,7 +134,6 @@ export class NoteComponent implements OnInit, AfterViewInit {
             this.selectedSpecialization = currentSpecialization;
             this.note.specialization_id = currentSpecialization.specialization_id;
 
-            console.log(currentSpecialization)
             this.getSpecializationDisciplines();
         }
 
@@ -149,7 +146,6 @@ export class NoteComponent implements OnInit, AfterViewInit {
             .then((result) => {
                 if (result.statusCode == 0) {
                     this.disciplines = result.data;
-                    console.log(result.data)
                 }
             })
             .catch((error) => {
