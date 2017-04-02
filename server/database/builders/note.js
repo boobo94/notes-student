@@ -7,8 +7,20 @@ export class Note {
 
     static findAll() {
         return model.findAll()
-            .then(function(results) {
+            .then(function (results) {
                 return results
+            })
+    }
+
+    static findAllByStudentIDandSpecializationID(noteIDS) {
+        return model.findAll({
+            where: {
+                student_id: noteIDS.student_id,
+                specialization_id: noteIDS.specialization_id
+            }
+        })
+            .then(function (result) {
+                return result
             })
     }
 
@@ -18,7 +30,7 @@ export class Note {
                 note_id: id
             }
         })
-            .then(function(result) {
+            .then(function (result) {
                 return result
             })
     }
@@ -28,9 +40,10 @@ export class Note {
             note: n.note,
             exam_date: n.exam_date,
             discipline_id: n.discipline_id,
-            student_id: n.student_id
+            student_id: n.student_id,
+            specialization_id: n.specialization_id
         })
-            .then(function(inserted) {
+            .then(function (inserted) {
                 return inserted
             })
     }
@@ -40,11 +53,12 @@ export class Note {
             note: n.note,
             exam_date: n.exam_date,
             discipline_id: n.discipline_id,
-            student_id: n.student_id
+            student_id: n.student_id,
+            specialization_id: n.specialization_id
         }, {
                 where: { note_id: n.note_id }
             })
-            .then(function(updated) {
+            .then(function (updated) {
                 return updated
             })
     }
@@ -53,7 +67,7 @@ export class Note {
         return model.destroy({
             where: { note_id: id }
         })
-            .then(function(affectedRows) {
+            .then(function (affectedRows) {
                 return affectedRows
             })
     }
