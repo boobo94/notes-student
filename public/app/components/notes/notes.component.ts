@@ -29,6 +29,7 @@ declare var $: any;// declare $ to use jquery
                     <thead>
                         <tr>
                             <th data-field="id">#</th>
+                            <th data-field="discipline">Discipline</th>
                             <th data-field="name">Notes</th>
                             <th data-field="btns" class="right">Edit/Delete</th>
                         </tr>
@@ -37,6 +38,7 @@ declare var $: any;// declare $ to use jquery
                     <tbody>
                         <tr *ngFor="let note of notes">
                             <td>{{note.note_id}}</td>
+                            <td>{{note.disciplines.name}}</td>
                             <td>{{note.note}}</td>
                             <td class="right">
                                 <button (click)="edit(note)" class="waves-effect waves-light btn "><i class="material-icons">mode_edit</i></button>
