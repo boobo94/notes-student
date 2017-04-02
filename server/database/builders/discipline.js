@@ -12,15 +12,34 @@ export class Discipline {
                 {
                     model: models.Specialization,
                     attributes: ["specialization_id"],
-                    as: 'disciplines',
+                    as: 'specializations',
                     through: {
                         attributes: []
                     }
                 },
             ],
-            order:[
-                ['discipline_id','ASC']
+            order: [
+                ['discipline_id', 'ASC']
             ]
+        })
+            .then((results) => {
+                return results
+            })
+    }
+
+    static findAllBySpecializationID(id) {
+        return model.findAll({
+            include: [
+                {
+                    model: models.Specialization,
+                    attributes: ["specialization_id"],
+                    as: 'specializations',
+                    where: {
+                        specialization_id: id
+                    }
+                },
+            ],
+
         })
             .then((results) => {
                 return results
@@ -50,7 +69,7 @@ export class Discipline {
             specialization_id: d.specialization_id
         })
             .then((inserted) => {
-                return inserted.setDisciplines(d.specialization_id) // after insert a new record in discipline table, also in relationship table discipline_specialization should be added
+                return inserted.setSpecializations(d.specialization_id) // after insert a new record in discipline table, also in relationship table discipline_specialization should be added
                     .then((discipline_specializations) => {
                         return discipline_specializations
                     })
@@ -74,7 +93,7 @@ export class Discipline {
                 return this.findById(d.discipline_id)
                     .then((result) => {
                         if (result && result.dataValues) {
-                            return result.setDisciplines(d.specialization_id) // after update a new record in discipline table was added, also in relationship table discipline_specialization should be added
+                            return result.setSpecializations(d.specialization_id) // after update a new record in discipline table was added, also in relationship table discipline_specialization should be added
                                 .then((discipline_specializations) => {
                                     return discipline_specializations
                                 })
