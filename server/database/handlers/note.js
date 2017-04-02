@@ -18,9 +18,9 @@ export class Handler {
             note: reqBody.note,
             exam_date: reqBody.exam_date,
             discipline_id: reqBody.discipline_id,
-            student_id: reqBody.student_id
+            student_id: reqBody.student_id,
+            specialization_id: reqBody.specialization_id
         }
-
         Note.add(note)
             .then(function (inserted) {
                 return cb(null, msg.success)
@@ -32,6 +32,23 @@ export class Handler {
 
     static getAll(cb) {
         Note.findAll()
+            .then(function (results) {
+                if (results)
+                    return cb(null, {
+                        statusCode: msg.success.statusCode,
+                        message: msg.success.message,
+                        data: results
+                    })
+                else
+                    return cb(null, msg.notfound)
+            })
+            .catch(function (error) {
+                return cb(error)
+            })
+    }
+
+    static getAllByStudentIDandSpecializationID(ids,cb) {
+        Note.findAllByStudentIDandSpecializationID(ids)
             .then(function (results) {
                 if (results)
                     return cb(null, {
@@ -67,10 +84,12 @@ export class Handler {
     static put(reqBody, id, cb) {
 
         var note = {
+            note_id: id,
             note: reqBody.note,
             exam_date: reqBody.exam_date,
             discipline_id: reqBody.discipline_id,
-            student_id: reqBody.student_id
+            student_id: reqBody.student_id,
+            specialization_id: reqBody.specialization_id
         }
 
         Note.update(note)

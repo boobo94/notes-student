@@ -10,7 +10,7 @@ const model = (sequelize, DataTypes) => {
             allowNull: false
         },
         exam_date: {
-            type: DataTypes.DATE
+            type: DataTypes.DATEONLY
         },
 
     }, {
@@ -18,6 +18,11 @@ const model = (sequelize, DataTypes) => {
                 associate: (models) => {
                     Note.belongsTo(models.Discipline, {
                         foreignKey: 'discipline_id',
+                        allowNull: false,
+                        onDelete: 'CASCADE'
+                    })
+                    Note.belongsTo(models.Specialization, {
+                        foreignKey: 'specialization_id',
                         allowNull: false,
                         onDelete: 'CASCADE'
                     })

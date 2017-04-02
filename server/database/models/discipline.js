@@ -37,7 +37,7 @@ const model = (sequelize, DataTypes) => {
             through: 'disciplineSpecializations',
             foreignKey: 'discipline_id',
             otherKey: 'specialization_id',
-            as: 'disciplines',
+            as: 'specializations',
             timestamps: false,
             onDelete: 'CASCADE'
           })
