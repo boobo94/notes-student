@@ -3,6 +3,7 @@ import { RouterModule } from '@angular/router';
 
 import { StudentsComponent } from './students.component';
 import { StudentComponent } from './student.component';
+import { StudentAccountComponent } from './student_account.component';
 import { AuthGuard } from '../../core/auth/auth.guard';
 
 @NgModule({
@@ -22,6 +23,10 @@ import { AuthGuard } from '../../core/auth/auth.guard';
                 path: 'admin/students/add',
                 component: StudentComponent,
                 canActivate: [AuthGuard]
+            },
+            {
+                path: 'my-notes',
+                component: StudentAccountComponent
             }
         ])
     ]
