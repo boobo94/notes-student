@@ -1,5 +1,6 @@
-import bcrypt from 'bcrypt'
-let model = require('../models').User
+import bcrypt from 'bcrypt';
+import models from '../models';
+let model = models.User;
 
 const saltRounds = 9;
 export class User {
@@ -38,6 +39,22 @@ export class User {
 
     static findByUN(un) {
         return model.findOne({
+            include: [
+                {
+                    model: models.Student,
+                    //attributes: ["specialization_id"],
+                    as: 'student',
+                    include: [
+                        {
+                            model: models.Specialization,
+                            attributes: ['specialization_id','name'],
+                            as: 'specializations',
+
+                        }
+                    ]
+                },
+
+            ],
             where: {
                 username: un
             }
