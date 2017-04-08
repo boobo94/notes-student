@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { MaterializeModule } from '../../core/materialize.module';
 import { StudentsComponent } from './students.component';
 import { StudentComponent } from './student.component';
+import { StudentAccountComponent } from './student_account.component';
 import { StudentsService } from './students.service';
 import { SpecializationsService } from '../specializations/specializations.service';
 import { GroupsService } from '../groups/groups.service';
@@ -22,7 +23,8 @@ import { AuthGuard } from '../../core/auth/auth.guard';
     ],
     declarations: [
         StudentsComponent,
-        StudentComponent
+        StudentComponent,
+        StudentAccountComponent
     ],
     providers: [
         StudentsService,
