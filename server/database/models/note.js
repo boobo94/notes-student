@@ -30,7 +30,8 @@ const model = (sequelize, DataTypes) => {
                     Note.belongsTo(models.Student, {
                         foreignKey: 'student_id',
                         allowNull: false,
-                        onDelete: 'CASCADE'
+                        onDelete: 'CASCADE',
+                        as: 'notes'
                     })
                 }
             }

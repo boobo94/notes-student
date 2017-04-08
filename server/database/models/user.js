@@ -24,6 +24,7 @@ const model = (sequelize, DataTypes) => {
             foreignKey: 'registration_number',
             targetKey: 'registration_number', // the target column from student table
             onDelete: 'CASCADE',
+            as: 'student'
           })
         }
       }
