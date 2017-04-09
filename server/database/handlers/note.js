@@ -30,8 +30,8 @@ export class Handler {
             })
     }
 
-    static getAll(cb) {
-        Note.findAll()
+    static getAll(queryParams, cb) {
+        Note.findAll(queryParams)
             .then(function (results) {
                 if (results)
                     return cb(null, {
@@ -47,7 +47,7 @@ export class Handler {
             })
     }
 
-    static getAllByStudentIDandSpecializationID(ids,cb) {
+    static getAllByStudentIDandSpecializationID(ids, cb) {
         Note.findAllByStudentIDandSpecializationID(ids)
             .then(function (results) {
                 if (results)

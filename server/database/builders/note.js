@@ -6,8 +6,30 @@ export class Note {
 
     }
 
-    static findAll() {
-        return model.findAll()
+    static findAll(queryParams) {
+        let whereObj = {}
+        if (queryParams.student_id)
+            whereObj.student_id = queryParams.student_id;
+        if (queryParams.specialization_id)
+            whereObj.specialization_id = queryParams.specialization_id;
+        
+        let whereDisciplineObj = {}
+        if (queryParams.year)
+            whereDisciplineObj.year = queryParams.year;
+        if (queryParams.semester)
+            whereDisciplineObj.semester = queryParams.semester;
+
+        return model.findAll({
+            include: [
+                {
+                    model: models.Discipline,
+                    attributes: ['name','credit_points','examination','semester','year'],
+                    as: 'disciplines',
+                    where: whereDisciplineObj
+                },
+            ],
+            where: whereObj
+        })
             .then(function (results) {
                 return results
             })

@@ -30,7 +30,7 @@ export class Api {
         this.router.get('/find',
             this.middlewares.auth.webAuth,
             function (req, res) {
-                Handler.getAll(function (error, result) {
+                Handler.getAll(req.query, function (error, result) {
                     if (error)
                         return res.status(500).send(error)
                     return res.status(200).send(result)
