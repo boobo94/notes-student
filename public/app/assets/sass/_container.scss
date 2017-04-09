@@ -1,4 +1,10 @@
 
-student-account-component, home {
+notes-students {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
 
+main {
+    flex: 1 0 auto;
 }

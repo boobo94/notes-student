@@ -3,9 +3,15 @@ import { Component } from '@angular/core';
 @Component({
     selector: 'notes-students',
     template: `
-        <navbar></navbar>
-        <router-outlet></router-outlet>
-        <ftr></ftr>
+        <header>
+            <navbar></navbar>
+        </header>
+        <main>
+            <router-outlet></router-outlet>
+        </main>
+        <footer class="page-footer">
+            <ftr></ftr>
+        </footer>
     `
 })
 export class AppComponent { }
