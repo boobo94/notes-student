@@ -29,7 +29,7 @@ import { Messages } from '../../core/messages.config';
                             <option value="" disabled >Choose your option</option>
                             <option *ngFor="let discipline of disciplines" [value]="discipline.discipline_id" >{{discipline.name}}</option>
                         </select>
-                        <label [class.active]="selectedSpecialization" >Discipline</label>
+                        <label [class.active]="selectedDiscipline" >Discipline</label>
                     </div>
                     <div class="col s10 offset-s1 m6 offset-m3 l4 offset-l4">
                         <button class="btn waves-effect waves-light right" type="submit" (click)="noteform.form.valid ? (editMode ? update() : insert()) : null">Submit
