@@ -12,11 +12,18 @@ export class Group {
             })
     }
 
-    static findById(student_id) {
+    static findById(student_id, queryParams) {
+        let whereObj = {
+            student_id: student_id
+        }
+        if (queryParams.specialization_id)
+            whereObj.specialization_id = queryParams.specialization_id;
+
         return model.findAll({
-            where: {
-                student_id: student_id
-            }
+            where: whereObj,
+            order: [
+                ['year', 'ASC']
+            ]
         })
             .then((result) => {
                 return result
@@ -60,10 +67,10 @@ export class Group {
 
     static deleteBySpecializationId(ids) {
         return model.destroy({
-            where: { 
+            where: {
                 specialization_id: ids.specialization_id,
                 student_id: ids.student_id
-             }
+            }
         })
             .then((affectedRows) => {
                 return affectedRows

@@ -25,7 +25,8 @@ const model = (sequelize, DataTypes) => {
           Group.belongsTo(models.Specialization, {
             foreignKey: 'specialization_id',
             allowNull: false,
-            onDelete: 'CASCADE'
+            onDelete: 'CASCADE',
+            as: 'groupsSpecialization'
           })
         }
       }

@@ -51,9 +51,8 @@ export class Handler {
             })
     }
 
-    static getAllById(id, cb) {
-
-        return Group.findById(id)
+    static getAllById(id, queryParams, cb) {
+        return Group.findById(id, queryParams)
             .then((result) => {
                 if (result)
                     return cb(null, {

@@ -47,9 +47,8 @@ export class User {
                     include: [
                         {
                             model: models.Specialization,
-                            attributes: ['specialization_id','name'],
+                            attributes: ['specialization_id', 'name'],
                             as: 'specializations',
-
                         }
                     ]
                 },
@@ -61,6 +60,9 @@ export class User {
         })
             .then((result) => {
                 return result
+            })
+            .catch((error) => {
+                return error
             })
     }
 

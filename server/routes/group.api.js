@@ -39,7 +39,7 @@ export class Api {
         this.router.get('/find/:id',
             this.middlewares.auth.webAuth,
             (req, res) => {
-                Handler.getAllById(req.params.id, (error, result) => {
+                Handler.getAllById(req.params.id, req.query, (error, result) => {
                     if (error)
                         return res.status(500).send(error)
                     return res.status(200).send(result)
