@@ -38,8 +38,8 @@ export class NotesService {
         return this.specialization;
     }
 
-    getAllNotes(): Promise<any> {
-        return this.http.get(this.url.getAllNotes)
+    getAllNotes(params): Promise<any> {
+        return this.http.get(this.url.getAllNotes, { search: params })
             .toPromise()
             .then((response) => {
                 return response.json();
