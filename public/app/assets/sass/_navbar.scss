@@ -1,4 +1,12 @@
 
 nav {
     margin-bottom: 0.5rem;
+    background-color: #6cf;
+}
+
+footer {
+    &.page-footer {
+        padding-top: 0;
+        background-color: #6cf;
+    }
 }
