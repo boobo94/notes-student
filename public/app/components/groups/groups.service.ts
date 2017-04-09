@@ -31,8 +31,8 @@ export class GroupsService {
             })
     }
 
-    getGroupById(student_id): Promise<any> {
-        return this.http.get(this.url.getGroup + student_id)
+    getGroupById(student_id, params): Promise<any> {
+        return this.http.get(this.url.getGroup + student_id, { search: params })
             .toPromise()
             .then((response) => {
                 return response.json();
