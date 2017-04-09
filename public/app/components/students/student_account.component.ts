@@ -1,14 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Http, RequestOptions, URLSearchParams } from '@angular/http';
 
 import { StudentsService } from './students.service';
-import { SpecializationsService } from '../specializations/specializations.service';
 import { GroupsService } from '../groups/groups.service';
+import { NotesService } from '../notes/notes.service';
 import { ToastService } from '../../components/notifications/toast.service';
 import { Messages } from '../../core/messages.config';
-
-declare var $: any;// declare $ to use jquery
-
 
 @Component({
     selector: 'student-account-component',
@@ -28,26 +26,48 @@ declare var $: any;// declare $ to use jquery
                         </li>
                     </ul>
                 </div>
+                <div class="col s12">
+                    <div class="input-field col s12 m4 l3">
+                        <select id="specialization_id" name="specialization_id" materialize="material_select" [materializeSelectOptions]="selectOptions" (change)="getGroups()" [(ngModel)]="selectedSpecialization">
+                            <option value="" disabled >Choose your option</option>
+                            <option *ngFor="let spec of student.specializations" [value]="spec.specialization_id" >{{spec.name}}</option>
+                        </select>
+                        <label>Specialization</label>
+                    </div>
+                    <div class="input-field col s12 m4 l3">
+                        <select id="group_id" name="group_id" materialize="material_select" [materializeSelectOptions]="selectOptions" (change)="getNotes()" [(ngModel)]="selectedYear">
+                            <option value="" >Choose your option</option>
+                            <option *ngFor="let group of groups" [value]="group.year" >{{group.year}} - {{group.name}}</option>
+                        </select>
+                        <label>Year - Group</label>
+                    </div>
+                    <div class="input-field col s12 m4 l3">
+                        <select id="semester" name="semester" materialize="material_select" [materializeSelectOptions]="selectOptions" (change)="getNotes()" [(ngModel)]="semester">
+                            <option value="" >Choose your option</option>
+                            <option [value]="1" >1</option>
+                            <option [value]="2" >2</option>
+                        </select>
+                        <label>Semester</label>
+                    </div>
+                </div>
                <table class="bordered">
                     <thead>
                         <tr>
-                            <th data-field="id">#</th>
-                            <th data-field="full_name">Full Name</th>
-                            <th data-field="registratio_number">Registation Number</th>
-                            <th data-field="btns" class="right">Notes/Edit/Delete</th>
+                            <th data-field="discipline">Discipline</th>
+                            <th data-field="note">Note</th>
+                            <th data-field="examination">Examination</th>
+                            <th data-field="credit_points">Credits</th>
+                            <th data-field="exam_date">Date</th>
                         </tr>
                     </thead>
 
                     <tbody>
-                        <tr *ngFor="let stud of students">
-                            <td>{{stud.student_id}}</td>
-                            <td>{{stud.name}}</td>
-                            <td>{{stud.registration_number}}</td>
-                            <td class="right">
-                                <button (click)="notes(stud)" class="waves-effect waves-light btn "><i class="material-icons">view_week</i></button>
-                                <button (click)="edit(stud)" class="waves-effect waves-light btn "><i class="material-icons">mode_edit</i></button>
-                                <button (click)="delete(stud.student_id)" class="waves-effect waves-light btn "><i class="material-icons">delete</i></button>
-                            </td>
+                        <tr *ngFor="let note of notes">
+                            <td>{{note.disciplines.name}}</td>
+                            <td>{{note.note}}</td>
+                            <td>{{note.disciplines.examination}}</td>
+                            <td>{{note.disciplines.credit_points}}</td>
+                            <td>{{note.exam_date | date:'longDate'}}</td>
                         </tr>
                     </tbody>
 
@@ -59,8 +79,13 @@ declare var $: any;// declare $ to use jquery
 export class StudentAccountComponent implements OnInit {
     myUsername: String;
     student: any;
+    groups: any;
+    selectedSpecialization: any;
+    selectedYear: any;
+    semester: any;
+    notes: any;
 
-    constructor(private service: StudentsService, private router: Router) {
+    constructor(private service: StudentsService, private router: Router, private groupService: GroupsService, private noteService: NotesService) {
         this.myUsername = localStorage.getItem('username');
         this.student = {
             student_id: null,
@@ -74,8 +99,33 @@ export class StudentAccountComponent implements OnInit {
                 }
             ]
         }
-        
-        
+        this.groups = [
+            {
+                group_id: null,
+                name: null,
+                specialization_id: null,
+                student_id: null,
+                year: null
+            }
+        ]
+        this.notes = [{
+            discipline_id: null,
+            disciplines: {
+                name: null,
+                credit_points: null,
+                examination: null,
+                semester: null,
+                year: null
+            },
+            exam_date: null,
+            note: null,
+            note_id: null,
+            specialization_id: null,
+            student_id: null
+        }]
+        this.selectedSpecialization = null;
+        this.selectedYear = null;
+        this.semester = null
     }
 
     ngOnInit() {
@@ -86,8 +136,40 @@ export class StudentAccountComponent implements OnInit {
         this.service.getUserWithUsername(this.myUsername)
             .then((result) => {
                 this.student = result.data.student;
+                this.selectedSpecialization = (this.student.specializations) ? this.student.specializations[0].specialization_id : null;
+                this.getGroups(); // get all groups for this student
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
 
-        console.log(this.student)
+    getGroups(): void {
+        var params: URLSearchParams = new URLSearchParams();
+        params.set('specialization_id', this.selectedSpecialization);
+
+        this.groupService.getGroupById(this.student.student_id, params)
+            .then((result) => {
+                this.groups = result.data;
+                this.getNotes()
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
+
+    getNotes(): void {
+        var params: URLSearchParams = new URLSearchParams();
+        params.set('student_id', this.student.student_id);
+        params.set('specialization_id', this.selectedSpecialization);
+        if (this.selectedYear)
+            params.set('year', this.selectedYear);
+        if (this.semester)
+            params.set('semester', this.semester);
+
+        this.noteService.getAllNotes(params)
+            .then((result) => {
+                this.notes = result.data;
             })
             .catch((error) => {
                 console.log(error)
