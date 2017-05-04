@@ -23,6 +23,7 @@ export class Messages {
             insertedWithSuccess: 'Inserted with success.',
             thisRecordWasNotFound: 'This record was not found.',
             notModified: 'The record was not modified, some errors was encounterd.',
+            notauthorized: 'You are not authorized to access that page!',
 
 
             //student
