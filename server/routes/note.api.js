@@ -53,6 +53,7 @@ export class Api {
 
         this.router.get('/find/:id',
             this.middlewares.auth.webAuth,
+            this.middlewares.auth.adminAuth,
             function (req, res) {
                 Handler.getOne(req.params.id, function (error, result) {
                     if (error)

@@ -28,6 +28,7 @@ export class Api {
 
         this.router.get('/find',
             this.middlewares.auth.webAuth,
+            this.middlewares.auth.adminAuth,
             (req, res) => {
                 Handler.getAll((error, result) => {
                     if (error)

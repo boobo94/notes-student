@@ -28,6 +28,7 @@ export class Api {
 
         this.router.get('/find',
             this.middlewares.auth.webAuth,
+            this.middlewares.auth.adminAuth,
             (req, res) => {
                 Handler.getAll((error, result) => {
                     if (error)
@@ -38,6 +39,7 @@ export class Api {
 
         this.router.get('/find/:id',
             this.middlewares.auth.webAuth,
+            this.middlewares.auth.adminAuth,
             (req, res) => {
                 Handler.getOne(req.params.id, (error, result) => {
                     if (error)
@@ -48,6 +50,7 @@ export class Api {
 
         this.router.get('/findBySpecialization/:id',
             this.middlewares.auth.webAuth,
+            this.middlewares.auth.adminAuth,
             (req, res) => {
                 Handler.getAllBySpecializationID(req.params.id, (error, result) => {
                     if (error)
