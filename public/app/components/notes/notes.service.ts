@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
 import { AuthHttp } from 'angular2-jwt';
+import { Router } from '@angular/router';
 import 'rxjs/add/operator/toPromise';
 
 import { ApiUrls } from '../../core/urls.config';
+import { ToastService } from '../../components/notifications/toast.service';
+import { Messages } from '../../core/messages.config';
 
 @Injectable()
 export class NotesService {
@@ -10,7 +13,7 @@ export class NotesService {
     student: any;
     specialization: any;
 
-    constructor(private http: AuthHttp, private url: ApiUrls) {
+    constructor(private http: AuthHttp, private url: ApiUrls, private router: Router) {
         this.note = null
     }
 
@@ -45,6 +48,10 @@ export class NotesService {
                 return response.json();
             })
             .catch((error) => {
+                if (error.status == 403){    
+                    ToastService.toast(Messages.message('notauthorized'))
+                    this.router.navigate(['/home']);
+                }
                 console.log(error);
             })
     }
@@ -56,6 +63,10 @@ export class NotesService {
                 return response.json();
             })
             .catch((error) => {
+                if (error.status == 403){    
+                    ToastService.toast(Messages.message('notauthorized'))
+                    this.router.navigate(['/home']);
+                }
                 console.log(error);
             })
     }
@@ -67,6 +78,10 @@ export class NotesService {
                 return response.json();
             })
             .catch((error) => {
+                if (error.status == 403){    
+                    ToastService.toast(Messages.message('notauthorized'))
+                    this.router.navigate(['/home']);
+                }
                 console.log(error);
             })
     }
@@ -78,6 +93,10 @@ export class NotesService {
                 return response.json();
             })
             .catch((error) => {
+                if (error.status == 403){    
+                    ToastService.toast(Messages.message('notauthorized'))
+                    this.router.navigate(['/home']);
+                }
                 console.log(error);
             })
     }
@@ -89,6 +108,10 @@ export class NotesService {
                 return response.json();
             })
             .catch((error) => {
+                if (error.status == 403){    
+                    ToastService.toast(Messages.message('notauthorized'))
+                    this.router.navigate(['/home']);
+                }
                 console.log(error);
             })
     }
