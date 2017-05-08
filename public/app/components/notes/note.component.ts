@@ -46,7 +46,7 @@ export class NoteComponent implements OnInit, AfterViewInit {
     editMode: Boolean
     student: any
     selectedSpecialization: any
-    disciplines: any
+    disciplines: any[]
     selectedDiscipline: any
 
     constructor(private service: NotesService, private router: Router, private disciplineService: DisciplinesService) {
