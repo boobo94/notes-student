@@ -33,8 +33,8 @@ export class Router {
 
     configure(app) {
 
-        let client = new Client(this.middlewares, this.dependencies)
-        app.use('/', client.router)
+        //let client = new Client(this.middlewares, this.dependencies)
+        //app.use('/', client.router)
 
         let admin = new Admin(this.middlewares, this.dependencies)
         app.use('/admin', admin.router)

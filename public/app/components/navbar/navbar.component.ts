@@ -27,7 +27,7 @@ declare var $: any;// declare $ to use jquery
                     </ul>
                     <ul class="side-nav" id="mobile">
                         <div *ngIf="auth.loggedIn()">
-                            <li *ngIf="isAdmin" routerLinkActive="active"><a routerLink="admin/discipline">Discipline</a></li>
+                            <li *ngIf="isAdmin" routerLinkActive="active"><a routerLink="admin/disciplines">Discipline</a></li>
                             <li *ngIf="isAdmin" routerLinkActive="active"><a routerLink="admin/specializations">Specializations</a></li>
                             <li *ngIf="isAdmin" routerLinkActive="active"><a routerLink="admin/students">Students</a></li>
                             <li *ngIf="isAdmin" routerLinkActive="active"><a routerLink="admin/users">Users</a></li>
