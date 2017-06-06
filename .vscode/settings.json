@@ -1,0 +1,9 @@
+// Place your settings in this file to overwrite default and user settings.
+{
+    "todoIgnore": ["**/node_modules/**"],
+    "files.exclude": {
+        //"public/app/**/*.js": true,
+        //"public/app/**/*.config.js": false
+    },
+    "vsicons.presets.angular": true
+}
