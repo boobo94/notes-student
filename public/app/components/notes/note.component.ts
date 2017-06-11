@@ -6,6 +6,8 @@ import { DisciplinesService } from '../disciplines/disciplines.service';
 import { ToastService } from '../../components/notifications/toast.service';
 import { Messages } from '../../core/messages.config';
 
+declare var $: any;// declare $ to use jquery
+
 @Component({
     selector: 'notes-component',
     template: `
@@ -145,7 +147,13 @@ export class NoteComponent implements OnInit, AfterViewInit {
         this.disciplineService.getAllDisciplinesBySpecialization(specialization_id)
             .then((result) => {
                 if (result.statusCode == 0) {
+                    console.log(result.data)
                     this.disciplines = result.data;
+
+                    $(document).ready(function(){
+                        $('select').material_select(); // force update on materialize select
+                    })
+                    
                 }
             })
             .catch((error) => {
