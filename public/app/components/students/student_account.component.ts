@@ -36,14 +36,14 @@ import { Messages } from '../../core/messages.config';
                     </div>
                     <div class="input-field col s12 m4 l3">
                         <select id="group_id" name="group_id" materialize="material_select" [materializeSelectOptions]="selectOptions" (change)="getNotes()" [(ngModel)]="selectedYear">
-                            <option value="" >Choose your option</option>
+                            <option value="" >All</option>
                             <option *ngFor="let group of groups" [value]="group.year" >{{group.year}} - {{group.name}}</option>
                         </select>
                         <label>Year - Group</label>
                     </div>
                     <div class="input-field col s12 m4 l3">
                         <select id="semester" name="semester" materialize="material_select" [materializeSelectOptions]="selectOptions" (change)="getNotes()" [(ngModel)]="semester">
-                            <option value="" >Choose your option</option>
+                            <option value="" >All</option>
                             <option [value]="1" >1</option>
                             <option [value]="2" >2</option>
                         </select>
