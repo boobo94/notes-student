@@ -25,6 +25,7 @@ declare var $: any;// declare $ to use jquery
 
                     <button class="btn-floating btn-large waves-effect waves-light red right" (click)="add()"><i class="material-icons">add</i></button>
                 </div>
+                <div class="col s12"> Name: {{student.name}}</div>
                 <table class="bordered">
                     <thead>
                         <tr>
