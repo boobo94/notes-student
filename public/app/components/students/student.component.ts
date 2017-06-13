@@ -56,7 +56,7 @@ declare var $: any;// declare $ to use jquery
                     </div>
 
                     <ul class="col s12 collapsible popout" data-collapsible="accordion">
-                        <li *ngFor="let spec of studentSpecializations">
+                        <li *ngFor="let spec of studentSpecializations; let index = index">
                             <div class="collapsible-header"><i class="material-icons">open_in_new</i>{{ spec.name }}</div>
                             <div class="collapsible-body">
                                 <button (click)="addNewGroup()" class="btn btn-floating btn-large waves-effect waves-light red right"><i class="material-icons">add</i></button>
@@ -113,7 +113,7 @@ declare var $: any;// declare $ to use jquery
                                 </ul>
                                 
 
-                                <button class="btn right" (click)="removeSpecialization(spec.specialization_id)"><i class="material-icons">delete</i></button>
+                                <button class="btn right" (click)="removeSpecialization(spec.specialization_id,index)"><i class="material-icons">delete</i></button>
                                 <br>
                             </div>
                         </li>
@@ -271,7 +271,7 @@ export class StudentComponent implements OnInit {
             })
     }
 
-    removeSpecialization(specialization_id) {
+    removeSpecialization(specialization_id,deleteIndex) {
         let spec = {
             specialization_id: specialization_id,
             student_id: this.student.student_id
@@ -279,9 +279,9 @@ export class StudentComponent implements OnInit {
         this.service.removeSpecializationFromStudent(spec)
             .then((r) => {
                 if (r.statusCode == 0) {
-                    var specializationIndex = this.getIndexStudentSpecializationsById(specialization_id)
+                    var specializationIndex = this.getIndexStudentSpecializationsById(specialization_id);
                     delete this.studentSpecializations[specializationIndex].groups; // remove this object because if not next time will prepopulated
-                    this.studentSpecializations.splice(specializationIndex, 1) // delete from studentSpecializations array deleted specialization
+                    this.studentSpecializations.splice(deleteIndex, 1) // delete from studentSpecializations array deleted specialization
                     ToastService.toast(Messages.message('deletedWithSuccess'))
                 }
                 else
@@ -305,6 +305,7 @@ export class StudentComponent implements OnInit {
     getIndexStudentSpecializationsById(id): any {
         var specializationIndex = null;
         $.each(this.allSpecializations, function (index, value) {
+            // console.log(id,index,value)
             if (value.specialization_id == id)
                 specializationIndex = index;
         });
