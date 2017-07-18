@@ -137,6 +137,9 @@ export class DisciplineComponent implements OnInit {
             .then((result) => {
                 this.allSpecializations = result.data;
                 Materialize.updateTextFields(); // updateTextFields to move the labels above inputs after data binding
+                $(document).ready(function(){
+                    $('select').material_select(); // force update on materialize select
+                })
             })
             .catch((error) => {
                 console.log(error)
