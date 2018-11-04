@@ -1,3 +1,5 @@
+[![BCH compliance](https://bettercodehub.com/edge/badge/boobo94/notes-student?branch=master)](https://bettercodehub.com/)
+
 # notes-student
 Website with notes for student
 
